@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
 }
+a {
+    cursor: pointer;
+}
 body {
     margin: 0 20px;
 }
@@ -9,6 +12,17 @@ body {
     top: 0;
     right: 0;
     background: rgba(255,255,255,1);
+    padding: 5px;
+    box-shadow: 0 0 2px rgba(0,0,0,.4);
+    border-bottom-left-radius: 3px;
+    z-index: 2;
+}
+.outline {
+    background: white;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
 }
 textarea {
     border: none;
@@ -48,6 +62,12 @@ p {
 }
 .parenthetical {
     margin: 0;
+}
+.parenthetical:before {
+    contnt: '(';
+}
+.parenthetical:after {
+    contnt: ')';
 }
 .parenthetical textarea {
     text-align: center;

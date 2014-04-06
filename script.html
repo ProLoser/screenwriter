@@ -3,5 +3,9 @@
 </p>
 <div class="statusbar">
     Share this URL with friends to collaborate!<br>
-    Title: <input ng-model="script.title"> Type: {{editing.type.toUpperCase()}}
+    Title: <input ng-model="script.title"></input>
+    Type: {{editing.type.toUpperCase()}}
 </div>
+<ol class="outline">
+    <li ng-repeat="scene in script.lines | filter : {type:'scene'}"><a ng-click="focus(scene)">{{scene.text}}</a></li>
+</ol>

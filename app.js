@@ -21,11 +21,12 @@ app.config(function($stateProvider, $urlRouterProvider){
             var script = new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
             fbScript = $firebase(script);
             fbScript.$bind($scope, 'script', function(){
-                if (!$scope.script.lines) {
-                    $scope.$apply(function(){
+                $scope.$apply(function(){
+                    if (!$scope.script)
+                        $scope.script = {};
+                    if (!$scope.script.lines)
                         $scope.script.lines = [{type:'scene'}];
-                    });
-                }
+                });
             });
           
             var types = $scope.types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
@@ -42,31 +43,46 @@ app.config(function($stateProvider, $urlRouterProvider){
             $scope.keypress = function($event, line){
                 switch ($event.keyCode) {
                     case 13: // enter
-                        $scope.newLine(line);
                         $event.preventDefault();
+                        if (line.text) {
+                            $scope.newLine(line);
+                        }
                 }
             };
             
-            function focus(line) {
+            $scope.focus = function(line) {
                 $scope.$broadcast('focus', line);
             }
+            $scope.clean = function(text) {
+                return text.replace(/[^0-9a-zA-Z]/, '+');
+            };
             $scope.keydown = function($event, line){
                 switch ($event.keyCode) {
+                    case 38: // up
+                        if (!$event.shiftKey) {
+                            $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
+                            $event.preventDefault();
+                        }
+                        break;
+                    case 40: // down
+                        if (!$event.shiftKey) {
+                            $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
+                            $event.preventDefault();
+                        }
+                        break;
                     case 8: // backspace
                         if (!line.text) {
-                            focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
+                            $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
                             $scope.script.lines.splice($scope.script.lines.indexOf(line), 1);
                             $event.preventDefault();
                         }
                         break;
-                    case 38: // up
-                        if (!$event.shiftKey)
-                            focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
-                        break;
-                    case 40: // down
-                        if (!$event.shiftKey)
-                            focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
-                        break;
+                    case 13: // enter
+                        if (line.text) {
+                            break;
+                        } else {
+                            $event.preventDefault();
+                        }
                     case 9: // tab
                         $event.preventDefault();
                         if ($event.shiftKey) {
@@ -94,9 +110,14 @@ app.config(function($stateProvider, $urlRouterProvider){
                 type = (type >= 0) ? type : types.length - 1;
                 line.type = types[type];
             };
-            $scope.nextType = function(line) {
-
-            };
+            $scope.words = function(){
+                var words = 0;
+                $scope.script.lines.forEach(function(line){
+                    words += line.text.split(' ');
+                });
+                return words;
+            }
+            
         }
     });
 });
