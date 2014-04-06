@@ -46,13 +46,26 @@ app.config(function($stateProvider, $urlRouterProvider){
                         $event.preventDefault();
                 }
             };
+            
+            function focus(line) {
+                $scope.$broadcast('focus', line);
+            }
             $scope.keydown = function($event, line){
                 switch ($event.keyCode) {
                     case 8: // backspace
                         if (!line.text) {
+                            focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
                             $scope.script.lines.splice($scope.script.lines.indexOf(line), 1);
                             $event.preventDefault();
                         }
+                        break;
+                    case 38: // up
+                        if (!$event.shiftKey)
+                            focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
+                        break;
+                    case 40: // down
+                        if (!$event.shiftKey)
+                            focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
                         break;
                     case 9: // tab
                         $event.preventDefault();
@@ -91,6 +104,11 @@ app.directive('textarea', function(){
     return {
         restrict: 'E',
         link: function($scope, $element, $attrs) {
+            $element[0].focus();
+            $scope.$on('focus', function(event, line){
+               if (line === $scope.line)
+                    $element[0].focus();
+            });
             $element.on('input', function(){
                 $element[0].style.height = $element[0].scrollHeight + 'px';
             });

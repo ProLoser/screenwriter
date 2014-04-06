@@ -3,5 +3,5 @@
     Title: <input ng-model="script.title"> Type: {{editing.type.toUpperCase()}}
 </div>
 <p ng-repeat="line in script.lines" ng-class="line.type">
-    <textarea ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" autofocus ng-focus="$root.editing=line"></textarea>
+    <textarea ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="$root.editing=line"></textarea>
 </p>

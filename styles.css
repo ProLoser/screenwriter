@@ -17,10 +17,12 @@ textarea {
     font-size: 14px;
     font-family: Courier;
     resize: none;
+    position: relative;
 }
 textarea:focus {
     box-shadow: 0 0 5px rgba(0,0,0,.5);
     outline: none;
+    z-index: 1;
 }
 body {
     font-size: 14px;
