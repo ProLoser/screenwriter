@@ -1,5 +1,7 @@
-<p ng-repeat="line in script.lines track by $index" ng-class="line.type">
-    <textarea ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="$root.editing=line"></textarea>
+<p ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}}">
+    <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
+    <textarea ng-show="commenting==line" class="comment" ng-model="line.comment" rows="1"></textarea>
+    <textarea class="line" ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="edit(line)"></textarea>
 </p>
 <div class="statusbar">
     Share this URL with friends to collaborate!<br>
@@ -7,5 +9,7 @@
     Type: {{editing.type.toUpperCase()}}
 </div>
 <ol class="outline">
-    <li ng-repeat="scene in script.lines | filter : {type:'scene'}"><a ng-click="focus(scene)">{{scene.text}}</a></li>
+    <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
+        <a ng-click="focus(scene)">{{scene.text}}</a>
+    </li>
 </ol>

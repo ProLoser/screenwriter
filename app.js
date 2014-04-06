@@ -40,6 +40,17 @@ app.config(function($stateProvider, $urlRouterProvider){
                 shot: 'action',
                 text: 'text'
             };
+            $scope.comment = function(line){
+                if ($scope.commenting === line) {
+                    $scope.commenting = null;
+                } else {
+                    $scope.commenting = line;
+                    $scope.$broadcast('comment', line);
+                }
+            };
+            $scope.edit = function(line){
+                $scope.editing = line;
+            };
             $scope.keypress = function($event, line){
                 switch ($event.keyCode) {
                     case 13: // enter
@@ -121,18 +132,28 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
     });
 });
-app.directive('textarea', function(){
+app.directive('textarea', function($timeout){
     return {
         restrict: 'E',
         link: function($scope, $element, $attrs) {
             $element[0].focus();
-            $scope.$on('focus', function(event, line){
-               if (line === $scope.line)
-                    $element[0].focus();
-            });
             $element.on('input', function(){
                 $element[0].style.height = $element[0].scrollHeight + 'px';
             });
+            if ($element.hasClass('line')) {
+                $scope.$on('focus', function(event, line){
+                   if (line === $scope.line)
+                        $element[0].focus();
+                });
+            }
+            if ($element.hasClass('comment')) {
+                $scope.$on('comment', function(event, line){
+                   if (line === $scope.line)
+                        $timeout(function(){
+                            $element[0].focus();  
+                        });
+                });
+            }
         }
     };
 });
