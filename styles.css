@@ -1,11 +1,14 @@
 * {
     box-sizing: border-box;
 }
+body {
+    margin: 0 20px;
+}
 .statusbar {
     position: fixed;
-    bottom: 0;
+    top: 0;
     right: 0;
-    background: rgba(0,0,0,.2);
+    background: rgba(255,255,255,1);
 }
 textarea {
     border: none;
@@ -16,7 +19,8 @@ textarea {
     resize: none;
 }
 textarea:focus {
-    box-shadow: 0 0 2px rgba(0,0,0,.5);
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
+    outline: none;
 }
 body {
     font-size: 14px;
