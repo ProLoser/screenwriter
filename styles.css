@@ -74,6 +74,10 @@ textarea.line:focus {
     outline: none;
     z-index: 1;
 }
+.dropdown-menu {
+    max-height: 150px;
+    overflow: auto;
+}
 body {
     font-size: 14px;
     font-family: Courier;
