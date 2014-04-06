@@ -67,6 +67,14 @@ app.config(function($stateProvider, $urlRouterProvider){
             $scope.clean = function(text) {
                 return text.replace(/[^0-9a-zA-Z]/, '+');
             };
+            $scope.suggestions = function(line) {
+                var suggestions = [];
+                $scope.script.lines.forEach(function(suggestion){
+                    if ( suggestion.text !== line.text && line.type === suggestion.type && ~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) && !~suggestions.indexOf(suggestion.text) )
+                        suggestions.push(suggestion.text);
+                });
+                return suggestions;
+            };
             $scope.keydown = function($event, line){
                 switch ($event.keyCode) {
                     case 38: // up
@@ -174,5 +182,12 @@ app.directive('textarea', function($timeout){
                 });
             }
         }
+    };
+});
+app.filter('unique', function(){
+    return function(data){
+        return _.uniq(data, false, function(row){
+            return row && row.text && row.text.toUpperCase();
+        });
     };
 });

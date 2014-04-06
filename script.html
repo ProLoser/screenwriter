@@ -1,9 +1,13 @@
-<div class="script">
-    <p ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}}">
+<div ng-click="editing=null" class="container">
+<div class="script" ng-click="$event.stopPropagation()">
+    <div ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}} dropdown open line">
         <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
         <textarea ng-show="commenting==line" class="comment" ng-model="line.comment" rows="1"></textarea>
         <textarea class="line" ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="edit(line)"></textarea>
-    </p>
+        <ul class="dropdown-menu" ng-if="suggestions(line).length">
+            <li ng-repeat="suggestion in suggestions(line)"><a ng-click="line.text=suggestion;focus(line)">{{suggestion}}</a></li>
+        </ul>
+    </div>
 </div>
 <div class="statusbar">
     Share this URL with friends to collaborate!<br>
@@ -25,3 +29,4 @@
         <a ng-click="focus(scene)">{{scene.text}}</a>
     </li>
 </ol>
+</div>
