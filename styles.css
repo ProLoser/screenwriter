@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+}
+.statusbar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,.2);
+}
+textarea {
+    border: none;
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    font-family: Courier;
+    resize: none;
+}
+textarea:focus {
+    box-shadow: 0 0 2px rgba(0,0,0,.5);
+}
+body {
+    font-size: 14px;
+    font-family: Courier;
+}
+p {
+    margin: 20px 0;
+}
+.scene {
+    text-transform: uppercase;
+}
+.scene textarea {
+    text-transform: uppercase;
+    background: rgba(0,0,0,.1);
+}
+.character {
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+.character textarea {
+    text-align: center;
+    text-transform: uppercase;
+}
+.parenthetical {
+    margin: 0;
+}
+.parenthetical textarea {
+    text-align: center;
+}
+.transition {
+    text-align: right;
+}
+.dialogue {
+    margin: 0 80px 20px;
+}
