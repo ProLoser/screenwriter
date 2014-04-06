@@ -17,7 +17,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $stateProvider.state('script', {
         url: '/:scriptId',
         templateUrl: 'script.html',
-        controller: function($scope, $firebase, $stateParams){
+        controller: function($scope, $firebase, $stateParams, $timeout){
             var script = new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
             fbScript = $firebase(script);
             fbScript.$bind($scope, 'script', function(){
@@ -70,13 +70,31 @@ app.config(function($stateProvider, $urlRouterProvider){
             $scope.keydown = function($event, line){
                 switch ($event.keyCode) {
                     case 38: // up
-                        if (!$event.shiftKey) {
-                            $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
+                        if ($event.shiftKey) {
+                            var lines = $scope.script.lines;
+                            var index = lines.indexOf(line);
+                            if (index > 0) {
+                                lines.splice(index, 1);
+                                lines.splice(index - 1, 0, line);
+                                $timeout(function(){
+                                    $scope.focus(line); 
+                                });
+                            }
+                        } else {
+                            $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line) - 1]);
                             $event.preventDefault();
                         }
                         break;
                     case 40: // down
-                        if (!$event.shiftKey) {
+                        if ($event.shiftKey) {
+                            var lines = $scope.script.lines;
+                            var index = lines.indexOf(line);
+                            lines.splice(index, 1);
+                            lines.splice(index + 1, 0, line);
+                            $timeout(function(){
+                                $scope.focus(line); 
+                            });
+                        } else {
                             $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
                             $event.preventDefault();
                         }
