@@ -111,7 +111,6 @@ app.config(function($stateProvider, $urlRouterProvider){
                 $scope.script.lines.splice($scope.script.lines.indexOf(line) + 1, 0, newLine);
             };
             $scope.next = function(line) {
-                console.log('hi');
                 var type = types.indexOf(line.type) + 1;
                 type = (type < types.length) ? type : 0;
                 line.type = types[type];
