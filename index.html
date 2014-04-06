@@ -3,16 +3,16 @@
 <head>
   <title>Screenwriter</title>
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/firebase/firebase.js"></script>
+  <script src="bower_components/angularfire/angularfire.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="statusbar">Type: {{editing.type.toUpperCase()}}</div>
-    <p ng-repeat="line in lines" ng-class="line.type">
-        <textarea ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" autofocus ng-focus="$root.editing=line"></textarea>
-    </p>
-    
+    <ui-view></ui-view>
+
 </body>
 </html>
