@@ -1,12 +1,24 @@
-<p ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}}">
-    <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
-    <textarea ng-show="commenting==line" class="comment" ng-model="line.comment" rows="1"></textarea>
-    <textarea class="line" ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="edit(line)"></textarea>
-</p>
+<div class="script">
+    <p ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}}">
+        <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
+        <textarea ng-show="commenting==line" class="comment" ng-model="line.comment" rows="1"></textarea>
+        <textarea class="line" ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="edit(line)"></textarea>
+    </p>
+</div>
 <div class="statusbar">
     Share this URL with friends to collaborate!<br>
-    Title: <input ng-model="script.title"></input>
+    <a ng-click="help=!help">Help</a>
+    <input ng-model="script.title" placeholder="Script Title"></input>
     Type: {{editing.type.toUpperCase()}}
+    <div ng-show="help">
+        <h4>Shortcuts:</h4>
+        <strong>Enter</strong> Insert new line<br>
+        <strong>(Shift+)Tab</strong> Cycle through line types<br>
+        <strong>Up/Down</strong> Move through lines<br>
+        <strong>Shift+Up/Down</strong> Reorder lines<br>
+        <h4>Comments:</h4>
+        <div>Hover the mouse over a line and click on the blue comment button (<a class="comment"><i class="glyphicon glyphicon-comment"></i></a>) to toggle comments. Lines that have comments will show a yellow comment button (<span class="commented"><a class="comment"><i class="glyphicon glyphicon-comment"></i></a></span>).</div>
+    </div>
 </div>
 <ol class="outline">
     <li ng-repeat="scene in script.lines | filter : {type:'scene'}">

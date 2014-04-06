@@ -4,7 +4,7 @@
 a {
     cursor: pointer;
 }
-a.comment {
+.script a.comment {
     position: absolute;
     left: 3px;
     margin-top: 4px;
@@ -21,6 +21,10 @@ body {
     box-shadow: 0 0 2px rgba(0,0,0,.4);
     border-bottom-left-radius: 3px;
     z-index: 2;
+    max-width: 360px;
+}
+.statusbar .comment {
+    display: inline-block !important;
 }
 .outline {
     background: white;
@@ -33,10 +37,10 @@ body {
 .outline a {
     display: block;
 }
-a.comment {
+.script a.comment {
     display: none;
 }
-p:hover a.comment {
+.script p:hover a.comment {
     display: block;
 }
 .commented a.comment {
