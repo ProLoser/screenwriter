@@ -8,10 +8,14 @@ Use <kbd>Enter</kbd> to create new lines
 
 Use <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> to cycle through different formats
 
+Scripts are NOT private or secure (yet). Use at your own peril.
+
+Scripts are synchronized across browsers. Collaborate in realtime with friends!
+
 ## Roadmap
 
 * Character / Location autocompletion
-* Live collaboration with Firebase
 * Private scripts
 * Better formatting
 * Export
+* Notes
