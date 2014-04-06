@@ -28,6 +28,10 @@ body {
     right: 0;
     bottom: 0;
     z-index: 2;
+    text-transform: uppercase;
+}
+.outline a {
+    display: block;
 }
 a.comment {
     display: none;

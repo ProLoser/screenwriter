@@ -82,7 +82,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                         }
                         break;
                     case 8: // backspace
-                        if (!line.text) {
+                        if (!line.text && $scope.script.lines.length > 1) {
                             $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
                             $scope.script.lines.splice($scope.script.lines.indexOf(line), 1);
                             $event.preventDefault();
@@ -142,7 +142,9 @@ app.directive('textarea', function($timeout){
             if ($element.hasClass('line')) {
                 $scope.$on('focus', function(event, line){
                    if (line === $scope.line)
-                        $element[0].focus();
+                        setTimeout(function(){
+                            $element[0].focus(); 
+                        });
                 });
             }
             if ($element.hasClass('comment')) {
