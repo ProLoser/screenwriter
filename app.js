@@ -68,7 +68,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 return text.replace(/[^0-9a-zA-Z]/, '+');
             };
             $scope.suggestions = function(line) {
-                if (line.type !== 'character' || line.type !== 'scene') return;
+                if (line.type !== 'character' && line.type !== 'scene') return;
                 var suggestions = [];
                 $scope.script.lines.forEach(function(suggestion){
                     if ( suggestion.text !== line.text && line.type === suggestion.type && ~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) && !~suggestions.indexOf(suggestion.text) )
