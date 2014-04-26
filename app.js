@@ -71,7 +71,7 @@ app.config(function($stateProvider, $urlRouterProvider){
                 if (line.type !== 'character' && line.type !== 'scene') return;
                 var suggestions = [];
                 $scope.script.lines.forEach(function(suggestion){
-                    if ( suggestion.text !== line.text && line.type === suggestion.type && ~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) && !~suggestions.indexOf(suggestion.text) )
+                    if ( line.type === suggestion.type && suggestion.text.toUpperCase() !== line.text.toUpperCase() && ~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) && !~suggestions.indexOf(suggestion.text) )
                         suggestions.push(suggestion.text);
                 });
                 return suggestions;
