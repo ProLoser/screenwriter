@@ -109,18 +109,18 @@ body {
     text-transform: uppercase;
 }
 .parenthetical {
-    margin: 0;
+    margin: 0 30%;
 }
 .parenthetical:before {
-    contnt: '(';
+    content: '(';
 }
 .parenthetical:after {
-    contnt: ')';
+    content: ')';
 }
 .parenthetical textarea.line {
     text-align: center;
 }
-.transition {
+.transition textarea.line {
     text-align: right;
 }
 .dialogue {
