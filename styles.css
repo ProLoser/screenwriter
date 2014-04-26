@@ -83,7 +83,7 @@ body {
     font-family: Courier;
 }
 .line {
-    margin: 20px 0;
+margin: 20px 0;
 }
 .line:before {
     content: '';
@@ -125,6 +125,7 @@ body {
 }
 .parenthetical textarea.line {
     text-align: center;
+    margin: -10px 0;
 }
 .transition textarea.line {
     text-align: right;
