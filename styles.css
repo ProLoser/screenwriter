@@ -11,6 +11,9 @@ body, html, .container {
 .container {
     padding: 0 20px;
 }
+.script {
+    padding-bottom: 100px;
+}
 .script a.comment {
     position: absolute;
     left: -17px;
