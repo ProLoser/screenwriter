@@ -25,7 +25,7 @@ body, html, .container {
     box-shadow: 0 0 2px rgba(0,0,0,.4);
     border-bottom-left-radius: 3px;
     z-index: 2;
-    max-width: 360px;
+    max-width: 400px;
 }
 .statusbar .comment {
     display: inline-block !important;
