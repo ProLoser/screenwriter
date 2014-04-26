@@ -111,11 +111,17 @@ body {
 .parenthetical {
     margin: 0 30%;
 }
+.parenthetical:before, .parenthetical:after {
+    position: absolute;
+    top: 0;
+}
 .parenthetical:before {
     content: '(';
+    left: -10px;
 }
 .parenthetical:after {
     content: ')';
+    right: -10px;
 }
 .parenthetical textarea.line {
     text-align: center;
