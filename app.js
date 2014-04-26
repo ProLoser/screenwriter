@@ -163,6 +163,7 @@ app.directive('textarea', function($timeout){
         restrict: 'E',
         link: function($scope, $element, $attrs) {
             $element[0].focus();
+            $element[0].style.height = $element[0].scrollHeight + 'px';
             $element.on('input', function(){
                 $element[0].style.height = $element[0].scrollHeight + 'px';
             });
