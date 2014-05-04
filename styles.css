@@ -62,6 +62,7 @@ textarea.comment {
     right: 0;
     background: yellow;
     z-index: 3;
+    min-height: 100%;
 }
 textarea.line {
     border: none;

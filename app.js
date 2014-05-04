@@ -170,6 +170,14 @@ app.directive('textarea', function($timeout){
             $element.on('input', function(){
                 $element[0].style.height = $element[0].scrollHeight + 'px';
             });
+            // Not firing for some reason???
+            // $attrs.ngShow && $attrs.$observe('ngShow', function(newVal){
+            //     if (newVal) {
+            //         setTimeout(function(){
+            //             $element[0].style.height = $element[0].scrollHeight + 'px';
+            //         }, 100);
+            //     }
+            // });
             if ($element.hasClass('line')) {
                 $scope.$on('focus', function(event, line){
                    if (line === $scope.line)
