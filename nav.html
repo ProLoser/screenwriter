@@ -1,0 +1,27 @@
+<form class="navbar-form navbar-right" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
+  </div>
+</form>
+
+<ul class="nav navbar-nav navbar-right dropdown">
+  <li class="dropdown" ng-class="{open:dropdowns.outline}">
+    <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
+    <ol class="dropdown-menu">
+      <li class="dropdown-header">Outline</li>
+      <li class="divider"></li>  
+      <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
+          <a ng-click="focus(scene)">{{scene.text}}</a>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<ul class="nav navbar-nav navbar-center dropdown" ng-show="editing">
+  <li class="dropdown" ng-class="{open:dropdowns.dropdown}">
+    <a class="dropdown-toggle" ng-click="dropdowns.dropdown=!dropdowns.dropdown;$event.stopPropagation()">Current Line: <span class="uppercase">{{editing.type}}</span> <b class="caret"></b></a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li ng-repeat="type in types" ng-class="{active:editing.type==type}"><a ng-click="editing.type=type">{{type}}</a></li>
+    </ul>
+  </li>
+</ul>

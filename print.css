@@ -1,9 +1,1 @@
-
-@media print {
-	textarea.line {
-	    font-size: 14pt;
-	}
-	a.comment {
-		display: none;
-	}
-}
+@media print{textarea.line{font-size:14pt}a.comment{display:none}}

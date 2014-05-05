@@ -1,6 +1,7 @@
 CACHE MANIFEST
 bower_components/underscore/underscore.js
 bower_components/angular/angular.min.js
+bower_components/ngstorage/ngStorage.min.js
 bower_components/firebase/firebase.js
 bower_components/angularfire/angularfire.min.js
 bower_components/angular-ui-router/release/angular-ui-router.min.js
@@ -11,5 +12,5 @@ bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
 app.js
 styles.css
 print.css
-home.html
+nav.html
 script.html

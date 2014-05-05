@@ -1,4 +1,3 @@
-<div ng-click="editing=null" class="container">
 <div class="script" ng-click="$event.stopPropagation()">
     <div ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}} dropdown open line">
         <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
@@ -8,25 +7,4 @@
             <li ng-repeat="suggestion in suggestions(line)"><a ng-click="line.text=suggestion;focus(line)">{{suggestion}}</a></li>
         </ul>
     </div>
-</div>
-<div class="statusbar">
-    Share this URL with friends to collaborate!<br>
-    <a ng-click="help=!help">Help</a>
-    <input ng-model="script.title" placeholder="Script Title"></input>
-    Type: {{editing.type.toUpperCase()}}
-    <div ng-show="help">
-        <h4>Shortcuts:</h4>
-        <strong>Enter</strong> Insert new line<br>
-        <strong>(Shift+)Tab</strong> Cycle through line types<br>
-        <strong>Up/Down</strong> Move through lines<br>
-        <strong>Shift+Up/Down</strong> Reorder lines<br>
-        <h4>Comments:</h4>
-        <div>Hover the mouse over a line and click on the blue comment button (<a class="comment"><i class="glyphicon glyphicon-comment"></i></a>) to toggle comments. Lines that have comments will show a yellow comment button (<span class="commented"><a class="comment"><i class="glyphicon glyphicon-comment"></i></a></span>).</div>
-    </div>
-</div>
-<ol class="outline">
-    <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
-        <a ng-click="focus(scene)">{{scene.text}}</a>
-    </li>
-</ol>
 </div>

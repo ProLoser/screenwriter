@@ -1,21 +1,71 @@
 <!DOCTYPE html>
-<html ng-app="scrnplay" manifest="cache.manifest">
+<!-- <html ng-app="scrnplay" manifest="cache.manifest"> -->
+<html ng-app="scrnplay">
 <head>
   <title>Screenwriter</title>
 
   <script src="bower_components/underscore/underscore.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/ngstorage/ngStorage.min.js"></script>
   <script src="bower_components/firebase/firebase.js"></script>
   <script src="bower_components/angularfire/angularfire.min.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app.js"></script>
+  
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="print.css">
 </head>
-<body>
+<body ng-click="dropdowns={}">
 
-    <ui-view></ui-view>
+  <div class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
+    <div class="container">
+      <div class="navbar-header hidden-xs">
+        <a class="navbar-brand" href="#/">Screenwriter</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="visible-xs col-2-xs">
+          <a href="#/"><i class="visible-xs glyphicon glyphicon-home"></i></a>
+        </li>
+        <li class="col-2-xs">
+          <a ng-click="new()">
+            <span class="hidden-xs">New Script</span>
+            <i class="visible-xs glyphicon glyphicon-plus"></i>
+          </a>
+        </li>
+      </ul>
+
+      <ui-view name="nav"></ui-view>
+    </div>
+  </div>
+
+  <div class="container" ui-view>
+    <script type="text/ng-template" id="home">
+
+      <h1>Welcome to Screenwriter</h1>
+      <h2>Get Started!</h2>
+      <p>
+        <a class="btn btn-default" href="#/demo">Demo Script</a> 
+        <a class="btn btn-default" ng-click="new()">New Script</a>
+      </p>
+
+      <h3>Collaborate:</h3>
+      <p>Share your custom URL with friends to collaborate!</p>
+    
+      <h3>Shortcuts:</h3>
+      <p>
+        <strong>Enter</strong> Insert new line<br>
+        <strong>(Shift+)Tab</strong> Cycle through line types<br>
+        <strong>Up/Down</strong> Move through lines<br>
+        <strong>Shift+Up/Down</strong> Reorder lines<br>
+      </p>
+
+      <h3>Comments:</h3>
+      <p class="help">Hover the mouse over a line and click on the blue comment button (<a class="comment"><i class="glyphicon glyphicon-comment"></i></a>) to toggle comments.<br>
+      Lines that have comments will show a yellow comment button (<span class="commented"><a class="comment"><i class="glyphicon glyphicon-comment"></i></a></span>).</p>
+
+    </script>
+  </div>
 
 </body>
 </html>
