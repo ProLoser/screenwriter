@@ -161,11 +161,10 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         if (nextLine && !nextLine.text) {
             newLine = nextLine;
         } else {
-            newLine = {
-                type: nextTypes[line.type]
-            };
+            newLine = {};
             $scope.script.lines.splice($scope.script.lines.indexOf(line) + 1, 0, newLine);
         }
+        newLine.type = nextTypes[line.type];
         $scope.focus(newLine);
     };
     $scope.next = function(line) {
