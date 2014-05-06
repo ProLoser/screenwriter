@@ -1,10 +1,10 @@
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right hidden-xs">
   <div class="form-group">
     <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
   </div>
 </form>
 
-<ul class="nav navbar-nav navbar-right dropdown">
+<ul class="nav navbar-nav navbar-right dropdown hidden-xs">
   <li class="dropdown" ng-class="{open:dropdowns.outline}">
     <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
     <ol class="dropdown-menu">
@@ -16,6 +16,27 @@
     </ol>
   </li>
 </ul>
+
+<ul class="nav navbar-nav visible-xs row">
+  <li class="col-xs-1"><a href="#/"><i class="visible-xs glyphicon glyphicon-home"></i></a></li>
+  <li class="col-xs-1"><a ng-click="new()"><i class="glyphicon glyphicon-plus"></i></a></li>
+  <li class="dropdown col-xs-1" ng-class="{open:dropdowns.outline}">
+    <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
+    <ol class="dropdown-menu">
+      <li class="dropdown-header">Outline</li>
+      <li class="divider"></li>  
+      <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
+          <a ng-click="focus(scene)">{{scene.text}}</a>
+      </li>
+    </ol>
+  </li>
+  <li class="col-xs-9">
+    <div class="form-group">
+      <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
+    </div>
+  </li>
+</ul>
+
 
 <ul class="nav navbar-nav navbar-center dropdown" ng-show="editing">
   <li class="dropdown" ng-class="{open:dropdowns.dropdown}">

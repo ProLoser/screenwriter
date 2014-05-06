@@ -23,15 +23,12 @@
       <div class="navbar-header hidden-xs">
         <a class="navbar-brand" href="#/">Screenwriter</a>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="visible-xs col-2-xs">
+      <ul class="nav navbar-nav hidden-xs">
+        <li>
           <a href="#/"><i class="visible-xs glyphicon glyphicon-home"></i></a>
         </li>
-        <li class="col-2-xs">
-          <a ng-click="new()">
-            <span class="hidden-xs">New Script</span>
-            <i class="visible-xs glyphicon glyphicon-plus"></i>
-          </a>
+        <li>
+          <a ng-click="new()">New Script</a>
         </li>
       </ul>
 
@@ -39,6 +36,8 @@
     </div>
   </div>
 
+            
+          
   <div class="container" ui-view>
     <script type="text/ng-template" id="home">
 

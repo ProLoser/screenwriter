@@ -3,43 +3,43 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
         url: '/',
-        templateUrl: 'home'
+        views: {
+            'nav': {
+                templateUrl: 'home-nav.html'
+            },
+            '': {
+                templateUrl: 'home'
+            }
+        }
     });
     $stateProvider.state('script', {
         url: '/{scriptId:.+}',
-        resolve: {
-            script: function($rootScope, $stateParams, $firebase, $localStorage){
-                var script = new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
-                fbScript = $firebase(script);
-                return fbScript.$bind($rootScope, 'script').then(function(unbind){
-                    if (!$rootScope.script)
-                        $rootScope.script = {};
-                    if (!$rootScope.script.lines)
-                        $rootScope.script.lines = [{type:'scene'}];
-                    $localStorage[$stateParams.scriptId] = $rootScope.script;
-                    return unbind;
-                });
-            }
-        },
         views: {
             'nav': {
                 templateUrl: 'nav.html',
-                controller: 'Nav',
+                controller: 'Script',
             },
             '': {
                 templateUrl: 'script.html',
                 controller: 'Script',
             }
         },
-        onExit: function($rootScope, script) {
-            // unbind 
-            script();
-            $rootScope.script = null;
+        resolve: {
+            script: function($stateParams){
+                return new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
+            }
         }
     });
 });
-app.run(function($rootScope, $state, $timeout, types){
-    $rootScope.types = types;
+app.run(function($rootScope, $state, types, $timeout){
+    $rootScope.edit = function(line){
+        $rootScope.editing = line;
+    };
+    $rootScope.focus = function(line){
+        $timeout(function(){
+            $rootScope.$broadcast('focus', line);
+        });
+    };
 
     $rootScope.dropdowns = {};
 
@@ -53,17 +53,18 @@ app.run(function($rootScope, $state, $timeout, types){
         $state.go('script', { scriptId: guid() });
     };
 
-    $rootScope.edit = function(line){
-        $rootScope.editing = line;
-    };
-    $rootScope.focus = function(line){
-        $rootScope.$broadcast('focus', line);
-    };
 });
 app.constant('types', ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text']);
-app.controller('Nav', function($scope){
-});
-app.controller('Script', function($scope){
+app.controller('Script', function($scope, types, script, $localStorage, $stateParams, $firebase){
+    $firebase(script).$bind($scope, 'script').then(function(unbind){
+        if (!$scope.script)
+            $scope.script = {};
+        if (!$scope.script.lines)
+            $scope.script.lines = [{type:'scene'}];
+        $localStorage[$stateParams.scriptId] = $scope.script;
+        return unbind;
+    });
+    $scope.types = types;
     var nextTypes = {
         scene: 'action',
         action: 'action',
@@ -125,7 +126,7 @@ app.controller('Script', function($scope){
                     var index = lines.indexOf(line);
                     lines.splice(index, 1);
                     lines.splice(index + 1, 0, line);
-                    $scope.focus(line); 
+                    $scope.focus(line);
                 } else {
                     $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
                 }
