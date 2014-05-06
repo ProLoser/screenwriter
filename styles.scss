@@ -16,6 +16,8 @@ body, html {
 
 body {
   margin-top: 70px;
+  font-size: 14px;
+  font-family: Courier;
 }
 
 /** BOOTSTRAP **/
@@ -43,18 +45,6 @@ body {
 .help {
   .comment {
     display: inline-block !important;
-  }
-}
-
-.outline {
-  background: white;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  text-transform: uppercase;
-  a {
-    display: block;
   }
 }
 
@@ -111,11 +101,6 @@ textarea {
 
 .dropdown-menu {
   overflow: auto;
-}
-
-body {
-  font-size: 14px;
-  font-family: Courier;
 }
 
 .line {
