@@ -205,6 +205,9 @@ app.directive('textarea', function($timeout){
             $element.on('input', function(){
                 $element[0].style.height = $element[0].scrollHeight + 'px';
             });
+            $element.on('focus', function(){
+                $element[0].style.height = $element[0].scrollHeight + 'px';
+            });
             // Not firing for some reason???
             // $attrs.ngShow && $attrs.$observe('ngShow', function(newVal){
             //     if (newVal) {
@@ -224,7 +227,6 @@ app.directive('textarea', function($timeout){
                    if (line === $scope.line)
                         $timeout(function(){
                             $element[0].focus();
-                            $element[0].style.height = $element[0].scrollHeight + 'px';
                         });
                 });
             }
