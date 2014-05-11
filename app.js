@@ -223,7 +223,8 @@ app.directive('textarea', function($timeout){
                 $scope.$on('comment', function(event, line){
                    if (line === $scope.line)
                         $timeout(function(){
-                            $element[0].focus();  
+                            $element[0].focus();
+                            $element[0].style.height = $element[0].scrollHeight + 'px';
                         });
                 });
             }
