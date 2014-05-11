@@ -87,7 +87,11 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         switch ($event.keyCode) {
             case 13: // enter
                 $event.preventDefault();
-                if (line.text) {
+                if ($event.shiftKey) {
+                    var suggestions = $scope.suggestions(line);
+                    if (suggestions[0])
+                        line.text = suggestions[0];
+                } else if (line.text) {
                     $scope.newLine(line);
                 }
         }
@@ -99,8 +103,13 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         if (line.type !== 'character' && line.type !== 'scene') return;
         var suggestions = [];
         $scope.script.lines.forEach(function(suggestion){
-            if ( suggestion.text && line.text && line.type === suggestion.type && suggestion.text.toUpperCase() !== line.text.toUpperCase() && ~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) && !~suggestions.indexOf(suggestion.text) )
-                suggestions.push(suggestion.text);
+            if (line === suggestion) return;
+            if (!line.text || !suggestion.text) return;
+            if (line.text.toUpperCase() === suggestion.text.toUpperCase()) return;
+            if (suggestion.type !== line.type) return;
+            if (suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) != 0) return;
+            if (suggestions.some(function(previous){return previous.toUpperCase() === suggestion.text.toUpperCase()})) return;
+            suggestions.push(suggestion.text);
         });
         return suggestions;
     };
