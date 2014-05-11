@@ -1,4 +1,4 @@
-<div class="script" ng-click="$event.stopPropagation()">
+<div class="script hidden-print" ng-click="$event.stopPropagation()">
     <div ng-repeat="line in script.lines track by $index" ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}" class="{{line.type}} dropdown open line">
         <a ng-click="comment(line)" class="comment"><i class="glyphicon glyphicon-comment"></i></a>
         <textarea ng-show="commenting==line" class="comment" ng-model="line.comment" rows="1"></textarea>
@@ -7,4 +7,14 @@
             <li ng-repeat="suggestion in suggestions(line)"><a ng-click="line.text=suggestion;focus(line)">{{suggestion}}</a></li>
         </ul>
     </div>
+</div>
+<div class="script-print visible-print">
+	<header>
+		<p class="uppercase">{{script.title}}</p>
+		<p ng-show="print.authors">by</p>
+		<p>{{print.authors}}</p>
+		<address class="text-left">{{print.leftAddress}}</address>
+		<address class="text-right">{{print.rightAddress}}</address>
+	</header>
+	<p ng-repeat="line in script.lines" ng-class="line.type">{{line.text}}</p>
 </div>

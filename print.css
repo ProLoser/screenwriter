@@ -1,1 +1,53 @@
-@media print{textarea.line{font-size:14pt}a.comment{display:none}}
+/* http://2012.scriptfrenzy.org/howtoformatascreenplay */
+@media print {
+  body {
+    margin: 0;
+    font-size: 12pt; }
+
+  header {
+    page-break-after: always;
+    margin-top: 50%;
+    text-align: center;
+    white-space: pre; }
+
+  address {
+    position: absolute;
+    bottom: 0;
+    white-space: pre; }
+    address.text-left {
+      left: 0; }
+    address.text-right {
+      right: 0; }
+
+  p {
+    margin: 0 0 12pt; }
+
+  .character, .scene {
+    text-transform: uppercase; }
+
+  .dialogue, .parenthetical {
+    margin-top: -12pt; }
+
+  .character {
+    margin-left: 2.2in; }
+
+  .dialogue {
+    margin-left: 1in;
+    margin-right: 1.5in; }
+
+  .parenthetical {
+    margin-left: 1.6in;
+    margin-right: 1.9in; }
+    .parenthetical:before {
+      content: '('; }
+    .parenthetical:after {
+      content: ')'; } }
+@page {
+  size: auto;
+  /* auto is the initial value */
+  /* this affects the margin in the printer settings */
+  margin: 1in 1in 1in 1.5in;
+  @top-right {
+    content: counter(page); } }
+
+/*# sourceMappingURL=print.css.map */

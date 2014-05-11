@@ -5,6 +5,18 @@
 </form>
 
 <ul class="nav navbar-nav navbar-right dropdown hidden-sm hidden-xs">
+  <li class="dropdown" ng-class="{open:dropdowns.print}" ng-click="$event.stopPropagation()">
+    <a class="dropdown-toggle" ng-click="dropdowns.print=!dropdowns.print"><i class="glyphicon glyphicon-print"></i></a>
+    <div class="popover bottom" ng-style="{display:dropdowns.print&&'block'}">
+      <div class="arrow"></div>
+      <h3 class="popover-title text-center">Printer Details</h3>
+      <div class="popover-content">
+        <textarea placeholder="Author(s)" ng-model="print.authors"></textarea>
+        <textarea placeholder="Address (left side)" ng-model="print.leftAddress"></textarea>
+        <textarea placeholder="Address (right side)" ng-model="print.rightAddress"></textarea>
+      </div>
+    </div>
+  </li>
   <li class="dropdown" ng-class="{open:dropdowns.outline}">
     <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
     <ol class="dropdown-menu">
@@ -20,6 +32,18 @@
 <ul class="nav navbar-nav visible-sm visible-xs row">
   <li class="col-sm-1 col-xs-1"><a href="#/"><i class="visible-sm visible-xs glyphicon glyphicon-home"></i></a></li>
   <li class="col-sm-1 col-xs-1"><a ng-click="new()"><i class="glyphicon glyphicon-plus"></i></a></li>
+  <li class="dropdown col-sm-1 col-xs-1" ng-class="{open:dropdowns.print}" ng-click="$event.stopPropagation()">
+    <a class="dropdown-toggle" ng-click="dropdowns.print=!dropdowns.print"><i class="glyphicon glyphicon-print"></i></a>
+    <div class="popover bottom" ng-style="{display:dropdowns.print&&'block'}">
+      <div class="arrow"></div>
+      <h3 class="popover-title text-center">Printer Details</h3>
+      <div class="popover-content">
+        <textarea placeholder="Author(s)" ng-model="print.authors"></textarea>
+        <textarea placeholder="Address (left side)" ng-model="print.leftAddress"></textarea>
+        <textarea placeholder="Address (right side)" ng-model="print.rightAddress"></textarea>
+      </div>
+    </div>
+  </li>
   <li class="dropdown col-sm-1 col-xs-1" ng-class="{open:dropdowns.outline}">
     <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
     <ol class="dropdown-menu">
@@ -30,7 +54,7 @@
       </li>
     </ol>
   </li>
-  <li class="col-sm-9 col-xs-9">
+  <li class="col-sm-8 col-xs-8">
     <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
   </li>
 </ul>

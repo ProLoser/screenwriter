@@ -22,51 +22,16 @@ body {
   float: none !important;
   display: inline-block; }
 
-/** CUSTOM **/
-.script {
-  padding-bottom: 100px; }
-  .script a.comment {
-    position: absolute;
-    left: -17px;
-    margin-top: 4px; }
+.popover.bottom {
+  top: 100%;
+  margin-left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  transform: translate(-50%, 0); }
 
+/** CUSTOM **/
 .help .comment {
   display: inline-block !important; }
-
-.script a.comment {
-  display: none; }
-.script .line:hover a.comment {
-  display: block; }
-
-.commented a.comment {
-  display: block;
-  color: #dd0; }
-
-a.comment:hover {
-  color: blue; }
-
-textarea.comment {
-  position: absolute;
-  right: 0;
-  background: yellow;
-  z-index: 3;
-  min-height: 100%; }
-textarea.line {
-  border: none;
-  display: block;
-  width: 100%;
-  font-size: 14px;
-  font-family: Courier;
-  resize: none;
-  position: relative; }
-  textarea.line:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    outline: none;
-    z-index: 1; }
-  textarea.line:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    outline: none;
-    z-index: 1; }
 
 .uppercase {
   text-transform: uppercase; }
@@ -74,49 +39,83 @@ textarea.line {
 .dropdown-menu {
   overflow: auto; }
 
-.line {
-  margin: 20px 0; }
-  .line:before {
-    content: '';
+.popover textarea {
+  min-height: 4em; }
+
+.script {
+  padding-bottom: 100px; }
+  .script a.comment {
+    position: absolute;
+    left: -17px;
+    margin-top: 4px;
+    display: none; }
+  .script .line:hover a.comment {
+    display: block; }
+  .script .commented a.comment {
     display: block;
+    color: #dd0; }
+  .script a.comment:hover {
+    color: blue; }
+  .script textarea.comment {
     position: absolute;
-    left: -20px;
-    height: 20px;
-    width: 20px; }
-
-.scene {
-  text-transform: uppercase; }
-  .scene textarea.line {
+    right: 0;
+    background: yellow;
+    z-index: 3;
+    min-height: 100%; }
+  .script textarea.line {
+    border: none;
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    font-family: Courier;
+    resize: none;
+    position: relative; }
+    .script textarea.line:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      outline: none;
+      z-index: 1; }
+    .script textarea.line:focus {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      outline: none;
+      z-index: 1; }
+  .script .line {
+    margin: 20px 0; }
+    .script .line:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: -20px;
+      height: 20px;
+      width: 20px; }
+  .script .scene {
+    text-transform: uppercase; }
+    .script .scene textarea.line {
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.1); }
+  .script .character {
     text-transform: uppercase;
-    background: rgba(0, 0, 0, 0.1); }
-
-.character {
-  text-transform: uppercase;
-  margin-bottom: 0; }
-  .character textarea.line {
-    text-align: center;
-    text-transform: uppercase;
-    background: #D6EAFF; }
-
-.parenthetical {
-  margin: 0 30%; }
-  .parenthetical:before, .parenthetical:after {
-    position: absolute;
-    top: 0; }
-  .parenthetical:before {
-    content: '(';
-    left: -10px; }
-  .parenthetical:after {
-    content: ')';
-    right: -10px; }
-  .parenthetical textarea.line {
-    text-align: center;
-    margin: -15px 0; }
-
-.transition textarea.line {
-  text-align: right; }
-
-.dialogue {
-  margin: 0 80px 20px; }
+    margin-bottom: 0; }
+    .script .character textarea.line {
+      text-align: center;
+      text-transform: uppercase;
+      background: #D6EAFF; }
+  .script .parenthetical {
+    margin: 0 30%; }
+    .script .parenthetical:before, .script .parenthetical:after {
+      position: absolute;
+      top: 0; }
+    .script .parenthetical:before {
+      content: '(';
+      left: -10px; }
+    .script .parenthetical:after {
+      content: ')';
+      right: -10px; }
+    .script .parenthetical textarea.line {
+      text-align: center;
+      margin: -15px 0; }
+  .script .transition textarea.line {
+    text-align: right; }
+  .script .dialogue {
+    margin: 0 80px 20px; }
 
 /*# sourceMappingURL=styles.css.map */
