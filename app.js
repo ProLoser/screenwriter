@@ -195,18 +195,22 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     }
     
 });
-app.directive('textarea', function($timeout){
+app.directive('textarea', function($timeout, $window){
+    function resize($element) {
+        $element[0].style.height = 'auto';
+        $element[0].style.height = $element[0].scrollHeight + 'px';
+    }
+
+    $window = angular.element($window);
+
     return {
         restrict: 'E',
         link: function($scope, $element, $attrs) {
             setTimeout(function(){
-                $element[0].style.height = $element[0].scrollHeight + 'px';
+                resize($element);
             });
-            $element.on('input', function(){
-                $element[0].style.height = $element[0].scrollHeight + 'px';
-            });
-            $element.on('focus', function(){
-                $element[0].style.height = $element[0].scrollHeight + 'px';
+            $element.on('input focus', function(){
+                resize($element);
             });
             // Not firing for some reason???
             // $attrs.ngShow && $attrs.$observe('ngShow', function(newVal){
@@ -220,6 +224,12 @@ app.directive('textarea', function($timeout){
                 $scope.$on('focus', function(event, line){
                    if (line === $scope.line)
                         $element[0].focus(); 
+                });
+                var listener = $window.on('resize', _.throttle(function(){
+                    resize($element);
+                }, 500));
+                $scope.$on('$destroy', function(){
+                    $window.off(listener);
                 });
             }
             if ($element.hasClass('comment')) {
