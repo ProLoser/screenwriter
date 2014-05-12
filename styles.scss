@@ -156,7 +156,7 @@ body {
     }
     textarea.line {
       text-align: center;
-      margin: -15px 0;
+      margin-top: -15px;
     }
   }
 
@@ -166,5 +166,8 @@ body {
 
   .dialogue {
     margin: 0 80px 20px;
+    textarea.line {
+      margin-top: -15px;
+    }
   }
 }
