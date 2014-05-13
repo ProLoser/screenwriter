@@ -111,7 +111,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
             if (!line.text || !suggestion.text) continue;
             if (line.text.toUpperCase() === suggestion.text.toUpperCase()) continue;
             if (suggestion.type !== line.type) continue;
-            if (suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) != 0) continue;
+            if (!~suggestion.text.toUpperCase().indexOf(line.text.toUpperCase())) continue;
             if (suggestions.some(function(previous){return previous.toUpperCase() === suggestion.text.toUpperCase()})) continue;
             suggestions.push(suggestion.text);
         }
