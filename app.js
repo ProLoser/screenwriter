@@ -107,12 +107,12 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         // iterate in reverse so most recently used items show up first
         while (length--) {
             suggestion = $scope.script.lines[length];
-            if (line === suggestion) return;
-            if (!line.text || !suggestion.text) return;
-            if (line.text.toUpperCase() === suggestion.text.toUpperCase()) return;
-            if (suggestion.type !== line.type) return;
-            if (suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) != 0) return;
-            if (suggestions.some(function(previous){return previous.toUpperCase() === suggestion.text.toUpperCase()})) return;
+            if (line === suggestion) continue;
+            if (!line.text || !suggestion.text) continue;
+            if (line.text.toUpperCase() === suggestion.text.toUpperCase()) continue;
+            if (suggestion.type !== line.type) continue;
+            if (suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) != 0) continue;
+            if (suggestions.some(function(previous){return previous.toUpperCase() === suggestion.text.toUpperCase()})) continue;
             suggestions.push(suggestion.text);
         }
         return suggestions;
