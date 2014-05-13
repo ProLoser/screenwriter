@@ -112,12 +112,12 @@ body {
       right: -10px; }
     .script .parenthetical textarea.line {
       text-align: center;
-      margin-top: -15px; }
+      margin-top: -20px; }
   .script .transition textarea.line {
     text-align: right; }
   .script .dialogue {
     margin: 0 80px 20px; }
     .script .dialogue textarea.line {
-      margin-top: -15px; }
+      margin-top: -20px; }
 
 /*# sourceMappingURL=styles.css.map */

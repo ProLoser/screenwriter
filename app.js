@@ -102,8 +102,11 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     };
     $scope.suggestions = function(line) {
         if (line.type !== 'character' && line.type !== 'scene') return;
-        var suggestions = [];
-        $scope.script.lines.forEach(function(suggestion){
+        var suggestions = [], suggestion;
+        var length = $scope.script.lines;
+        // iterate in reverse so most recently used items show up first
+        while (length--) {
+            suggestion = $scope.script.lines[length];
             if (line === suggestion) return;
             if (!line.text || !suggestion.text) return;
             if (line.text.toUpperCase() === suggestion.text.toUpperCase()) return;
@@ -111,7 +114,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
             if (suggestion.text.toUpperCase().indexOf(line.text.toUpperCase()) != 0) return;
             if (suggestions.some(function(previous){return previous.toUpperCase() === suggestion.text.toUpperCase()})) return;
             suggestions.push(suggestion.text);
-        });
+        }
         return suggestions;
     };
     $scope.keydown = function($event, line){
