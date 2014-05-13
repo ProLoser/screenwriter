@@ -103,7 +103,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     $scope.suggestions = function(line) {
         if (line.type !== 'character' && line.type !== 'scene') return;
         var suggestions = [], suggestion;
-        var length = $scope.script.lines;
+        var length = $scope.script.lines.length;
         // iterate in reverse so most recently used items show up first
         while (length--) {
             suggestion = $scope.script.lines[length];
