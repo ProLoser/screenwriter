@@ -16,5 +16,5 @@
 		<address class="text-left">{{print.leftAddress}}</address>
 		<address class="text-right">{{print.rightAddress}}</address>
 	</header>
-	<p ng-repeat="line in script.lines" ng-class="line.type">{{line.text}}</p>
+	<p ng-repeat="line in script.lines" ng-class="{highlight:line.text.toUpperCase()==print.highlight.toUpperCase()}" class="{{line.type}}">{{line.text}}</p>
 </div>

@@ -35,6 +35,9 @@
     margin-left: 1in;
     margin-right: 1.5in; }
 
+  .highlight {
+    color: #FF4136 !important; }
+
   .parenthetical {
     margin-left: 1.6in;
     margin-right: 1.9in; }

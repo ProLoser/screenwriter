@@ -100,6 +100,17 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     $scope.clean = function(text) {
         return text.replace(/[^0-9a-zA-Z]/, '+');
     };
+    $scope.$root.characters = [];
+    $scope.$watchCollection('script.lines', function(lines){
+        var length = lines.length;
+        // iterate in reverse so most recently used items show up first
+        while (length--) {
+            line = lines[length];
+            if (line.type !== 'character') continue;
+            if ($scope.characters.some(function(previous){return previous.toUpperCase() === line.text.toUpperCase()})) continue;
+            $scope.characters.push(line.text.toUpperCase());
+        }
+    });
     $scope.suggestions = function(line) {
         if (line.type !== 'character' && line.type !== 'scene') return;
         var suggestions = [], suggestion;

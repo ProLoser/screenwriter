@@ -57,8 +57,10 @@ body {
   overflow: auto;
 }
 
-.popover textarea {
-  min-height: 4em;
+.popover {
+  textarea {
+    min-height: 4em;
+  }
 }
 
 .script {
