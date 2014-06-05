@@ -46,6 +46,11 @@
         <textarea placeholder="Author(s)" ng-model="print.authors"></textarea>
         <textarea placeholder="Address (left side)" ng-model="print.leftAddress"></textarea>
         <textarea placeholder="Address (right side)" ng-model="print.rightAddress"></textarea>
+        <p>Highlight Character:</p>
+        <select class="form-control" ng-model="print.highlight">
+          <option value="">-- none --</option>
+          <option ng-repeat="character in characters">{{character}}</option>
+        </select>
       </div>
     </div>
   </li>
