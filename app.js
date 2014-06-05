@@ -100,8 +100,8 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     $scope.clean = function(text) {
         return text.replace(/[^0-9a-zA-Z]/, '+');
     };
-    $scope.$root.characters = [];
     $scope.$watchCollection('script.lines', function(lines){
+        $scope.$root.characters = [];
         var length = lines.length;
         // iterate in reverse so most recently used items show up first
         while (length--) {
