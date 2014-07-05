@@ -102,6 +102,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     };
     $scope.$watchCollection('script.lines', function(lines){
         $scope.$root.characters = [];
+        if (!lines) return;
         var length = lines.length;
         // iterate in reverse so most recently used items show up first
         while (length--) {
