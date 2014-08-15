@@ -142,6 +142,15 @@ body {
     }
   }
 
+  .transition {
+    &:after {
+      position: absolute;
+      top: 0;
+      content: ':';
+      right: -10px;
+    }
+  }
+
   .parenthetical {
     margin: 0 30%;
     &:before, &:after {

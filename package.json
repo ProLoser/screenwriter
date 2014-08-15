@@ -1,0 +1,25 @@
+{
+  "name": "screenwriter",
+  "version": "0.0.0",
+  "description": "A simple copy of Final Draft that can be used online",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "gulp-sass": "^0.7.3",
+    "gulp-webserver": "^0.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ProLoser/screenwriter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProLoser/screenwriter/issues"
+  },
+  "homepage": "https://github.com/ProLoser/screenwriter"
+}

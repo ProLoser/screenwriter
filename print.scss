@@ -38,6 +38,12 @@
 		margin-left: 1in;
 		margin-right: 1.5in;
 	}
+	.transition {
+		text-align: right;
+		&:after {
+			content: ':';
+		}
+	}
 	.parenthetical {
 		margin-left: 1.6in;
 		margin-right: 1.9in;

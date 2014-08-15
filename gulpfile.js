@@ -1,10 +1,19 @@
 var gulp = require('gulp'),
-    less = require('gulp-sass'),
-    livereload = require('gulp-livereload'),
-    watch = require('gulp-watch');
+    sass = require('gulp-sass'),
+    webserver = require('gulp-webserver');
 
 gulp.task('default', function() {
-  gulp.src('*.js, *.css, *.html')
-    .pipe(watch())
-    .pipe(livereload());
+	gulp.src('.')
+		.pipe(webserver({
+			livereload: true,
+			open: true,
+			fallback: 'index.html'
+		}));
+	gulp.watch('*.scss', function(){
+		gulp.src('*.scss')
+			.pipe(sass({
+				sourceComments: 'map'
+			}))
+			.pipe(gulp.dest('.'));
+	});
 });
