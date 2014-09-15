@@ -88,7 +88,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         switch ($event.keyCode) {
             case 13: // enter
                 $event.preventDefault();
-                if ($event.shiftKey) {
+                if ($event.ctrlKey) {
                     var suggestions = $scope.suggestions(line);
                     if (suggestions[0])
                         line.text = suggestions[0];
