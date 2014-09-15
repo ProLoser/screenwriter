@@ -88,7 +88,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         switch ($event.keyCode) {
             case 13: // enter
                 $event.preventDefault();
-                if ($event.ctrlKey) {
+                if ($event.shiftKey) {
                     var suggestions = $scope.suggestions(line);
                     if (suggestions[0])
                         line.text = suggestions[0];
@@ -158,7 +158,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
                 $event.preventDefault();
                 break;
             case 8: // backspace
-                if ((!line.text || $event.shiftKey) && $scope.script.lines.length > 1) {
+                if ((!line.text || $event.ctrlKey) && $scope.script.lines.length > 1) {
                     $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
                     $scope.script.lines.splice($scope.script.lines.indexOf(line), 1);
                     $event.preventDefault();
