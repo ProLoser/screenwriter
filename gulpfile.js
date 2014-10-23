@@ -9,11 +9,12 @@ gulp.task('default', function() {
 			open: true,
 			fallback: 'index.html'
 		}));
-	gulp.watch('*.scss', function(){
-		gulp.src('*.scss')
-			.pipe(sass({
-				sourceComments: 'map'
-			}))
-			.pipe(gulp.dest('.'));
-	});
+	gulp.watch('*.scss', ['sass']);
+});
+gulp.task('sass', function() {
+	gulp.src('*.scss')
+		.pipe(sass({
+			sourceComments: 'map'
+		}))
+		.pipe(gulp.dest('.'));
 });

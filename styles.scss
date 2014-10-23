@@ -145,7 +145,6 @@ body {
   .transition {
     &:after {
       position: absolute;
-      text-transform: uppercase;
       top: 0;
       content: ':';
       right: -10px;
@@ -174,6 +173,7 @@ body {
 
   .transition textarea.line {
     text-align: right;
+    text-transform: uppercase;
   }
 
   .dialogue {
