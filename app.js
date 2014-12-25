@@ -1,4 +1,4 @@
-app = angular.module('scrnplay', ['ui.router', 'firebase', 'ngStorage']);
+app = angular.module('scrnplay', ['ui.router', 'firebase', 'ngStorage', 'contenteditable', 'MassAutoComplete']);
 app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
@@ -211,51 +211,28 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     }
     
 });
-app.directive('textarea', function($timeout, $window){
-    function resize($element) {
-        $element[0].style.height = 'auto';
-        $element[0].style.height = $element[0].scrollHeight + 'px';
-    }
-
-    $window = angular.element($window);
-
+app.directive('contenteditable', function($timeout){
     return {
-        restrict: 'E',
+        restrict: 'A',
         link: function($scope, $element, $attrs) {
-            setTimeout(function(){
-                resize($element);
+            $scope.$on('focus', function(event, line){
+               if (line === $scope.line)
+                    $element[0].focus(); 
             });
-            $element.on('input focus', function(){
-                resize($element);
+        }
+    };
+});
+
+app.directive('commentBox', function($timeout){
+    return {
+        restrict: 'C',
+        link: function($scope, $element, $attrs) {
+            $scope.$on('comment', function(event, line){
+               if (line === $scope.line)
+                    $timeout(function(){
+                        $element[0].focus();
+                    });
             });
-            // Not firing for some reason???
-            // $attrs.ngShow && $attrs.$observe('ngShow', function(newVal){
-            //     if (newVal) {
-            //         setTimeout(function(){
-            //             $element[0].style.height = $element[0].scrollHeight + 'px';
-            //         }, 100);
-            //     }
-            // });
-            if ($element.hasClass('line')) {
-                $scope.$on('focus', function(event, line){
-                   if (line === $scope.line)
-                        $element[0].focus(); 
-                });
-                var listener = $window.on('resize', _.throttle(function(){
-                    resize($element);
-                }, 500));
-                $scope.$on('$destroy', function(){
-                    $window.off(listener);
-                });
-            }
-            if ($element.hasClass('comment')) {
-                $scope.$on('comment', function(event, line){
-                   if (line === $scope.line)
-                        $timeout(function(){
-                            $element[0].focus();
-                        });
-                });
-            }
         }
     };
 });

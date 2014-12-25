@@ -1,185 +1,184 @@
 /** GLOBAL **/
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 a {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 body, html {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 
 }
 
 body {
-  margin-top: 100px;
-  font-size: 14px;
-  font-family: Courier;
+	margin-top: 100px;
+	font-size: 14px;
+	font-family: Courier;
 }
 
 /** BOOTSTRAP **/
 
 .navbar {
-  text-align: center;
+	text-align: center;
 }
 
 .navbar-center {
-  float: none !important;
-  display: inline-block;
+	float: none !important;
+	display: inline-block;
 }
 
 .popover {
-  &.bottom {
-    top: 100%;
-    margin-left: 50%;
-    -webkit-transform: translate(-50%, 0);
+	&.bottom {
+		top: 100%;
+		margin-left: 50%;
+		-webkit-transform: translate(-50%, 0);
         -ms-transform: translate(-50%, 0); // IE9 only
-            transform: translate(-50%, 0);
-  }
+        transform: translate(-50%, 0);
+    }
 }
 
-/** CUSTOM **/
-
 .help {
-  .comment {
-    display: inline-block !important;
-  }
+	.comment {
+		display: inline-block !important;
+	}
 }
 
 .uppercase {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .dropdown-menu {
-  overflow: auto;
+	overflow: auto;
 }
 
 .popover {
-  textarea {
-    min-height: 4em;
-  }
+	textarea {
+		min-height: 4em;
+	}
 }
 
+
+/** SCRIPT **/
+
 .script {
-  padding-bottom: 100px;
-  a.comment {
-    position: absolute;
-    left: -17px;
-    margin-top: 4px;
-    display: none;
-  }
-  .line:hover a.comment {
-    display: block;
-  }
-  .commented a.comment {
-    display: block;
-    color: #dd0;
-  }
+	list-style: none;
+	padding-left: 0;
+	padding-bottom: 100px;
+	> li {
+		margin: 20px 0 20px -20px;
+		padding: 0 0 0 20px;
+		display: block;
+		position: relative;
 
-  a.comment:hover {
-    color: blue;
-  }
+		&:hover .comment-add {
+			display: block;
+		}
+	}
 
-  textarea {
-    &.comment {
-      position: absolute;
-      right: 0;
-      background: yellow;
-      z-index: 3;
-      min-height: 100%;
-    }
-    &.line {
-      border: none;
-      display: block;
-      width: 100%;
-      font-size: 14px;
-      font-family: Courier;
-      resize: none;
-      position: relative;
-      &:hover {
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        outline: none;
-        z-index: 1;
-      }
-      &:focus {
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        outline: none;
-        z-index: 1;
-      }
-    }
-  }
+	.comment-add {
+		position: absolute;
+		left: 0;
+		margin-top: 4px;
+		display: none;
+		content: '';
+		position: absolute;
+		height: 20px;
+		width: 20px;
+		&:hover {
+			color: blue;
+		}
+	}
+	.commented .comment-add {
+		display: block;
+		color: #dd0;
+	}
 
-  .line {
-    margin: 20px 0;
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      left: -20px;
-      height: 20px;
-      width: 20px;
-    }
-  }
+	.comment-box {
+		position: absolute;
+		right: 0;
+		background: yellow;
+		z-index: 3;
+		min-width: 100px;
+		max-width: 300px;
+		min-height: 40px;
+		box-shadow: 0 0 5px rgba(0,0,0,.5);
+		&:before {
+			content: '';
+			display: block;
+			float: right;
+			height: 0;
+			width: 0;
+			border-style: solid;
+			border-width: 0 20px 20px 0;
+			border-color: transparent rgb(255, 255, 150) transparent transparent;
+		}
+	}
 
-  .scene {
-    text-transform: uppercase;
-    textarea.line {
-      text-transform: uppercase;
-      background: rgba(0, 0, 0, 0.1);
-    }
-  }
 
-  .character {
-    text-transform: uppercase;
-    margin-bottom: 0;
-    textarea.line {
-      text-align: center;
-      text-transform: uppercase;
-      background: #EDF6FF;
-    }
-  }
+	/** LINES **/
 
-  .transition {
-    &:after {
-      position: absolute;
-      top: 0;
-      content: ':';
-      right: -10px;
-    }
-  }
+	.line-text {
+		font-size: 14px;
+		font-family: Courier;
+		background: white;
+		&:hover {
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+		}
+		&:focus {
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			z-index: 5;
+		}
 
-  .parenthetical {
-    margin: 0 30%;
-    &:before, &:after {
-      position: absolute;
-      top: 0;
-    }
-    &:before {
-      content: '(';
-      left: -10px;
-    }
-    &:after {
-      content: ')';
-      right: -10px;
-    }
-    textarea.line {
-      text-align: center;
-      margin-top: -20px;
-    }
-  }
+	}
 
-  .transition textarea.line {
-    text-align: right;
-    text-transform: uppercase;
-  }
+	.scene {
+		text-transform: uppercase;
+		.line-text {
+			text-transform: uppercase;
+			background: rgba(0, 0, 0, 0.1);
+		}
+	}
 
-  .dialogue {
-    margin: 0 80px 20px;
-    textarea.line {
-      margin-top: -20px;
-    }
-  }
+	.character {
+		text-transform: uppercase;
+		margin-bottom: 0;
+		.line-text {
+			text-align: center;
+			text-transform: uppercase;
+			background: #EDF6FF;
+		}
+	}
+
+	.transition {
+		.line-text {
+			text-align: right;
+			text-transform: uppercase;
+			width: auto;
+			&:after {
+				content: ':';
+			}
+		}
+	}
+
+	.parenthetical {
+		margin: 0 30%;
+		.line-text {
+			text-align: center;
+			&:before {
+				content: '(';
+			}
+			&:after {
+				content: ')';
+			}
+		}
+	}
+
+	.dialogue {
+		margin: 0 80px 20px;
+	}
 }

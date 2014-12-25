@@ -1,0 +1,24 @@
+{
+  "name": "angular-contenteditable",
+  "version": "0.3.7",
+  "main": "angular-contenteditable.js",
+  "ignore": [
+    ".*",
+    "README.md",
+    "Gruntfile.coffee",
+    "package.json",
+    "components",
+    "node_modules",
+    "src",
+    "test"
+  ],
+  "devDependencies": {
+    "angular": "*",
+    "angular-mocks": "~1.0.5",
+    "angular-scenario": "~1.0.5",
+    "expect": "~0.2.0",
+    "jquery": "~2.0.2",
+    "bootstrap-css": "~2.3.2",
+    "angular-bootstrap": "~0.4.0"
+  }
+}
