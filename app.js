@@ -223,7 +223,7 @@ app.directive('contenteditable', function($timeout){
             // Strip formatting on paste
             $element.on('paste', function (e) {
                 var tempDiv = document.createElement("DIV");
-                Array.prototype.forEach.call(e.originalEvent.clipboardData.items, function (item) {
+                Array.prototype.forEach.call(e.clipboardData.items, function (item) {
                     item.getAsString(function (value) {
                         tempDiv.innerHTML = value;
                         document.execCommand('inserttext', false, tempDiv.innerText);
