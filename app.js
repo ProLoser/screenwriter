@@ -215,9 +215,21 @@ app.directive('contenteditable', function($timeout){
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
+            // Focus element on scope event
             $scope.$on('focus', function(event, line){
                if (line === $scope.line)
                     $element[0].focus(); 
+            });
+            // Strip formatting on paste
+            $element.on('paste', function (e) {
+                var tempDiv = document.createElement("DIV");
+                Array.prototype.forEach.call(e.originalEvent.clipboardData.items, function (item) {
+                    item.getAsString(function (value) {
+                        tempDiv.innerHTML = value;
+                        document.execCommand('inserttext', false, tempDiv.innerText);
+                    })
+                })
+                e.preventDefault();
             });
         }
     };
