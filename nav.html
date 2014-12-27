@@ -72,8 +72,12 @@
 
 <ul class="nav navbar-nav navbar-center dropdown" ng-show="editing">
   <li class="dropdown" ng-class="{open:dropdowns.dropdown}">
-    <a class="dropdown-toggle" ng-click="dropdowns.dropdown=!dropdowns.dropdown;$event.stopPropagation()">Current Line: <span class="uppercase">{{editing.type}}</span> <b class="caret"></b></a>
-    <ul class="dropdown-menu dropdown-menu-right">
+    <a class="dropdown-toggle" ng-click="dropdowns.dropdown=!dropdowns.dropdown;$event.stopPropagation()">
+      <i class="glyphicon glyphicon-align-center"></i> 
+      <span class="uppercase">{{editing.type}}</span> 
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right uppercase">
       <li ng-repeat="type in types" ng-class="{active:editing.type==type}"><a ng-click="editing.type=type">{{type}}</a></li>
     </ul>
   </li>
