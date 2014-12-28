@@ -106,10 +106,7 @@ body {
 	/** COMMENTS **/
 
 		&:hover .comment-add {
-			opacity: .5;
-		}
-		.line-text:focus ~ .comment-add  {
-			opacity: .3;
+			opacity: .7;
 		}
 	}
 
@@ -124,21 +121,28 @@ body {
 		display: block;
 		opacity: 0;
 		z-index: 8;
+		color: yellow;
 		content: '';
 		position: absolute;
 		width: 40px;
 		height: 40px;
-		margin: -7px -10px;
+		margin: -10px -10px;
 		padding: 10px;
+		font-size: 120%;
 		text-shadow: 0 1px 1px rgba(0,0,0,1);
 		&:hover {
-			color: blue;
 			opacity: 1 !important;
 		}
 	}
+	.line-text:focus ~ .comment-add  {
+		opacity: .3;
+	}
+	.comment-box:focus ~ .comment-add {
+		opacity: 1;
+	}
 	.commented .comment-add {
-		display: block;
-		color: #dd0;
+		opacity: .5;
+		color: orange;
 	}
 
 	.comment-box {
