@@ -1,80 +1,73 @@
-<form class="navbar-form navbar-right hidden-sm hidden-xs hidden-xs">
-  <div class="form-group">
-    <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
-  </div>
-</form>
+<ul class="nav navbar-nav btn-block row">
+  <li class="col-md-4 col-sm-3 col-xs-6 dropdown"
+    ng-class="{open:dropdowns=='outline'||dropdowns=='print'}">
 
-<ul class="nav navbar-nav navbar-right dropdown hidden-sm hidden-xs">
-  <li class="dropdown" ng-class="{open:dropdowns.print}" ng-click="$event.stopPropagation()">
-    <a class="dropdown-toggle" ng-click="dropdowns.print=!dropdowns.print"><i class="glyphicon glyphicon-print"></i></a>
-    <div class="popover bottom" ng-style="{display:dropdowns.print&&'block'}">
+    <!-- BRAND -->
+    <a class="navbar-brand hidden-sm hidden-xs" href="#/">Screenwriter</a>
+    <a class="navbar-brand visible-sm visible-xs" href="#/"><i class="glyphicon glyphicon-home"></i></a>
+
+    <!-- NEW -->
+    <a class="pull-left" ng-click="new()" title="New Script"><i class="glyphicon glyphicon-plus"></i></a>
+
+    <!-- PRINTER -->
+    <a class="pull-left dropdown-toggle" ng-click="$root.dropdowns='print';$event.stopPropagation();"><i class="glyphicon glyphicon-print"></i></a>
+
+    <!-- OUTLINE
+    <a class="pull-left dropdown-toggle hidden-xs" ng-click="$root.dropdowns='outline';$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
+    -->
+
+    <!-- PRINTER DROPDOWN -->
+    <div class="popover bottom" ng-style="{display:dropdowns=='print'&&'block'}" ng-click="$event.stopPropagation()">
       <div class="arrow"></div>
-      <h3 class="popover-title text-center">Printer Details</h3>
+      <h3 class="popover-title btn btn-block" ng-click="print()">Print</h3>
       <div class="popover-content">
-        <textarea placeholder="Author(s)" ng-model="print.authors"></textarea>
-        <textarea placeholder="Address (left side)" ng-model="print.leftAddress"></textarea>
-        <textarea placeholder="Address (right side)" ng-model="print.rightAddress"></textarea>
+        <textarea placeholder="Author(s)" ng-model="printer.authors"></textarea>
+        <textarea placeholder="Address (left side)" ng-model="printer.leftAddress"></textarea>
+        <textarea placeholder="Address (right side)" ng-model="printer.rightAddress"></textarea>
         <p>Highlight Character:</p>
-        <select class="form-control" ng-model="print.highlight">
+        <select class="form-control" ng-model="printer.highlight">
           <option value="">-- none --</option>
           <option ng-repeat="character in characters">{{character}}</option>
         </select>
       </div>
     </div>
-  </li>
-  <li class="dropdown" ng-class="{open:dropdowns.outline}">
-    <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
-    <ol class="dropdown-menu">
+
+    <!-- OUTLINE DROPDOWN
+    <ol class="dropdown-menu uppercase hidden-xs" ng-show="dropdowns=='outline'">
       <li class="dropdown-header">Outline</li>
       <li class="divider"></li>  
       <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
           <a ng-click="focus(scene)">{{scene.text}}</a>
       </li>
     </ol>
+    -->
   </li>
-</ul>
 
-<ul class="nav navbar-nav visible-sm visible-xs row">
-  <li class="col-sm-1 col-xs-1"><a href="#/"><i class="visible-sm visible-xs glyphicon glyphicon-home"></i></a></li>
-  <li class="col-sm-1 col-xs-1"><a ng-click="new()"><i class="glyphicon glyphicon-plus"></i></a></li>
-  <li class="dropdown col-sm-1 col-xs-1" ng-class="{open:dropdowns.print}" ng-click="$event.stopPropagation()">
-    <a class="dropdown-toggle" ng-click="dropdowns.print=!dropdowns.print"><i class="glyphicon glyphicon-print"></i></a>
-    <div class="popover bottom" ng-style="{display:dropdowns.print&&'block'}">
-      <div class="arrow"></div>
-      <h3 class="popover-title text-center">Printer Details</h3>
-      <div class="popover-content">
-        <textarea placeholder="Author(s)" ng-model="print.authors"></textarea>
-        <textarea placeholder="Address (left side)" ng-model="print.leftAddress"></textarea>
-        <textarea placeholder="Address (right side)" ng-model="print.rightAddress"></textarea>
-        <p>Highlight Character:</p>
-        <select class="form-control" ng-model="print.highlight">
-          <option value="">-- none --</option>
-          <option ng-repeat="character in characters">{{character}}</option>
-        </select>
-      </div>
-    </div>
+  <!-- SCRIPT TITLE -->
+  <li class="col-sm-5 col-xs-6 navbar-btn">
+    <input type="text" class="form-control text-center" ng-model="script.title" placeholder="Script Title">
   </li>
-  <li class="dropdown col-sm-1 col-xs-1" ng-class="{open:dropdowns.outline}">
-    <a class="dropdown-toggle" ng-click="dropdowns.outline=!dropdowns.outline;$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
-    <ol class="dropdown-menu">
-      <li class="dropdown-header">Outline</li>
-      <li class="divider"></li>  
+
+  <!-- OUTLINE 
+  <li class="dropdown visible-xs col-xs-5" ng-class="{open:dropdowns=='outline'}">
+    <a class="pull-left dropdown-toggle" ng-click="$root.dropdowns='outline';$event.stopPropagation()">
+      <i class="glyphicon glyphicon-bookmark"></i>
+      Outline
+    </a>
+    <ol class="dropdown-menu uppercase" ng-show="dropdowns=='outline'">
       <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
           <a ng-click="focus(scene)">{{scene.text}}</a>
       </li>
     </ol>
   </li>
-  <li class="col-sm-8 col-xs-8">
-    <input type="text" class="form-control" ng-model="script.title" placeholder="Script Title">
-  </li>
-</ul>
+  -->
 
-
-<ul class="nav navbar-nav navbar-center dropdown" ng-show="editing">
-  <li class="dropdown" ng-class="{open:dropdowns.dropdown}">
-    <a class="dropdown-toggle" ng-click="dropdowns.dropdown=!dropdowns.dropdown;$event.stopPropagation()">
+  <!-- LINE TYPE DROPDOWN -->
+  <li class="col-md-3 col-sm-4 col-xs-12 dropdown" ng-class="{open:dropdowns=='line'}">
+    <a class="dropdown-toggle text-right"
+      ng-click="$root.dropdowns='line';$event.stopPropagation()">
       <i class="glyphicon glyphicon-align-center"></i> 
-      <span class="uppercase">{{editing.type}}</span> 
+      <span class="uppercase">{{editing.type || 'Line Type'}}</span> 
       <b class="caret"></b>
     </a>
     <ul class="dropdown-menu dropdown-menu-right uppercase">

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- <html ng-app="scrnplay" manifest="cache.manifest"> -->
-<html ng-app="scrnplay">
+<html ng-app="scrnplay" ng-click="$root.dropdowns=''">
 <head>
   <title>Screenwriter</title>
 
@@ -19,21 +19,10 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="print.css">
 </head>
-<body ng-click="dropdowns={}">
+<body>
 
   <div class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
-    <div class="container">
-      <div class="navbar-header hidden-sm hidden-xs">
-        <a class="navbar-brand" href="#/">Screenwriter</a>
-      </div>
-      <ul class="nav navbar-nav hidden-sm hidden-xs">
-        <li>
-          <a ng-click="new()"><i class="glyphicon glyphicon-plus"></i></a>
-        </li>
-      </ul>
-
-      <ui-view name="nav"></ui-view>
-    </div>
+    <div class="container" ui-view="nav"></div>
   </div>
 
             
@@ -44,8 +33,8 @@
       <h1>Welcome to Screenwriter</h1>
       <h2>Get Started!</h2>
       <p>
-        <a class="btn btn-default" href="#/demo">Demo Script</a> 
         <a class="btn btn-default" ng-click="new()"><i class="glyphicon glyphicon-plus"></i> New Script</a>
+        <a class="btn btn-default" href="#/demo">Demo Script</a> 
       </p>
 
       <h3>Collaborate:</h3>

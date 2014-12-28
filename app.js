@@ -31,7 +31,7 @@ app.config(function($stateProvider, $urlRouterProvider){
         }
     });
 });
-app.run(function($rootScope, $state, types, $timeout){
+app.run(function($rootScope, $state, types, $timeout, $window){
     $rootScope.edit = function(line){
         $rootScope.editing = line;
     };
@@ -41,8 +41,12 @@ app.run(function($rootScope, $state, types, $timeout){
         });
     };
 
-    $rootScope.dropdowns = {};
-    $rootScope.print = {};
+    $rootScope.dropdowns = '';
+    $rootScope.printer = {};
+
+    $rootScope.print = function(){
+        $window.print();
+    };
 
     function S4() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -216,12 +220,12 @@ app.directive('contenteditable', function($timeout){
         restrict: 'A',
         link: function($scope, $element, $attrs) {
             // Focus element on scope event
-            $scope.$on('focus', function(event, line){
+            var focusBinding = $scope.$on('focus', function(event, line){
                if (line === $scope.line)
                     $element[0].focus(); 
             });
             // Strip formatting on paste
-            $element.on('paste', function (e) {
+            var pasteBinding = $element.on('paste', function (e) {
                 var tempDiv = document.createElement("DIV");
                 Array.prototype.forEach.call(e.clipboardData.items, function (item) {
                     item.getAsString(function (value) {
@@ -230,6 +234,10 @@ app.directive('contenteditable', function($timeout){
                     })
                 })
                 e.preventDefault();
+            });
+            $scope.$on('$destroy', function(){
+                focusBinding();
+                pasteBinding();
             });
         }
     };

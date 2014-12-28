@@ -1,5 +1,5 @@
 <div mass-autocomplete>
-	<ul class="script hidden-print" ng-click="$event.stopPropagation()">
+	<ul class="script hidden-print">
 		<li ng-repeat="line in script.lines track by $index"
 			ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}"
 			class="{{line.type}}">
@@ -14,10 +14,10 @@
 <div class="script-print visible-print">
 	<header>
 		<p class="uppercase">{{script.title}}</p>
-		<p ng-show="print.authors">by</p>
-		<p>{{print.authors}}</p>
-		<address class="text-left">{{print.leftAddress}}</address>
-		<address class="text-right">{{print.rightAddress}}</address>
+		<p ng-show="printer.authors">by</p>
+		<p>{{printer.authors}}</p>
+		<address class="text-left">{{printer.leftAddress}}</address>
+		<address class="text-right">{{printer.rightAddress}}</address>
 	</header>
-	<p ng-repeat="line in script.lines" ng-class="{highlight:line.text.toUpperCase()==print.highlight.toUpperCase()}" class="{{line.type}}">{{line.text}}</p>
+	<p ng-repeat="line in script.lines" ng-class="{highlight:line.text.toUpperCase()==printer.highlight.toUpperCase()}" class="{{line.type}}">{{line.text}}</p>
 </div>
