@@ -147,6 +147,7 @@ body {
 		font-size: 14px;
 		font-family: Courier;
 		background: white;
+		position: relative;
 		&:hover {
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 			z-index: 1;
@@ -154,8 +155,8 @@ body {
 		&:focus {
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 			z-index: 5;
+			outline: none;
 		}
-
 	}
 
 	.scene {
