@@ -88,6 +88,11 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
             $scope.$broadcast('comment', line);
         }
     };
+    $scope.closeComment = function() {
+        if (!$scope.commenting.comment) {
+            $scope.commenting = null;
+        }
+    };
     $scope.keypress = function($event, line){
         switch ($event.keyCode) {
             case 13: // enter

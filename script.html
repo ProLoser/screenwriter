@@ -1,12 +1,12 @@
-<div mass-autocomplete>
+<div ng-click="closeComment()">
 	<ul class="script hidden-print">
 		<li ng-repeat="line in script.lines track by $index"
 			ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}"
 			class="{{line.type}}">
-			<a ng-click="comment(line)" class="comment-add">
+			<a ng-click="comment(line);$event.stopPropagation()" class="comment-add">
 				<i class="glyphicon glyphicon-comment"></i>
 			</a>
-			<div contenteditable ng-show="commenting==line" class="comment-box" ng-model="line.comment" rows="1"></div>
+			<div contenteditable ng-click="$event.stopPropagation()" ng-show="commenting==line" class="comment-box" ng-model="line.comment" rows="1"></div>
 			<div contenteditable ng-model="line.text" autogrow rows="1" ng-keydown="keydown($event, line)" ng-keypress="keypress($event, line)" ng-focus="edit(line)" class="line-text"></div>
 		</li>
 	</ul>
