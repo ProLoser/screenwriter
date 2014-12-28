@@ -103,15 +103,27 @@ body {
 		display: block;
 		position: relative;
 
+	/** COMMENTS **/
+
 		&:hover .comment-add {
-			display: block;
+			opacity: .5;
+		}
+		.line-text:focus ~ .comment-add  {
+			opacity: .3;
 		}
 	}
 
+
 	.comment-add {
+		-webkit-transition: all ease 0.2s;
+		-moz-transition: all ease 0.2s;
+		transition: all ease 0.2s;
 		position: absolute;
 		left: 0;
-		display: none;
+		top: 0;
+		display: block;
+		opacity: 0;
+		z-index: 8;
 		content: '';
 		position: absolute;
 		width: 40px;
@@ -120,6 +132,7 @@ body {
 		padding: 10px;
 		&:hover {
 			color: blue;
+			opacity: 1 !important;
 		}
 	}
 	.commented .comment-add {
