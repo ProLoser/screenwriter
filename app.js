@@ -3,14 +3,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
         url: '/',
-        views: {
-            'nav': {
-                templateUrl: 'home-nav.html'
-            },
-            '': {
-                templateUrl: 'home'
-            }
-        }
+        templateUrl: 'home'
     });
     $stateProvider.state('script', {
         url: '/{scriptId:.+}',
@@ -72,7 +65,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         if (!$scope.script)
             $scope.script = {};
         if (!$scope.script.lines)
-            $scope.script.lines = [{type:'scene'}];
+            $scope.script.lines = [{type:'scene' }];
         $localStorage[$stateParams.scriptId] = $scope.script;
         return unbind;
     });
@@ -244,7 +237,6 @@ app.directive('contenteditable', function($timeout){
             });
             $scope.$on('$destroy', function(){
                 focusBinding();
-                pasteBinding();
             });
         }
     };
@@ -261,6 +253,13 @@ app.directive('commentBox', function($timeout){
                     });
             });
         }
+    };
+});
+
+app.directive('ngAutofocus', function(){
+    return function($scope, $element, $attrs) {
+        if ($scope.$eval($attrs.ngAutofocus))
+            $element[0].focus();
     };
 });
 app.filter('unique', function(){

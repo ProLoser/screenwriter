@@ -21,21 +21,23 @@
 </head>
 <body>
 
-  <div class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
-    <div class="container" ui-view="nav"></div>
-  </div>
+  <ui-view name="nav"></ui-view>
 
-            
-          
   <div class="container" ui-view>
     <script type="text/ng-template" id="home">
 
-      <h1>Welcome to Screenwriter</h1>
-      <h2>Get Started!</h2>
-      <p>
-        <a class="btn btn-default" ng-click="new()"><i class="glyphicon glyphicon-plus"></i> New Script</a>
-        <a class="btn btn-default" href="#/demo">Demo Script</a> 
-      </p>
+      <div class="text-center">
+
+        <h1>Screenwriter</h1>
+        <p>
+          <a class="btn btn-primary" ng-click="new()"><i class="glyphicon glyphicon-plus"></i> New Script</a>
+          <a class="btn btn-primary" href="#/demo">Demo Script</a> 
+        </p>
+
+        <p>
+          <a class="btn btn-default" href="https://github.com/ProLoser/screenwriter"><img src="github-icons/GitHub-Mark-32px.png" alt="Github" /> Source Code</a>
+        </p>
+      </div>
 
       <h3>Collaborate:</h3>
       <p>Share your custom URL with friends to collaborate!</p>
@@ -51,12 +53,9 @@
       </p>
 
       <h3>Comments:</h3>
-      <p class="help">Hover the mouse over a line and click on the blue comment button (<a class="comment"><i class="glyphicon glyphicon-comment"></i></a>) to toggle comments.<br>
-      Lines that have comments will show a yellow comment button (<span class="commented"><a class="comment"><i class="glyphicon glyphicon-comment"></i></a></span>).</p>
+      <p class="help">Hover over a line and click comment button <a class="comment"><i class="glyphicon glyphicon-comment"></i></a><br>
+      Lines with comments will show a yellow button <span class="commented"><a class="comment"><i class="glyphicon glyphicon-comment" style="color:#dd0"></i></a></span></p>
 
-      <h2>Bugs? Features? Contribute?</h2>
-      <p>This is an open-source project. Meaning <strong>ANYONE</strong> can add features to this software!</p>
-      <p>Check out the <a href="https://github.com/ProLoser/screenwriter">source code on Github</a> or <a href="https://github.com/ProLoser/screenwriter/issues">Report a Bug and Ask for a Feature</a></p>
     </script>
   </div>
 
