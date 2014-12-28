@@ -86,12 +86,13 @@ body {
 	.comment-add {
 		position: absolute;
 		left: 0;
-		margin-top: 4px;
 		display: none;
 		content: '';
 		position: absolute;
-		height: 20px;
-		width: 20px;
+		width: 40px;
+		height: 40px;
+		margin: -7px -10px;
+		padding: 10px;
 		&:hover {
 			color: blue;
 		}
@@ -109,6 +110,7 @@ body {
 		min-width: 100px;
 		max-width: 300px;
 		min-height: 40px;
+		padding: 4px;
 		box-shadow: 0 0 5px rgba(0,0,0,.5);
 		&:before {
 			content: '';
@@ -184,5 +186,20 @@ body {
 
 	.dialogue {
 		margin: 0 80px 20px;
+	}
+}
+
+@media(max-width:767px) {
+	.script {
+		> li {
+			margin: 20px 0 20px -15px;
+			padding: 0 0 0 15px;
+		}
+		.parenthetical {
+			margin: 0 13%;
+		}
+		.dialogue {
+			margin: 0 10%;
+		}
 	}
 }
