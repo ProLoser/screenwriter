@@ -10,10 +10,10 @@
     <a class="pull-left" ng-click="new()" title="New Script"><i class="glyphicon glyphicon-plus"></i></a>
 
     <!-- PRINTER -->
-    <a class="pull-left dropdown-toggle hidden-xs" ng-click="$root.dropdowns='print';$event.stopPropagation();"><i class="glyphicon glyphicon-print"></i></a>
+    <a class="pull-left dropdown-toggle hidden-xs" ng-click="toggle('print');$event.stopPropagation();"><i class="glyphicon glyphicon-print"></i></a>
 
     <!-- OUTLINE
-    <a class="pull-left dropdown-toggle hidden-xs" ng-click="$root.dropdowns='outline';$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
+    <a class="pull-left dropdown-toggle hidden-xs" ng-click="toggle('outline');$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
     -->
 
     <!-- PRINTER DROPDOWN -->
@@ -50,7 +50,7 @@
 
   <!-- OUTLINE 
   <li class="dropdown visible-xs col-xs-5" ng-class="{open:dropdowns=='outline'}">
-    <a class="pull-left dropdown-toggle" ng-click="$root.dropdowns='outline';$event.stopPropagation()">
+    <a class="pull-left dropdown-toggle" ng-click="toggle('outline');$event.stopPropagation()">
       <i class="glyphicon glyphicon-bookmark"></i>
       Outline
     </a>
@@ -65,7 +65,7 @@
   <!-- LINE TYPE DROPDOWN -->
   <li class="col-md-3 col-sm-4 col-xs-12 dropdown" ng-class="{open:dropdowns=='line'}">
     <a class="dropdown-toggle text-right"
-      ng-click="$root.dropdowns='line';$event.stopPropagation()">
+      ng-click="toggle('line');$event.stopPropagation()">
       <i class="glyphicon glyphicon-align-center"></i> 
       <span class="uppercase">{{editing.type || 'Line Type'}}</span> 
       <b class="caret"></b>
