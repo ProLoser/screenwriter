@@ -89,7 +89,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         }
     };
     $scope.closeComment = function() {
-        if (!$scope.commenting.comment) {
+        if (!$scope.commenting = !$scope.commenting.comment) {
             $scope.commenting = null;
         }
     };
