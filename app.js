@@ -231,13 +231,12 @@ app.directive('contenteditable', function($timeout){
             });
             // Strip formatting on paste
             var pasteBinding = $element.on('paste', function (e) {
-                var tempDiv = document.createElement("DIV");
-                Array.prototype.forEach.call(e.clipboardData.items, function (item) {
-                    item.getAsString(function (value) {
-                        tempDiv.innerHTML = value;
-                        document.execCommand('inserttext', false, tempDiv.innerText);
-                    })
-                })
+                //var tempDiv = document.createElement("DIV");
+                var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
+                item.getAsString(function (value) {
+                    //tempDiv.innerHTML = value;
+                    document.execCommand('inserttext', false, value);
+                });
                 e.preventDefault();
             });
             $scope.$on('$destroy', function(){
