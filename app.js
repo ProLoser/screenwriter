@@ -67,7 +67,12 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
         if (!$scope.script.lines)
             $scope.script.lines = [{type:'scene' }];
         $localStorage[$stateParams.scriptId] = $scope.script;
+        document.title = 'Screenwriter: ' + $scope.script.title;
         return unbind;
+    });
+    
+    $scope.$watch('script.title', function(newVal, oldVal){
+        document.title = 'Screenwriter: ' + newVal 
     });
     $scope.types = types;
     var nextTypes = {
