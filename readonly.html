@@ -9,10 +9,7 @@
 				class="comment-box"
 				ng-model="line.comment"></div>
 			<div contenteditable
-				ng-model="line.text"
-				ng-keydown="keydown($event, line)"
-				ng-keypress="keypress($event, line)"
-				ng-focus="edit(line)"
+				ng-bind="line.text"
 				class="line-text"></div>
 			<a ng-click="comment(line);$event.stopPropagation()" class="comment-add">
 				<i class="glyphicon glyphicon-comment"></i>

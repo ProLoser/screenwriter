@@ -60,7 +60,7 @@ app.run(function($rootScope, $state, types, $timeout, $window){
 
 });
 app.constant('types', ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text']);
-app.controller('Script', function($scope, types, script, $localStorage, $stateParams, $firebase){
+app.controller('Script', function($scope, types, script, $localStorage, $stateParams, $firebase, cursorPos){
     $firebase(script).$bind($scope, 'script').then(function(unbind){
         if (!$scope.script)
             $scope.script = {};
@@ -72,7 +72,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     });
     
     $scope.$watch('script.title', function(newVal, oldVal){
-        document.title = 'Screenwriter: ' + newVal 
+        document.title = 'Screenwriter: ' + newVal;
     });
     $scope.types = types;
     var nextTypes = {
@@ -146,7 +146,7 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
     $scope.keydown = function($event, line){
         switch ($event.keyCode) {
             case 38: // up
-                if ($event.shiftKey) {
+                if ($event.metaKey || $event.ctrlKey) {
                     var lines = $scope.script.lines;
                     var index = lines.indexOf(line);
                     if (index > 0) {
@@ -154,25 +154,27 @@ app.controller('Script', function($scope, types, script, $localStorage, $statePa
                         lines.splice(index - 1, 0, line);
                         $scope.focus(line); 
                     }
-                } else {
+                    $event.preventDefault();
+                } else if (!cursorPos($event.srcElement)) {
                     $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line) - 1]);
+                    $event.preventDefault();
                 }
-                $event.preventDefault();
                 break;
             case 40: // down
-                if ($event.shiftKey) {
+                if ($event.metaKey || $event.ctrlKey) {
                     var lines = $scope.script.lines;
                     var index = lines.indexOf(line);
                     lines.splice(index, 1);
                     lines.splice(index + 1, 0, line);
                     $scope.focus(line);
-                } else {
+                    $event.preventDefault();
+                } else if (cursorPos($event.srcElement) >= $event.srcElement.textContent.length) {
                     $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)+1]);
+                    $event.preventDefault();
                 }
-                $event.preventDefault();
                 break;
             case 8: // backspace
-                if ((!line.text || $event.ctrlKey) && $scope.script.lines.length > 1) {
+                if (!line.text && $scope.script.lines.length > 1) {
                     $scope.focus($scope.script.lines[$scope.script.lines.indexOf(line)-1]);
                     $scope.script.lines.splice($scope.script.lines.indexOf(line), 1);
                     $event.preventDefault();
@@ -264,7 +266,31 @@ app.directive('commentBox', function($timeout){
         }
     };
 });
-
+app.factory('cursorPos', function(){
+    return function cursorPos(element) {
+        var caretOffset = 0;
+        var doc = element.ownerDocument || element.document;
+        var win = doc.defaultView || doc.parentWindow;
+        var sel;
+        if (typeof win.getSelection != "undefined") {
+            sel = win.getSelection();
+            if (sel.rangeCount > 0) {                                                                                                                    
+                var range = win.getSelection().getRangeAt(0);
+                var preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(element);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                caretOffset = preCaretRange.toString().length;
+            }
+        } else if ( (sel = doc.selection) && sel.type != "Control") {
+            var textRange = sel.createRange();
+            var preCaretTextRange = doc.body.createTextRange();
+            preCaretTextRange.moveToElementText(element);
+            preCaretTextRange.setEndPoint("EndToEnd", textRange);
+            caretOffset = preCaretTextRange.text.length;
+        }
+        return caretOffset;
+    };
+});
 app.directive('ngAutofocus', function(){
     return function($scope, $element, $attrs) {
         if ($scope.$eval($attrs.ngAutofocus))
