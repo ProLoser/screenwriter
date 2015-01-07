@@ -52,7 +52,7 @@
       </li>
 
 
-      <!-- LINE TYPE DROPDOWN -->
+      <!-- LINE TYPE -->
       <li class="col-sm-6 col-xs-12 dropdown" ng-class="{open:dropdowns=='line'}">
         <a ng-click="toggle('line');$event.stopPropagation()">
           <i class="glyphicon glyphicon-align-center"></i> 
@@ -61,8 +61,8 @@
         </a>
 
 
-        <!-- PRINTER DROPDOWN -->
-        <div class="popover bottom" ng-style="{display:dropdowns=='line'&&'block'}" ng-click="$event.stopPropagation()">
+        <!-- LINE TYPE DROPDOWN -->
+        <div class="popover bottom" ng-style="{display:dropdowns=='line'&&'block'}">
           <div class="arrow"></div>
             <div class="list-group uppercase popover-content text-center">
               <a ng-repeat="type in types" 
