@@ -1,4 +1,4 @@
-app = angular.module('scrnplay', ['ui.router', 'firebase', 'ngStorage', 'contenteditable', 'MassAutoComplete']);
+app = angular.module('scrnplay', ['ui.router', 'firebase', 'ngStorage', 'contenteditable']);
 app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
@@ -61,7 +61,8 @@ app.run(function($rootScope, $state, types, $timeout, $window){
 });
 app.constant('types', ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text']);
 app.controller('Script', function($scope, types, script, $localStorage, $stateParams, $firebase, cursorPos){
-    $firebase(script).$bind($scope, 'script').then(function(unbind){
+    script = $firebase(script).$asObject();
+    script.$bindTo($scope, 'script').then(function(unbind){
         if (!$scope.script)
             $scope.script = {};
         if (!$scope.script.lines)

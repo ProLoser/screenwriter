@@ -17,7 +17,6 @@
     "commit": "ff080c74d9fdee0058e92b1890ac030520060cf7"
   },
   "_source": "git://github.com/hakib/MassAutocomplete.git",
-  "_target": "~0.2.2",
-  "_originalSource": "angular-mass-autocomplete",
-  "_direct": true
+  "_target": "~0",
+  "_originalSource": "angular-mass-autocomplete"
 }

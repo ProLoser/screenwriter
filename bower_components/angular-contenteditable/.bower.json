@@ -29,7 +29,6 @@
     "commit": "9a1471d23c726cf043727a8774e3094714193df2"
   },
   "_source": "git://github.com/akatov/angular-contenteditable.git",
-  "_target": "~0.3.7",
-  "_originalSource": "angular-contenteditable",
-  "_direct": true
+  "_target": "~0",
+  "_originalSource": "angular-contenteditable"
 }
