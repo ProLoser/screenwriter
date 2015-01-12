@@ -39,6 +39,23 @@ function cursorPos(element) {
     return caretOffset;
 };
 
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
+}
 
 function S4() {
    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -67,7 +84,7 @@ var Script = React.createClass({
 			var previous, previousIndex;
 			fb.update({firstLine: '0'});
 			_.each(snapshot.val().lines, function(line, index) {
-				if (previous && !previous.next) {
+				if (previous) {
 					fb.child('lines/'+previousIndex+'/next').set(index);
 				}
 				previous = line;
@@ -107,10 +124,10 @@ var Script = React.createClass({
                     		this.firebaseRefs.script.child('lines/'+prevIndex).update({next: newNext });
                     	else
 	                    	this.firebaseRefs.script.child('lines/'+prevIndex+'/next').remove();
-                        this.refs['line'+index].focus();
+                        this.refs['line'+index].focus(true);
 	                    event.preventDefault();
 	                } else if (!cursorPos(event.target)) {
-	                    this.refs['line'+prevIndex].focus();
+	                    this.refs['line'+prevIndex].focus(true);
 	                    event.preventDefault();
 	                }
                 }
@@ -151,7 +168,8 @@ var Script = React.createClass({
 
 	                // remove line
                     this.firebaseRefs.script.child('lines/'+index).remove();
-                    this.refs['line'+prevIndex].focus();
+                    this.refs['line'+prevIndex].focus(true);
+                    event.preventDefault();
                 }
                 break;
             case 13: // enter
@@ -162,6 +180,9 @@ var Script = React.createClass({
                     newRef = this.firebaseRefs.script.child('lines').push(newItem);
                     // point current line to the new line
                     this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key());
+                    setTimeout((function(){
+                    	this.refs['line'+newRef.key()].focus();
+                    }).bind(this));
                 }
         }
 	},
@@ -263,11 +284,11 @@ var Line = React.createClass({
 			}
 		});
 	},
-	focus: function() {
-		this.refs.text.getDOMNode().focus();
-	},
-	componentDidMount: function() {
-		this.focus();
+	focus: function(atEnd) {
+		if (atEnd)
+			placeCaretAtEnd(this.refs.text.getDOMNode());
+		else
+			this.refs.text.getDOMNode().focus();
 	},
 	render: function() {
 		return (
