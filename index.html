@@ -1,60 +1,20 @@
 <!DOCTYPE html>
-<!-- <html ng-app="scrnplay" manifest="cache.manifest"> -->
-<html ng-app="scrnplay" ng-click="toggle('')">
+<!-- <html manifest="cache.manifest"> -->
+<html>
 <head>
   <title>Screenwriter</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <script src="bower_components/underscore/underscore.js"></script>
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+  <script src="bower_components/react/react.js"></script>
+  <script src="bower_components/react-router/dist/react-router.js"></script>
+  <script src="bower_components/reactfire/dist/reactfire.js"></script>
   <script src="bower_components/firebase/firebase.js"></script>
-  <script src="bower_components/angular-contenteditable/angular-contenteditable.js"></script>
-  <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="app.js"></script>
-  
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/angular-mass-autocomplete/massautocomplete.theme.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="print.css">
 </head>
 <body>
-
-  <ui-view name="nav"></ui-view>
-
-  <div class="container" ui-view>
-    <script type="text/ng-template" id="home">
-
-      <div class="text-center">
-
-        <h1>Screenwriter</h1>
-        <p>
-          <a class="btn btn-primary" ng-click="new()"><i class="glyphicon glyphicon-plus"></i> New Script</a>
-          <a class="btn btn-primary" href="#/demo">Demo Script</a> 
-        </p>
-
-        <p>
-          <a class="btn btn-default" href="https://github.com/ProLoser/screenwriter"><img src="github-icons/GitHub-Mark-32px.png" alt="Github" /> Source Code</a>
-        </p>
-      </div>
-
-      <h3>Collaborate:</h3>
-      <p>Share your custom URL with friends to collaborate!</p>
-    
-      <h3>Shortcuts:</h3>
-      <p>
-        <strong>Enter</strong> Insert new line<br>
-        <strong>(Shift+)Tab</strong> Cycle through line types<br>
-        <strong>Up/Down</strong> Move through lines<br>
-        <strong>Cmd/Ctrl+Up/Down</strong> Reorder lines<br>
-        <strong>Shift+Enter</strong> To select the top of the autocomplete suggestions<br>
-      </p>
-
-      <h3>Comments:</h3>
-      <p class="help">Hover over a line and click comment button <i class="glyphicon glyphicon-comment" style="color:#dd0;text-shadow:0 1px 1px #000;font-size: 120%;"></i></p>
-
-    </script>
-  </div>
-
+  <div id="container" class="container"></div>
+  <script src="script.js"></script>
 </body>
 </html>

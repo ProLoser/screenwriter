@@ -3,9 +3,19 @@
   "version": "0.0.0",
   "description": "A simple copy of Final Draft that can be used online",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "firebase": "^2.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-reactify": "^1.0.2",
+    "react": "^0.12.2",
+    "react-router": "^0.11.6",
+    "reactfire": "^0.4.0",
+    "reactify": "^0.17.1"
+  },
   "devDependencies": {
     "gulp": "^3.8.7",
+    "gulp-plumber": "^0.6.6",
+    "gulp-react": "^2.0.0",
     "gulp-sass": "^0.7.3",
     "gulp-webserver": "^0.6.0"
   },

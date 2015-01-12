@@ -25,6 +25,10 @@
     "firebase": "~1",
     "ngstorage": "~0",
     "underscore": "~1",
-    "angular": "~1"
+    "angular": "~1",
+    "react": "~0.12.2",
+    "reactfire": "~0.4.0",
+    "react-router": "~0.11.6",
+    "react-bootstrap": "~0.13.0"
   }
 }

@@ -5,24 +5,50 @@ app.config(function($stateProvider, $urlRouterProvider){
         url: '/',
         templateUrl: 'home'
     });
+
     $stateProvider.state('script', {
-        url: '/{scriptId:.+}',
+        url: '/:scriptId',
         views: {
             'nav': {
                 templateUrl: 'nav.html',
                 controller: 'Script',
             },
             '': {
-                templateUrl: 'script.html',
+                template: '<script data="script"></script>',
                 controller: 'Script',
             }
         },
         resolve: {
-            script: function($stateParams){
-                return new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
+            script: function($stateParams, $rootScope, $firebase){
+                var fb = new Firebase("https://screenwrite.firebaseio.com/"+$stateParams.scriptId);
+
+                script = $firebase(fb).$asObject();
+                return script.$bindTo($rootScope, 'script');
+            }
+        },
+        onEnter: function($rootScope) {
+            if (!$rootScope.script)
+                $rootScope.script = {};
+            if (!$rootScope.script.lines)
+                $rootScope.script.lines = [{type:'scene' }];
+        },
+        onExit: function(script) {
+            script(); // unbind firebase
+        }
+    });
+
+    $stateProvider.state('script.view', {
+        url: '/view',
+        views: {
+            'nav@script': {
+                templateUrl: 'readonly-nav.html',
+            },
+            '@script': {
+                templateUrl: 'readonly.html',
             }
         }
     });
+
 });
 app.run(function($rootScope, $state, types, $timeout, $window){
     $rootScope.edit = function(line){
@@ -58,19 +84,14 @@ app.run(function($rootScope, $state, types, $timeout, $window){
         $state.go('script', { scriptId: guid() });
     };
 
+    $rootScope.$on('$stateChangeError', function(){
+        console.log('Error:', arguments);
+    });
+
 });
 app.constant('types', ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text']);
-app.controller('Script', function($scope, types, script, $localStorage, $stateParams, $firebase, cursorPos){
-    script = $firebase(script).$asObject();
-    script.$bindTo($scope, 'script').then(function(unbind){
-        if (!$scope.script)
-            $scope.script = {};
-        if (!$scope.script.lines)
-            $scope.script.lines = [{type:'scene' }];
-        $localStorage[$stateParams.scriptId] = $scope.script;
-        document.title = 'Screenwriter: ' + $scope.script.title;
-        return unbind;
-    });
+app.controller('Script', function($scope, types, $localStorage, $stateParams, $firebase, cursorPos){
+    document.title = 'Screenwriter: ' + $scope.script.title;
     
     $scope.$watch('script.title', function(newVal, oldVal){
         document.title = 'Screenwriter: ' + newVal;
@@ -303,5 +324,16 @@ app.filter('unique', function(){
         return _.uniq(data, false, function(row){
             return row && row.text && row.text.toUpperCase();
         });
+    };
+});
+
+app.directive('script', function($timeout){
+    return {
+        restrict: 'E',
+        link: function($scope, $element, $attrs) {
+            $timeout(function(){
+                React.renderComponent(Script({ script: $scope.$eval($attrs.data) }), $element[0]);
+            }, true);
+        }
     };
 });

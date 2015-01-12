@@ -148,6 +148,7 @@ body {
 	.comment-box {
 		position: absolute;
 		right: 0;
+		top: 0;
 		background: yellow;
 		z-index: 3;
 		min-width: 100px;
@@ -221,6 +222,22 @@ body {
 
 	.dialogue {
 		margin: 0 15% 20px;
+	}
+}
+
+.highlight .line-text {
+	&:before {
+		content: '➤';
+		display: inline-block;
+		margin-right: 20px;
+		margin-left: -25px;
+	}
+	&:after {
+		content: '➤';
+		transform: rotate(180deg);
+		display: inline-block;
+		margin-left: 20px;
+		margin-right: -25px;
 	}
 }
 

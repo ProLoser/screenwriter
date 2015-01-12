@@ -1,6 +1,9 @@
 /* http://2012.scriptfrenzy.org/howtoformatascreenplay */
 
 @media print {
+	.comment-box, .comment-add {
+		display: none !important;
+	}
 	body {
 		margin: 0;
 	    font-size: 12pt;
@@ -39,24 +42,13 @@
 		margin-right: 1.5in;
 	}
 	.transition {
-		text-align: right;
-		text-transform: uppercase;
-		&:after {
-			content: ':';
-		}
 	}
 	.parenthetical {
 		margin-left: 1.6in;
 		margin-right: 1.9in;
-		&:before {
-			content: '(';
-		}
-		&:after {
-			content: ')';
-		}
 	}
-	.highlight {
-		color: #FF4136 !important;
+	.character-highlighted {
+		margin-top: 50px;
 	}
 }
 
