@@ -73,7 +73,7 @@ var Script = React.createClass({
 		// console.log(this.getParams());return;
 		// CLEANUP OLD DATA
 		var fb = new Firebase("https://screenwrite.firebaseio.com/"+scriptId);
-		fb.once('value', function(snapshot){
+		fb.once('value', (function(snapshot){
 			if (!snapshot.val()) {
 				fb.set({});
 				var newLine = fb.child('lines').push({ type: 'scene' });
@@ -90,12 +90,15 @@ var Script = React.createClass({
 				previous = line;
 				previousIndex = index;
 			});
-		});
+		}).bind(this));
+		window.onunload = (function(){
+			if (_.keys(this.state.script.lines).length <= 2)
+				fb.remove();
+		}).bind(this);
 
 		return {
 			scriptId: scriptId,
 			script: {},
-			lines: [],
 			editing: {}
 		};
 	},
@@ -386,7 +389,9 @@ var Nav = React.createClass({
 		this.firebaseRefs.script.child(input).set(event.target.value);
 	},
 	newScript: function(){
-		window.location.hash = '#/' + guid();
+		var fb = new Firebase("https://screenwrite.firebaseio.com/");
+		var newRef = fb.push();
+		window.location.hash = '#/' + newRef.key();
 		window.location.reload(); // force firebase to reload
 	},
 	render: function() {
@@ -477,7 +482,9 @@ var Nav = React.createClass({
 
 var Home = React.createClass({
 	newScript: function(){
-		window.location.hash = '#/' + guid();
+		var fb = new Firebase("https://screenwrite.firebaseio.com/");
+		var newRef = fb.push();
+		window.location.hash = '#/' + newRef.key();
 		window.location.reload(); // force firebase to reload
 	},
 	render: function() {
