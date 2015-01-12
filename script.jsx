@@ -372,10 +372,12 @@ var Nav = React.createClass({
 		if (!this.state.script) return <div />;
 		var editing = this.state.script.lines && this.state.script.lines[this.props.editingIndex] || {};
 		if (this.state.open=='print') {
-			var characters = _.map(_.uniq(_.map(_.pluck(_.where(this.state.script.lines, {type:'character'}), 'text'), function(character){
+			var characters = [];
+			_.each(_.uniq(_.map(_.pluck(_.where(this.state.script.lines, {type:'character'}), 'text'), function(character){
 				return character && character.toUpperCase();
 			})), function(character){
-				return <option key={character}>{character}</option>
+				if (character)
+					characters.push(<option key={character}>{character}</option>)
 			});
 		}
 		return (
