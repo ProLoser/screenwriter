@@ -3,6 +3,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     react = require('gulp-react'),
     webserver = require('gulp-webserver');
+var browserify = require('gulp-browserify');
+var concat = require('gulp-concat');
 
 gulp.task('default', function() {
 	gulp.src('.')
@@ -27,4 +29,11 @@ gulp.task('react', function() {
 		.pipe(plumber())
 		.pipe(react())
 		.pipe(gulp.dest('.'));
+});
+
+gulp.task('browserify', function() {
+    gulp.src('*.jsx')
+      .pipe(browserify({transform: 'reactify'}))
+      .pipe(concat('script.js'))
+      .pipe(gulp.dest('.'));
 });
