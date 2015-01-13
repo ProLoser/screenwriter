@@ -272,11 +272,9 @@ var Line = React.createClass({displayName: "Line",
 			updates.suggestion = this.props.getSuggestion(this.props.index);
 		}
 		this.firebaseRefs.line.update({'text':event.target.value});
-		this.setState(updates);
 	},
 	handleComment: function(event) {
 		this.firebaseRefs.line.update({'comment':event.target.value});
-		this.setState({ line: { text: event.target.value } });
 	},
 	nextType: function(){
         var index = types.indexOf(this.props.line.type) + 1;
@@ -329,11 +327,11 @@ var Line = React.createClass({displayName: "Line",
 			this.refs.text.getDOMNode().focus();
 	},
 	onFocus: function(event) {
-		// this.setState({suggesting:true});
-		// this.props.onFocus(event);
+		this.setState({suggesting:true});
+		this.props.onFocus(event);
 	},
 	onBlur: function(event) {
-		// this.setState({suggesting:false});
+		this.setState({suggesting:false});
 	},
 	render: function() {
 		return (
