@@ -69,10 +69,19 @@ var Script = React.createClass({displayName: "Script",
 	mixins: [ReactFireMixin, ReactRouter.State],
 	getInitialState: function() {
 		highlight = '';
-		var scriptId = this.getParams().scriptId;
-		// console.log(this.getParams());return;
+
+		return {
+			scriptId: this.getParams().scriptId,
+			script: {},
+			editing: {}
+		};
+	},
+	componentWillMount: function() {
+		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId), "script");
+	},
+	componentDidMount: function() {
 		// CLEANUP OLD DATA
-		var fb = new Firebase("https://screenwrite.firebaseio.com/"+scriptId);
+		var fb = new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId);
 		fb.once('value', (function(snapshot){
 			if (!snapshot.val()) {
 				fb.set({});
@@ -91,25 +100,45 @@ var Script = React.createClass({displayName: "Script",
 				previousIndex = index;
 			});
 		}).bind(this));
+
 		window.onunload = (function(){
-			if (_.keys(this.state.script.lines).length <= 2)
+			if (_.keys(this.state.script.lines).length <= 2 || !this.state.script.title)
 				fb.remove();
 		}).bind(this);
-
-		return {
-			scriptId: scriptId,
-			script: {},
-			editing: {}
-		};
-	},
-	componentWillMount: function() {
-		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId), "script");
 	},
 	editing: function(line) {
 		this.setState({editing:line});
 	},
+	getSuggestion: function(lineIndex) {
+		if (!this.state.script.lines[lineIndex].text) return '';
+		var type = this.state.script.lines[lineIndex].type;
+		var text = this.state.script.lines[lineIndex].text.toUpperCase();
+
+		var suggestions = [];
+		var iterate = (function(index){
+		    var line = this.state.script.lines[index];
+			if (line.type == type
+			    && line.text
+			    && line.text.length > text.length
+			    && line.text.toUpperCase().indexOf(text) === 0)
+				suggestions.push(line.text.toUpperCase());
+			if (index != lineIndex && line.next)
+				iterate(line.next);
+		}).bind(this);
+		iterate(this.state.script.firstLine);
+		return (suggestions.pop() || '').substr(text.length);
+	},
 	handleKey: function(event, line, index, prevIndex, prevPrevIndex) {
 		switch (event.keyCode) {
+			case 39: // right
+				if ((line.type == 'character' || line.type == 'scene') && cursorPos(event.target) >= event.target.textContent.length) {
+					var suggestion;
+					if (suggestion = this.getSuggestion(index)) {
+						this.firebaseRefs.script.child('lines/'+index).update({ text: line.text + suggestion });
+						this.refs['line'+index].focus(true);
+					}
+				}
+				break;
             case 38: // up
                 if (prevIndex) {
 	                if (event.metaKey || event.ctrlKey) {
@@ -190,16 +219,16 @@ var Script = React.createClass({displayName: "Script",
         }
 	},
 	render: function() {
-
-
 		var indexes = {};
 		var lines = [];
 		var previous, prevPrevious;
 		var next = (function(line, index){
+			console.log(line, index);
 			lines.push(
 				React.createElement(Line, {line: line, key: index, index: index, ref: 'line'+index, 
 					previous: previous, prevPrevious: prevPrevious, 
 					onFocus: this.editing.bind(this, index), 
+					getSuggestion: this.getSuggestion, 
 					onKeyDown: this.handleKey})
 			);
 			prevPrevious = previous;
@@ -229,15 +258,21 @@ var Line = React.createClass({displayName: "Line",
 		return {
 			comments: this.props.line.comments,
 			commenting: false,
-			scriptId: this.getParams().scriptId
+			scriptId: this.getParams().scriptId,
+			suggesting: false,
+			suggestion: '',
 		};
 	},
 	componentWillMount: function() {
 		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId+"/lines/" + this.props.index), "line");
 	},
 	handleChange: function(event) {
+		var updates = { line: { text: event.target.value } }
+		if (this.state.suggesting) {
+			updates.suggestion = this.props.getSuggestion(this.props.index);
+		}
 		this.firebaseRefs.line.update({'text':event.target.value});
-		this.setState({ line: { text: event.target.value } });
+		this.setState(updates);
 	},
 	handleComment: function(event) {
 		this.firebaseRefs.line.update({'comment':event.target.value});
@@ -293,6 +328,13 @@ var Line = React.createClass({displayName: "Line",
 		else
 			this.refs.text.getDOMNode().focus();
 	},
+	onFocus: function(event) {
+		// this.setState({suggesting:true});
+		// this.props.onFocus(event);
+	},
+	onBlur: function(event) {
+		// this.setState({suggesting:false});
+	},
 	render: function() {
 		return (
 			React.createElement("li", {className: 'line '+this.props.line.type+' '+(highlight && this.props.line.text && highlight.toUpperCase()==this.props.line.text.toUpperCase() && 'highlight')}, 
@@ -301,7 +343,8 @@ var Line = React.createClass({displayName: "Line",
 					html: this.props.line.text, 
 					onChange: this.handleChange, 
 					onKeyDown: this.handleKey, 
-					onFocus: this.props.onFocus, 
+					onFocus: this.onFocus, 
+					onBlur: this.onBlur, 
 					className: "line-text"}), 
 				React.createElement("a", {onClick: this.comment, className: "comment-add"}, 
 					React.createElement("i", {className: "glyphicon glyphicon-comment"})
@@ -328,6 +371,7 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
             onClick: this.props.onClick, 
             className: this.props.className, 
 			onFocus: this.props.onFocus, 
+			onBlur: this.props.onBlur, 
             contentEditable: true, 
             dangerouslySetInnerHTML: {__html: this.props.html}});
     },
@@ -355,7 +399,6 @@ var Nav = React.createClass({displayName: "Nav",
 			open: null,
 			script: {},
 			scriptId: this.getParams().scriptId,
-			characters: [],
 			highlight: ''
 		};
 	},
