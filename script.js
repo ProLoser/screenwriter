@@ -337,8 +337,17 @@ var Line = React.createClass({displayName: "Line",
 		this.setState({suggesting:false});
 	},
 	render: function() {
+		var cx = React.addons.classSet;
+		var classes = {
+			line: true,
+			commented: this.props.line.comment,
+			highlight: highlight && this.props.line.text && highlight.toUpperCase()==this.props.line.text.toUpperCase()
+		};
+		classes[this.props.line.type] = true;
+		classes = cx(classes);
+
 		return (
-			React.createElement("li", {className: 'line '+this.props.line.type+' '+(highlight && this.props.line.text && highlight.toUpperCase()==this.props.line.text.toUpperCase() && 'highlight')}, 
+			React.createElement("li", {className: classes}, 
 				React.createElement(ContentEditable, {
 					ref: "text", 
 					html: this.props.line.text, 
