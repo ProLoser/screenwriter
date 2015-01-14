@@ -115,6 +115,7 @@ var Script = React.createClass({
 		var text = this.state.script.lines[lineIndex].text.toUpperCase();
 
 		var suggestions = [];
+		var passed = false;
 		var iterate = (function(index){
 		    var line = this.state.script.lines[index];
 			if (line.type == type
@@ -122,7 +123,10 @@ var Script = React.createClass({
 			    && line.text.length > text.length
 			    && line.text.toUpperCase().indexOf(text) === 0)
 				suggestions.push(line.text.toUpperCase());
-			if (index != lineIndex && line.next)
+			if (index == lineIndex)
+				passed = true;
+			if (passed && suggestions.length) return;
+			if (line.next)
 				iterate(line.next);
 		}).bind(this);
 		iterate(this.state.script.firstLine);
