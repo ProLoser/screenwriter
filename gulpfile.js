@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     react = require('gulp-react'),
     webserver = require('gulp-webserver');
 var browserify = require('gulp-browserify');
-var concat = require('gulp-concat');
+// var concat = require('gulp-concat');
 
 gulp.task('default', function() {
 	gulp.src('.')

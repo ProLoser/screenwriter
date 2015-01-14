@@ -359,6 +359,16 @@ var Line = React.createClass({displayName: "Line",
 });
 
 var ContentEditable = React.createClass({displayName: "ContentEditable",
+	stripPaste: function(e){
+        // Strip formatting on paste
+        var tempDiv = document.createElement("DIV");
+        var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
+        item.getAsString(function (value) {
+            tempDiv.innerHTML = value;
+            document.execCommand('inserttext', false, tempDiv.innerText);
+        });
+        e.preventDefault();
+	},
     render: function(){
         return React.createElement("div", {
         	ref: "input", 
@@ -369,6 +379,7 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
             className: this.props.className, 
 			onFocus: this.props.onFocus, 
 			onBlur: this.props.onBlur, 
+			onPaste: this.stripPaste, 
             contentEditable: true, 
             dangerouslySetInnerHTML: {__html: this.props.html}});
     },
