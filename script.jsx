@@ -337,14 +337,13 @@ var Line = React.createClass({
 		this.setState({suggesting:false});
 	},
 	render: function() {
-		var cx = React.addons.classSet;
 		var classes = {
 			line: true,
 			commented: this.props.line.comment,
 			highlight: highlight && this.props.line.text && highlight.toUpperCase()==this.props.line.text.toUpperCase()
 		};
 		classes[this.props.line.type] = true;
-		classes = cx(classes);
+		classes = React.addons.classSet(classes);
 
 		return (
 			<li className={classes}>
@@ -460,6 +459,10 @@ var Nav = React.createClass({
 	},
 	render: function() {
 		if (!this.state.script) return <div />;
+
+		if (this.state.script.title)
+			document.title = 'Screenwriter: ' + this.state.script.title;
+
 		var editing = this.state.script.lines && this.state.script.lines[this.props.editingIndex] || {};
 		if (this.state.open=='print') {
 			var characters = [];
