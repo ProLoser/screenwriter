@@ -42,13 +42,28 @@
 		margin-right: 1.5in;
 	}
 	.transition {
+		.line-text:empty {
+			&:after {
+				display: none;
+			}
+		}
 	}
 	.parenthetical {
 		margin-left: 1.6in;
 		margin-right: 1.9in;
+		.line-text:empty {
+			&:before, &:after {
+				display: none;
+			}
+		}
 	}
 	.character-highlighted {
 		margin-top: 50px;
+	}
+	.character, .scene, .shot, .transition, .dialogue, .action {
+		.line-text:empty:before {
+			display: none;
+		}
 	}
 }
 

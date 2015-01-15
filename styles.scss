@@ -183,6 +183,10 @@ body {
 		.line-text {
 			text-transform: uppercase;
 			background: rgba(0, 0, 0, 0.1);
+			&:empty:before {
+				content: 'SCENE';
+				color: #bbb;
+			}
 		}
 	}
 
@@ -193,6 +197,10 @@ body {
 			text-align: center;
 			text-transform: uppercase;
 			background: #EDF6FF;
+			&:empty:before {
+				content: 'CHARACTER';
+				color: #cfcfcf;
+			}
 		}
 	}
 
@@ -203,6 +211,10 @@ body {
 			width: auto;
 			&:after {
 				content: ':';
+			}
+			&:empty:before {
+				content: 'TRANSITION';
+				color: #ddd;
 			}
 		}
 	}
@@ -222,6 +234,33 @@ body {
 
 	.dialogue {
 		margin: 0 15% 20px;
+		.line-text {
+
+			&:empty:before {
+				content: 'Dialogue';
+				color: #ddd;
+			}
+		}
+	}
+
+	.action {
+		.line-text {
+
+			&:empty:before {
+				content: 'Action';
+				color: #ddd;
+			}
+		}
+	}
+
+	.shot {
+		.line-text {
+
+			&:empty:before {
+				content: 'Shot';
+				color: #ddd;
+			}
+		}
 	}
 }
 
