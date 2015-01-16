@@ -587,7 +587,7 @@ var Home = React.createClass({
 					</div>
 
 					<h3>Collaborate:</h3>
-					<p>Share your custom URL with friends to collaborate!</p>
+					<p>Share your custom URL with friends to collaborate or add <code>/view</code> to the end for <strong>readonly</strong> mode!</p>
 
 					<h3>Shortcuts:</h3>
 					<p>
@@ -595,7 +595,7 @@ var Home = React.createClass({
 						<strong>(Shift+)Tab</strong> Cycle through line types<br />
 						<strong>Up/Down</strong> Move through lines<br />
 						<strong>Cmd/Ctrl+Up/Down</strong> Reorder lines<br />
-						<strong>Shift+Enter</strong> To select the top of the autocomplete suggestions<br />
+						<strong>Right</strong> Autocomplete the character or scene<br />
 					</p>
 
 					<h3>Comments:</h3>

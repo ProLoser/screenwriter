@@ -587,7 +587,7 @@ var Home = React.createClass({displayName: "Home",
 					), 
 
 					React.createElement("h3", null, "Collaborate:"), 
-					React.createElement("p", null, "Share your custom URL with friends to collaborate!"), 
+					React.createElement("p", null, "Share your custom URL with friends to collaborate or add ", React.createElement("code", null, "/view"), " to the end for ", React.createElement("strong", null, "readonly"), " mode!"), 
 
 					React.createElement("h3", null, "Shortcuts:"), 
 					React.createElement("p", null, 
@@ -595,7 +595,7 @@ var Home = React.createClass({displayName: "Home",
 						React.createElement("strong", null, "(Shift+)Tab"), " Cycle through line types", React.createElement("br", null), 
 						React.createElement("strong", null, "Up/Down"), " Move through lines", React.createElement("br", null), 
 						React.createElement("strong", null, "Cmd/Ctrl+Up/Down"), " Reorder lines", React.createElement("br", null), 
-						React.createElement("strong", null, "Shift+Enter"), " To select the top of the autocomplete suggestions", React.createElement("br", null)
+						React.createElement("strong", null, "Right"), " Autocomplete the character or scene", React.createElement("br", null)
 					), 
 
 					React.createElement("h3", null, "Comments:"), 
