@@ -491,10 +491,10 @@ var Nav = React.createClass({displayName: "Nav",
 								React.createElement("div", {className: "input-group"}, 
 									React.createElement("input", {type: "text", className: "form-control text-center", value: this.state.script.title, onChange: this.handleChange.bind(this,'title'), placeholder: "Script Title", readOnly: this.props.readonly}), 
 									React.createElement("span", {className: "input-group-btn"}, 
-										React.createElement("a", {className: 'btn btn-default printOptions ' + (this.state.dropdowns=='print'&&'active'), onClick: this.toggle.bind(this,'print'), title: "Print Options"}, 
+										React.createElement("a", {className: 'btn btn-default slidetip ' + (this.state.dropdowns=='print'&&'active'), onClick: this.toggle.bind(this,'print'), title: "Print Options"}, 
 											React.createElement("i", {className: "glyphicon glyphicon-print"})
 										), 
-										React.createElement("a", {className: "btn btn-default newScript", onClick: this.newScript, title: "New Script"}, 
+										React.createElement("a", {className: "btn btn-default slidetip", onClick: this.newScript, title: "New Script"}, 
 											React.createElement("i", {className: "glyphicon glyphicon-plus"})
 										)
 									)

@@ -91,23 +91,14 @@ body {
 }
 
 /** NAV **/
-.printOptions {
-	&:before {
-		content: 'Print Options ';
-	}
-}
-.newScript {
-	&:before {
-		content: 'New Script ';
-	}
-}
-.printOptions, .newScript {
+.slidetip {
 	&:before {
 		display: inline-block;
 		overflow: hidden;
 		max-width: 0;
 		line-height: 14px;
 		transition: all ease 0.2s;
+		content: attr(title);
 	}
 	&:hover {
 		&:before {

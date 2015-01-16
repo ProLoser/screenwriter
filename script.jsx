@@ -491,10 +491,10 @@ var Nav = React.createClass({
 								<div className="input-group">
 									<input type="text" className="form-control text-center" value={this.state.script.title} onChange={this.handleChange.bind(this,'title')} placeholder="Script Title" readOnly={this.props.readonly} />
 									<span className="input-group-btn">
-										<a className={'btn btn-default printOptions ' + (this.state.dropdowns=='print'&&'active')} onClick={this.toggle.bind(this,'print')} title="Print Options">
+										<a className={'btn btn-default slidetip ' + (this.state.dropdowns=='print'&&'active')} onClick={this.toggle.bind(this,'print')} title="Print Options">
 											<i className="glyphicon glyphicon-print"></i>
 										</a>
-										<a className="btn btn-default newScript" onClick={this.newScript} title="New Script">
+										<a className="btn btn-default slidetip" onClick={this.newScript} title="New Script">
 											<i className="glyphicon glyphicon-plus"></i>
 										</a>
 									</span>
