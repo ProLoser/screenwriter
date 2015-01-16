@@ -183,7 +183,7 @@ body {
 		.line-text {
 			text-transform: uppercase;
 			background: rgba(0, 0, 0, 0.1);
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'SCENE';
 				color: #bbb;
 			}
@@ -197,7 +197,7 @@ body {
 			text-align: center;
 			text-transform: uppercase;
 			background: #EDF6FF;
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'CHARACTER';
 				color: #cfcfcf;
 			}
@@ -212,7 +212,7 @@ body {
 			&:after {
 				content: ':';
 			}
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'TRANSITION';
 				color: #ddd;
 			}
@@ -236,7 +236,7 @@ body {
 		margin: 0 15% 20px;
 		.line-text {
 
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'Dialogue';
 				color: #ddd;
 			}
@@ -246,7 +246,7 @@ body {
 	.action {
 		.line-text {
 
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'Action';
 				color: #ddd;
 			}
@@ -256,7 +256,7 @@ body {
 	.shot {
 		.line-text {
 
-			&:empty:before {
+			&:empty:focus:before {
 				content: 'Shot';
 				color: #ddd;
 			}

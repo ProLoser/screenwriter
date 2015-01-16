@@ -62,7 +62,7 @@
 	}
 	.character, .scene, .shot, .transition, .dialogue, .action {
 		.line-text:empty:before {
-			display: none;
+			// display: none;
 		}
 	}
 }
@@ -73,5 +73,11 @@
     margin: 1in 1in 1in 1.5in;  
 	@top-right {
 	    content: counter(page);
+	    content: 'hi';
+	}
+	:first {
+		@top-right {
+			content: none;
+		}
 	}
 }

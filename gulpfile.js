@@ -7,7 +7,7 @@ var browserify = require('gulp-browserify');
 // var concat = require('gulp-concat');
 
 gulp.task('default', function() {
-	gulp.src('.')
+	gulp.src(['**/*.js', '**/*.css', '**/*.html'])
 		.pipe(webserver({
 			livereload: true,
 			open: true,
