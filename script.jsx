@@ -600,6 +600,9 @@ var Home = React.createClass({
 
 					<h3>Comments:</h3>
 					<p className="help">Hover over a line and click comment button <i className="glyphicon glyphicon-comment" style={commentStyles}></i></p>
+
+					<h3>Notes:</h3>
+					<p>Scripts are not secure, if someone can figure out your URL, they can edit it. Print to PDF if you want a permanent copy.</p>
 				</div>
 		);
 	}

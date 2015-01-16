@@ -599,7 +599,10 @@ var Home = React.createClass({displayName: "Home",
 					), 
 
 					React.createElement("h3", null, "Comments:"), 
-					React.createElement("p", {className: "help"}, "Hover over a line and click comment button ", React.createElement("i", {className: "glyphicon glyphicon-comment", style: commentStyles}))
+					React.createElement("p", {className: "help"}, "Hover over a line and click comment button ", React.createElement("i", {className: "glyphicon glyphicon-comment", style: commentStyles})), 
+
+					React.createElement("h3", null, "Notes:"), 
+					React.createElement("p", null, "Scripts are not secure, if someone can figure out your URL, they can edit it. Print to PDF if you want a permanent copy.")
 				)
 		);
 	}
