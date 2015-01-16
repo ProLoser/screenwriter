@@ -204,6 +204,11 @@ body {
 				content: 'SCENE';
 				color: #bbb;
 			}
+			&:focus:after {
+				position: absolute;
+				content: attr(data-suggest);
+				color: #bbb;
+			}
 		}
 	}
 
@@ -215,6 +220,11 @@ body {
 			background: #EDF6FF;
 			&:empty:focus:before {
 				content: 'CHARACTER';
+				color: #cfcfcf;
+			}
+			&:focus:after {
+				position: absolute;
+				content: attr(data-suggest);
 				color: #cfcfcf;
 			}
 		}

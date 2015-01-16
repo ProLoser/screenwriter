@@ -103,17 +103,17 @@ var Script = React.createClass({displayName: "Script",
 		}).bind(this));
 
 		window.onunload = (function(){
-			if (_.keys(this.state.script.lines).length <= 2 || !this.state.script.title)
+			if (_.keys(this.state.script.lines).length <= 2)
 				fb.remove();
 		}).bind(this);
 	},
 	editing: function(line) {
 		this.setState({editing:line});
 	},
-	getSuggestion: function(lineIndex) {
+	getSuggestion: function(lineIndex, fromValue) {
 		if (!this.state.script.lines[lineIndex].text) return '';
 		var type = this.state.script.lines[lineIndex].type;
-		var text = this.state.script.lines[lineIndex].text.toUpperCase();
+		var text = fromValue && fromValue.toUpperCase() || this.state.script.lines[lineIndex].text.toUpperCase();
 
 		var suggestions = [];
 		var passed = false;
@@ -135,15 +135,6 @@ var Script = React.createClass({displayName: "Script",
 	},
 	handleKey: function(event, line, index, prevIndex, prevPrevIndex) {
 		switch (event.keyCode) {
-			case 39: // right
-				if ((line.type == 'character' || line.type == 'scene') && cursorPos(event.target) >= event.target.textContent.length) {
-					var suggestion;
-					if (suggestion = this.getSuggestion(index)) {
-						this.firebaseRefs.script.child('lines/'+index).update({ text: line.text + suggestion });
-						this.refs['line'+index].focus(true);
-					}
-				}
-				break;
 			case 38: // up
 				if (prevIndex) {
 					if (event.metaKey || event.ctrlKey) {
@@ -264,18 +255,13 @@ var Line = React.createClass({displayName: "Line",
 			comments: this.props.line.comments,
 			commenting: false,
 			scriptId: this.getParams().scriptId,
-			suggesting: false,
-			suggestion: '',
+			focused: false,
 		};
 	},
 	componentWillMount: function() {
 		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId+"/lines/" + this.props.index), "line");
 	},
 	handleChange: function(event) {
-		var updates = { line: { text: event.target.value } }
-		if (this.state.suggesting) {
-			updates.suggestion = this.props.getSuggestion(this.props.index);
-		}
 		this.firebaseRefs.line.update({'text':event.target.value});
 	},
 	handleComment: function(event) {
@@ -296,6 +282,16 @@ var Line = React.createClass({displayName: "Line",
 	},
 	handleKey: function(event) {
 		switch (event.keyCode) {
+			case 39: // right
+				if (~['character', 'scene'].indexOf(this.props.line.type) && cursorPos(event.target) >= event.target.textContent.length) {
+					var suggestion;
+					if (suggestion = this.props.getSuggestion(this.props.index)) {
+						this.firebaseRefs.line.update({ text: this.props.line.text + suggestion }, (function(){
+							placeCaretAtEnd(this.refs.text.getDOMNode());
+						}).bind(this));
+					}
+				}
+				break;
 			case 13: // enter
 				event.preventDefault();
 				if (this.props.line.text) {
@@ -332,11 +328,11 @@ var Line = React.createClass({displayName: "Line",
 			this.refs.text.getDOMNode().focus();
 	},
 	onFocus: function(event) {
-		this.setState({suggesting:true});
+		this.setState({focused:true});
 		this.props.onFocus(event);
 	},
 	onBlur: function(event) {
-		this.setState({suggesting:false});
+		this.setState({focused:false});
 	},
 	render: function() {
 		var classes = {
@@ -347,10 +343,14 @@ var Line = React.createClass({displayName: "Line",
 		classes[this.props.line.type] = true;
 		classes = React.addons.classSet(classes);
 
-		var line;
+		var line, suggest;
 		if (this.props.readonly) {
 			line = React.createElement("div", {className: "line-text", dangerouslySetInnerHTML: {__html: this.props.line.text}});
 		} else {
+			if (this.state.focused) {
+				suggest = this.props.getSuggestion(this.props.index);
+			}
+
 			line = React.createElement(ContentEditable, {
 					ref: "text", 
 					html: this.props.line.text, 
@@ -358,6 +358,7 @@ var Line = React.createClass({displayName: "Line",
 					onKeyDown: this.handleKey, 
 					onFocus: this.onFocus, 
 					onBlur: this.onBlur, 
+					suggest: suggest, 
 					className: "line-text"})
 		}
 
@@ -390,23 +391,6 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
 		});
 		e.preventDefault();
 	},
-	render: function(){
-		return React.createElement("div", {
-			ref: "input", 
-			onInput: this.emitChange, 
-			onBlur: this.emitChange, 
-			onKeyDown: this.props.onKeyDown, 
-			onClick: this.props.onClick, 
-			className: this.props.className, 
-			onFocus: this.props.onFocus, 
-			onBlur: this.props.onBlur, 
-			onPaste: this.stripPaste, 
-			contentEditable: true, 
-			dangerouslySetInnerHTML: {__html: this.props.html}});
-	},
-	shouldComponentUpdate: function(nextProps){
-		return nextProps.html !== this.getDOMNode().innerHTML;
-	},
 	emitChange: function(){
 		var html = this.getDOMNode().innerHTML;
 		if (this.props.onChange && html !== this.lastHtml) {
@@ -418,6 +402,21 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
 			});
 		}
 		this.lastHtml = html;
+	},
+	render: function(){
+		return React.createElement("div", {
+			ref: "input", 
+			onInput: this.emitChange, 
+			onBlur: this.emitChange, 
+			onKeyDown: this.props.onKeyDown, 
+			onClick: this.props.onClick, 
+			className: this.props.className, 
+			onFocus: this.props.onFocus, 
+			onBlur: this.props.onBlur, 
+			onPaste: this.stripPaste, 
+			"data-suggest": this.props.suggest, 
+			contentEditable: true, 
+			dangerouslySetInnerHTML: {__html: this.props.html}});
 	}
 });
 
