@@ -7,12 +7,12 @@ var browserify = require('gulp-browserify');
 // var concat = require('gulp-concat');
 
 gulp.task('default', function() {
-	gulp.src(['**/*.js', '**/*.css', '**/*.html'])
-		.pipe(webserver({
-			livereload: true,
-			open: true,
-			fallback: 'index.html'
-		}));
+	// gulp.src(['**/*.js', '**/*.css', '**/*.html'])
+	// 	.pipe(webserver({
+	// 		livereload: true,
+	// 		open: true,
+	// 		fallback: 'index.html'
+	// 	}));
 	gulp.watch('*.scss', ['sass']);
 	gulp.watch('*.jsx', ['react']);
 });

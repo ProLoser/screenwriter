@@ -1,13 +1,13 @@
 var types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
 var nextTypes = {
-    scene: 'action',
-    action: 'action',
-    character: 'dialogue',
-    dialogue: 'character',
-    parenthetical: 'dialogue',
-    transition: 'scene',
-    shot: 'action',
-    text: 'text'
+	scene: 'action',
+	action: 'action',
+	character: 'dialogue',
+	dialogue: 'character',
+	parenthetical: 'dialogue',
+	transition: 'scene',
+	shot: 'action',
+	text: 'text'
 };
 
 var StopPropagationMixin = {
@@ -16,45 +16,45 @@ var StopPropagationMixin = {
 	},
 };
 function cursorPos(element) {
-    var caretOffset = 0;
-    var doc = element.ownerDocument || element.document;
-    var win = doc.defaultView || doc.parentWindow;
-    var sel;
-    if (typeof win.getSelection != "undefined") {
-        sel = win.getSelection();
-        if (sel.rangeCount > 0) {
-            var range = win.getSelection().getRangeAt(0);
-            var preCaretRange = range.cloneRange();
-            preCaretRange.selectNodeContents(element);
-            preCaretRange.setEnd(range.endContainer, range.endOffset);
-            caretOffset = preCaretRange.toString().length;
-        }
-    } else if ( (sel = doc.selection) && sel.type != "Control") {
-        var textRange = sel.createRange();
-        var preCaretTextRange = doc.body.createTextRange();
-        preCaretTextRange.moveToElementText(element);
-        preCaretTextRange.setEndPoint("EndToEnd", textRange);
-        caretOffset = preCaretTextRange.text.length;
-    }
-    return caretOffset;
+	var caretOffset = 0;
+	var doc = element.ownerDocument || element.document;
+	var win = doc.defaultView || doc.parentWindow;
+	var sel;
+	if (typeof win.getSelection != "undefined") {
+		sel = win.getSelection();
+		if (sel.rangeCount > 0) {
+			var range = win.getSelection().getRangeAt(0);
+			var preCaretRange = range.cloneRange();
+			preCaretRange.selectNodeContents(element);
+			preCaretRange.setEnd(range.endContainer, range.endOffset);
+			caretOffset = preCaretRange.toString().length;
+		}
+	} else if ( (sel = doc.selection) && sel.type != "Control") {
+		var textRange = sel.createRange();
+		var preCaretTextRange = doc.body.createTextRange();
+		preCaretTextRange.moveToElementText(element);
+		preCaretTextRange.setEndPoint("EndToEnd", textRange);
+		caretOffset = preCaretTextRange.text.length;
+	}
+	return caretOffset;
 };
 
 function placeCaretAtEnd(el) {
-    el.focus();
-    if (typeof window.getSelection != "undefined"
-            && typeof document.createRange != "undefined") {
-        var range = document.createRange();
-        range.selectNodeContents(el);
-        range.collapse(false);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-    } else if (typeof document.body.createTextRange != "undefined") {
-        var textRange = document.body.createTextRange();
-        textRange.moveToElementText(el);
-        textRange.collapse(false);
-        textRange.select();
-    }
+	el.focus();
+	if (typeof window.getSelection != "undefined"
+			&& typeof document.createRange != "undefined") {
+		var range = document.createRange();
+		range.selectNodeContents(el);
+		range.collapse(false);
+		var sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
+	} else if (typeof document.body.createTextRange != "undefined") {
+		var textRange = document.body.createTextRange();
+		textRange.moveToElementText(el);
+		textRange.collapse(false);
+		textRange.select();
+	}
 }
 
 function S4() {
@@ -72,6 +72,7 @@ var Script = React.createClass({displayName: "Script",
 
 		return {
 			scriptId: this.getParams().scriptId,
+			action: this.getParams().action,
 			script: {},
 			editing: {}
 		};
@@ -117,11 +118,11 @@ var Script = React.createClass({displayName: "Script",
 		var suggestions = [];
 		var passed = false;
 		var iterate = (function(index){
-		    var line = this.state.script.lines[index];
+			var line = this.state.script.lines[index];
 			if (line.type == type
-			    && line.text
-			    && line.text.length > text.length
-			    && line.text.toUpperCase().indexOf(text) === 0)
+				&& line.text
+				&& line.text.length > text.length
+				&& line.text.toUpperCase().indexOf(text) === 0)
 				suggestions.push(line.text.toUpperCase());
 			if (index == lineIndex)
 				passed = true;
@@ -143,84 +144,84 @@ var Script = React.createClass({displayName: "Script",
 					}
 				}
 				break;
-            case 38: // up
-                if (prevIndex) {
-	                if (event.metaKey || event.ctrlKey) {
-	                	// [a, b, C, d] => [a, C, b, d]
-	                	// A points to C
-	                	if (prevPrevIndex)
-		                	this.firebaseRefs.script.child('lines/'+prevPrevIndex).update({next: index});
-		                else
-		                	this.firebaseRefs.script.update({firstLine:index});
-                    	// C points to B
-                    	var newNext = line.next;
-                    	this.firebaseRefs.script.child('lines/'+index).update({next: prevIndex });
-                    	// B points to D
-                    	if (line.next)
-                    		this.firebaseRefs.script.child('lines/'+prevIndex).update({next: newNext });
-                    	else
-	                    	this.firebaseRefs.script.child('lines/'+prevIndex+'/next').remove();
-                        this.refs['line'+index].focus(true);
-	                    event.preventDefault();
-	                } else if (!cursorPos(event.target)) {
-	                    this.refs['line'+prevIndex].focus(true);
-	                    event.preventDefault();
-	                }
-                }
-                break;
-            case 40: // down
-            	if (line.next) {
-	                if (event.metaKey || event.ctrlKey) {
-			            // [a, b, c, d] => [a, c, b, d]
+			case 38: // up
+				if (prevIndex) {
+					if (event.metaKey || event.ctrlKey) {
+						// [a, b, C, d] => [a, C, b, d]
+						// A points to C
+						if (prevPrevIndex)
+							this.firebaseRefs.script.child('lines/'+prevPrevIndex).update({next: index});
+						else
+							this.firebaseRefs.script.update({firstLine:index});
+						// C points to B
+						var newNext = line.next;
+						this.firebaseRefs.script.child('lines/'+index).update({next: prevIndex });
+						// B points to D
+						if (line.next)
+							this.firebaseRefs.script.child('lines/'+prevIndex).update({next: newNext });
+						else
+							this.firebaseRefs.script.child('lines/'+prevIndex+'/next').remove();
+						this.refs['line'+index].focus(true);
+						event.preventDefault();
+					} else if (!cursorPos(event.target)) {
+						this.refs['line'+prevIndex].focus(true);
+						event.preventDefault();
+					}
+				}
+				break;
+			case 40: // down
+				if (line.next) {
+					if (event.metaKey || event.ctrlKey) {
+						// [a, b, c, d] => [a, c, b, d]
 
-	                	// A points to C
-	                	if (prevIndex)
-		                	this.firebaseRefs.script.child('lines/'+prevIndex).update({next: line.next});
-		                else
-		                	this.firebaseRefs.script.update({firstLine:line.next});
-	                	var newNext = this.state.script.lines[line.next].next;
-	                	// C points to B
-	                	this.firebaseRefs.script.child('lines/'+line.next).update({next: index});
-	                	// B points to D
-	                	if (newNext)
-		                	this.firebaseRefs.script.child('lines/'+index).update({ next: newNext });
-		                else
-		                	this.firebaseRefs.script.child('lines/'+index+'/next').remove();
-	                    this.refs['line'+index].focus();
-	                    event.preventDefault();
-	                } else if (cursorPos(event.target) >= event.target.textContent.length ) {
-	                	this.refs['line'+line.next].focus();
-	                    event.preventDefault();
-	                }
-            	}
-                break;
-            case 8: // backspace
-                if (!line.text && prevIndex) {
-                	// update previous line
-                	if (line.next)
-	                	this.firebaseRefs.script.child('lines/'+prevIndex).update({next:line.next});
-	                else
-	                	this.firebaseRefs.script.child('lines/'+prevIndex+'/next').remove();
+						// A points to C
+						if (prevIndex)
+							this.firebaseRefs.script.child('lines/'+prevIndex).update({next: line.next});
+						else
+							this.firebaseRefs.script.update({firstLine:line.next});
+						var newNext = this.state.script.lines[line.next].next;
+						// C points to B
+						this.firebaseRefs.script.child('lines/'+line.next).update({next: index});
+						// B points to D
+						if (newNext)
+							this.firebaseRefs.script.child('lines/'+index).update({ next: newNext });
+						else
+							this.firebaseRefs.script.child('lines/'+index+'/next').remove();
+						this.refs['line'+index].focus();
+						event.preventDefault();
+					} else if (cursorPos(event.target) >= event.target.textContent.length ) {
+						this.refs['line'+line.next].focus();
+						event.preventDefault();
+					}
+				}
+				break;
+			case 8: // backspace
+				if (!line.text && prevIndex) {
+					// update previous line
+					if (line.next)
+						this.firebaseRefs.script.child('lines/'+prevIndex).update({next:line.next});
+					else
+						this.firebaseRefs.script.child('lines/'+prevIndex+'/next').remove();
 
-	                // remove line
-                    this.firebaseRefs.script.child('lines/'+index).remove();
-                    this.refs['line'+prevIndex].focus(true);
-                    event.preventDefault();
-                }
-                break;
-            case 13: // enter
-                if (line.text) {
-                	// create new line pointing to current line's `next`
-                	var newItem = { type: nextTypes[line.type] };
-                	if (line.next) newItem.next = line.next;
-                    newRef = this.firebaseRefs.script.child('lines').push(newItem);
-                    // point current line to the new line
-                    this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key());
-                    setTimeout((function(){
-                    	this.refs['line'+newRef.key()].focus();
-                    }).bind(this));
-                }
-        }
+					// remove line
+					this.firebaseRefs.script.child('lines/'+index).remove();
+					this.refs['line'+prevIndex].focus(true);
+					event.preventDefault();
+				}
+				break;
+			case 13: // enter
+				if (line.text) {
+					// create new line pointing to current line's `next`
+					var newItem = { type: nextTypes[line.type] };
+					if (line.next) newItem.next = line.next;
+					newRef = this.firebaseRefs.script.child('lines').push(newItem);
+					// point current line to the new line
+					this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key());
+					setTimeout((function(){
+						this.refs['line'+newRef.key()].focus();
+					}).bind(this));
+				}
+		}
 	},
 	render: function() {
 		var indexes = {};
@@ -232,6 +233,7 @@ var Script = React.createClass({displayName: "Script",
 					previous: previous, prevPrevious: prevPrevious, 
 					onFocus: this.editing.bind(this, index), 
 					getSuggestion: this.getSuggestion, 
+					readonly: this.state.action == 'view', 
 					onKeyDown: this.handleKey})
 			);
 			prevPrevious = previous;
@@ -246,7 +248,7 @@ var Script = React.createClass({displayName: "Script",
 		}
 		return (
 			React.createElement("div", null, 
-				React.createElement(Nav, {script: this.state.script, editingIndex: this.state.editing}), 
+				React.createElement(Nav, {script: this.state.script, editingIndex: this.state.editing, readonly: this.state.action=='view'}), 
 				React.createElement("ul", {className: "script"}, lines)
 			)
 		);
@@ -280,33 +282,33 @@ var Line = React.createClass({displayName: "Line",
 		this.firebaseRefs.line.update({'comment':event.target.value});
 	},
 	nextType: function(){
-        var index = types.indexOf(this.props.line.type) + 1;
-        index = (index < types.length) ? index : 0;
-        this.setType(types[index]);
-    },
-    prevType: function() {
-        var index = types.indexOf(this.props.line.type) - 1;
-        index = (index >= 0) ? index : types.length - 1;
-        this.setType(types[index]);
-    },
+		var index = types.indexOf(this.props.line.type) + 1;
+		index = (index < types.length) ? index : 0;
+		this.setType(types[index]);
+	},
+	prevType: function() {
+		var index = types.indexOf(this.props.line.type) - 1;
+		index = (index >= 0) ? index : types.length - 1;
+		this.setType(types[index]);
+	},
 	setType: function(type) {
 		this.firebaseRefs.line.update({type:type});
 	},
 	handleKey: function(event) {
 		switch (event.keyCode) {
-            case 13: // enter
-	            event.preventDefault();
-                if (this.props.line.text) {
-                    break;
-                }
-            case 9: // tab
-                event.preventDefault();
-                if (event.shiftKey) {
-                    this.prevType();
-                } else {
-                    this.nextType();
-                }
-        }
+			case 13: // enter
+				event.preventDefault();
+				if (this.props.line.text) {
+					break;
+				}
+			case 9: // tab
+				event.preventDefault();
+				if (event.shiftKey) {
+					this.prevType();
+				} else {
+					this.nextType();
+				}
+		}
 
 		this.props.onKeyDown(event, this.props.line, this.props.index, this.props.previous, this.props.prevPrevious);
 	},
@@ -345,16 +347,23 @@ var Line = React.createClass({displayName: "Line",
 		classes[this.props.line.type] = true;
 		classes = React.addons.classSet(classes);
 
-		return (
-			React.createElement("li", {className: classes}, 
-				React.createElement(ContentEditable, {
+		var line;
+		if (this.props.readonly) {
+			line = React.createElement("div", {className: "line-text", dangerouslySetInnerHTML: {__html: this.props.line.text}});
+		} else {
+			line = React.createElement(ContentEditable, {
 					ref: "text", 
 					html: this.props.line.text, 
 					onChange: this.handleChange, 
 					onKeyDown: this.handleKey, 
 					onFocus: this.onFocus, 
 					onBlur: this.onBlur, 
-					className: "line-text"}), 
+					className: "line-text"})
+		}
+
+		return (
+			React.createElement("li", {className: classes}, 
+				line, 
 				React.createElement("a", {onClick: this.comment, className: "comment-add"}, 
 					React.createElement("i", {className: "glyphicon glyphicon-comment"})
 				), 
@@ -372,44 +381,44 @@ var Line = React.createClass({displayName: "Line",
 
 var ContentEditable = React.createClass({displayName: "ContentEditable",
 	stripPaste: function(e){
-        // Strip formatting on paste
-        var tempDiv = document.createElement("DIV");
-        var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
-        item.getAsString(function (value) {
-            tempDiv.innerHTML = value;
-            document.execCommand('inserttext', false, tempDiv.innerText);
-        });
-        e.preventDefault();
+		// Strip formatting on paste
+		var tempDiv = document.createElement("DIV");
+		var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
+		item.getAsString(function (value) {
+			tempDiv.innerHTML = value;
+			document.execCommand('inserttext', false, tempDiv.innerText);
+		});
+		e.preventDefault();
 	},
-    render: function(){
-        return React.createElement("div", {
-        	ref: "input", 
-            onInput: this.emitChange, 
-            onBlur: this.emitChange, 
-            onKeyDown: this.props.onKeyDown, 
-            onClick: this.props.onClick, 
-            className: this.props.className, 
+	render: function(){
+		return React.createElement("div", {
+			ref: "input", 
+			onInput: this.emitChange, 
+			onBlur: this.emitChange, 
+			onKeyDown: this.props.onKeyDown, 
+			onClick: this.props.onClick, 
+			className: this.props.className, 
 			onFocus: this.props.onFocus, 
 			onBlur: this.props.onBlur, 
 			onPaste: this.stripPaste, 
-            contentEditable: true, 
-            dangerouslySetInnerHTML: {__html: this.props.html}});
-    },
-    shouldComponentUpdate: function(nextProps){
-        return nextProps.html !== this.getDOMNode().innerHTML;
-    },
-    emitChange: function(){
-        var html = this.getDOMNode().innerHTML;
-        if (this.props.onChange && html !== this.lastHtml) {
+			contentEditable: true, 
+			dangerouslySetInnerHTML: {__html: this.props.html}});
+	},
+	shouldComponentUpdate: function(nextProps){
+		return nextProps.html !== this.getDOMNode().innerHTML;
+	},
+	emitChange: function(){
+		var html = this.getDOMNode().innerHTML;
+		if (this.props.onChange && html !== this.lastHtml) {
 
-            this.props.onChange({
-                target: {
-                    value: html
-                }
-            });
-        }
-        this.lastHtml = html;
-    }
+			this.props.onChange({
+				target: {
+					value: html
+				}
+			});
+		}
+		this.lastHtml = html;
+	}
 });
 
 var Nav = React.createClass({displayName: "Nav",
@@ -480,28 +489,28 @@ var Nav = React.createClass({displayName: "Nav",
 						React.createElement("ul", {className: "nav navbar-nav btn-block row"}, 
 							React.createElement("li", {className: "col-sm-6 col-xs-12 navbar-btn dropdown"}, 
 								React.createElement("div", {className: "input-group"}, 
-									React.createElement("input", {type: "text", className: "form-control text-center", value: this.state.script.title, onChange: this.handleChange.bind(this,'title'), placeholder: "Script Title"}), 
+									React.createElement("input", {type: "text", className: "form-control text-center", value: this.state.script.title, onChange: this.handleChange.bind(this,'title'), placeholder: "Script Title", readOnly: this.props.readonly}), 
 									React.createElement("span", {className: "input-group-btn"}, 
-										React.createElement("a", {className: 'btn btn-default ' + (this.state.dropdowns=='print'&&'active'), onClick: this.toggle.bind(this,'print'), title: "Print Options"}, 
+										React.createElement("a", {className: 'btn btn-default printOptions ' + (this.state.dropdowns=='print'&&'active'), onClick: this.toggle.bind(this,'print'), title: "Print Options"}, 
 											React.createElement("i", {className: "glyphicon glyphicon-print"})
 										), 
-										React.createElement("a", {className: "btn btn-default", onClick: this.newScript, title: "New Script"}, 
+										React.createElement("a", {className: "btn btn-default newScript", onClick: this.newScript, title: "New Script"}, 
 											React.createElement("i", {className: "glyphicon glyphicon-plus"})
 										)
 									)
 								), 
 								this.state.open == 'print' && React.createElement("div", {className: "popover bottom", style:  { display: 'block'}, onClick: this.stopProp}, 
 									React.createElement("div", {className: "arrow"}), 
-									React.createElement("h3", {className: "popover-title btn btn-block", onClick: this.print}, "Print"), 
+									React.createElement("h3", {className: "popover-title btn btn-block", onClick: this.print}, "Print Script"), 
 									React.createElement("div", {className: "popover-content"}, 
 										React.createElement("div", {className: "form-group"}, 
-											React.createElement("textarea", {placeholder: "Author(s)", value: this.state.script.authors, onChange: this.handleChange.bind(this,'authors'), className: "form-control"})
+											React.createElement("textarea", {placeholder: "Author(s)", value: this.state.script.authors, onChange: this.handleChange.bind(this,'authors'), className: "form-control", readOnly: this.props.readonly})
 										), 
 										React.createElement("div", {className: "form-group"}, 
-											React.createElement("textarea", {placeholder: "Address (left side)", value: this.state.script.leftAddress, onChange: this.handleChange.bind(this,'leftAddress'), className: "form-control"})
+											React.createElement("textarea", {placeholder: "Address (left side)", value: this.state.script.leftAddress, onChange: this.handleChange.bind(this,'leftAddress'), className: "form-control", readOnly: this.props.readonly})
 										), 
 										React.createElement("div", {className: "form-group"}, 
-											React.createElement("textarea", {placeholder: "Address (right side)", value: this.state.script.rightAddress, onChange: this.handleChange.bind(this,'rightAddress'), className: "form-control"})
+											React.createElement("textarea", {placeholder: "Address (right side)", value: this.state.script.rightAddress, onChange: this.handleChange.bind(this,'rightAddress'), className: "form-control", readOnly: this.props.readonly})
 										), 
 										React.createElement("div", {className: "form-group"}, 
 											React.createElement("select", {className: "form-control", onChange: this.highlight, title: "Highlights a character when printing", value: this.state.highlight}, 
@@ -561,37 +570,37 @@ var Home = React.createClass({displayName: "Home",
 			fontSize: '120%'
 		};
 		return (
-		        React.createElement("div", null, 
+				React.createElement("div", null, 
 
-			        React.createElement("div", {className: "text-center"}, 
+					React.createElement("div", {className: "text-center"}, 
 
-				        React.createElement("h1", null, "Screenwriter"), 
-				        React.createElement("p", null, 
-					        React.createElement("a", {className: "btn btn-primary", onClick: this.newScript}, React.createElement("i", {className: "glyphicon glyphicon-plus"}), " New Script"), 
-					        " ", 
-					        React.createElement(Link, {className: "btn btn-primary", to: "/demo"}, "Demo Script")
-				        ), 
+						React.createElement("h1", null, "Screenwriter"), 
+						React.createElement("p", null, 
+							React.createElement("a", {className: "btn btn-primary", onClick: this.newScript}, React.createElement("i", {className: "glyphicon glyphicon-plus"}), " New Script"), 
+							" ", 
+							React.createElement(Link, {className: "btn btn-primary", to: "/demo"}, "Demo Script")
+						), 
 
-				        React.createElement("p", null, 
-					        React.createElement("a", {className: "btn btn-default", href: "https://github.com/ProLoser/screenwriter"}, React.createElement("img", {src: "github-icons/GitHub-Mark-32px.png", alt: "Github"}), " Source Code")
-				        )
-			        ), 
+						React.createElement("p", null, 
+							React.createElement("a", {className: "btn btn-default", href: "https://github.com/ProLoser/screenwriter"}, React.createElement("img", {src: "github-icons/GitHub-Mark-32px.png", alt: "Github"}), " Source Code")
+						)
+					), 
 
-			        React.createElement("h3", null, "Collaborate:"), 
-			        React.createElement("p", null, "Share your custom URL with friends to collaborate!"), 
+					React.createElement("h3", null, "Collaborate:"), 
+					React.createElement("p", null, "Share your custom URL with friends to collaborate!"), 
 
-			        React.createElement("h3", null, "Shortcuts:"), 
-			        React.createElement("p", null, 
-				        React.createElement("strong", null, "Enter"), " Insert new line", React.createElement("br", null), 
-				        React.createElement("strong", null, "(Shift+)Tab"), " Cycle through line types", React.createElement("br", null), 
-				        React.createElement("strong", null, "Up/Down"), " Move through lines", React.createElement("br", null), 
-				        React.createElement("strong", null, "Cmd/Ctrl+Up/Down"), " Reorder lines", React.createElement("br", null), 
-				        React.createElement("strong", null, "Shift+Enter"), " To select the top of the autocomplete suggestions", React.createElement("br", null)
-			        ), 
+					React.createElement("h3", null, "Shortcuts:"), 
+					React.createElement("p", null, 
+						React.createElement("strong", null, "Enter"), " Insert new line", React.createElement("br", null), 
+						React.createElement("strong", null, "(Shift+)Tab"), " Cycle through line types", React.createElement("br", null), 
+						React.createElement("strong", null, "Up/Down"), " Move through lines", React.createElement("br", null), 
+						React.createElement("strong", null, "Cmd/Ctrl+Up/Down"), " Reorder lines", React.createElement("br", null), 
+						React.createElement("strong", null, "Shift+Enter"), " To select the top of the autocomplete suggestions", React.createElement("br", null)
+					), 
 
-			        React.createElement("h3", null, "Comments:"), 
-			        React.createElement("p", {className: "help"}, "Hover over a line and click comment button ", React.createElement("i", {className: "glyphicon glyphicon-comment", style: commentStyles}))
-		        )
+					React.createElement("h3", null, "Comments:"), 
+					React.createElement("p", {className: "help"}, "Hover over a line and click comment button ", React.createElement("i", {className: "glyphicon glyphicon-comment", style: commentStyles}))
+				)
 		);
 	}
 
@@ -610,8 +619,8 @@ DefaultRoute = ReactRouter.DefaultRoute;
 var routes = (
 	React.createElement(Route, {handler: App}, 
 		React.createElement(DefaultRoute, {handler: Home}), 
-		React.createElement(Route, {name: "script", path: "/:scriptId", handler: Script}
-		)
+		React.createElement(Route, {name: "script", path: "/:scriptId", handler: Script}), 
+		React.createElement(Route, {name: "scriptAction", path: "/:scriptId/:action", handler: Script})
 	)
 );
 

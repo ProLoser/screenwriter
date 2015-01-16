@@ -90,6 +90,33 @@ body {
 	}
 }
 
+/** NAV **/
+.printOptions {
+	&:before {
+		content: 'Print Options ';
+	}
+}
+.newScript {
+	&:before {
+		content: 'New Script ';
+	}
+}
+.printOptions, .newScript {
+	&:before {
+		display: inline-block;
+		overflow: hidden;
+		max-width: 0;
+		line-height: 14px;
+		transition: all ease 0.2s;
+	}
+	&:hover {
+		&:before {
+			max-width: 120px;
+			margin-right: 10px;
+		}
+	}
+}
+
 
 /** SCRIPT **/
 
@@ -179,7 +206,6 @@ body {
 	}
 
 	.scene {
-		text-transform: uppercase;
 		.line-text {
 			text-transform: uppercase;
 			background: rgba(0, 0, 0, 0.1);
@@ -191,7 +217,6 @@ body {
 	}
 
 	.character {
-		text-transform: uppercase;
 		margin-bottom: 0;
 		.line-text {
 			text-align: center;
