@@ -513,7 +513,7 @@ var Nav = React.createClass({
 										</div>
 										<div className="form-group">
 											<select className="form-control" onChange={this.highlight} title="Highlights a character when printing" value={this.state.highlight}>
-												<option value="">-- Character --</option>
+												<option value="">-- Highlighter --</option>
 												{characters}
 											</select>
 										</div>
