@@ -25,8 +25,8 @@
     		right: 0;
     	}
 	}
-	p {
-		margin: 0 0 12pt;
+	li {
+		margin: 12pt 0;
 	}
 	.character, .scene, .shot {
 		text-transform: uppercase;
@@ -58,7 +58,7 @@
 		}
 	}
 	.character-highlighted {
-		margin-top: 50px;
+		margin-top: 100px;
 	}
 	.character, .scene, .shot, .transition, .dialogue, .action {
 		.line-text:empty:before {

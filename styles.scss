@@ -1,6 +1,17 @@
+/** COLORS **/
+$background: #eee;
+$text: #333;
+$shadow: #000;
+$placeholder: #ddd;
+$character: #EDF6FF;
+$character-placeholder: #cfcfcf;
+$scene: opacity($background, 0.1);
+$scene-placeholder: #bbb;
+$comment-button: yellow;
+$commented-button: orange;
+$comment-box: $comment-button;
+
 /** GLOBAL **/
-
-
 * {
 	box-sizing: border-box;
 }
@@ -40,8 +51,6 @@ body {
 	top: 100%;
 	margin-top: 10px;
 	margin-left: 50%;
-	-webkit-transform: translate(-50%, 0);
-    -ms-transform: translate(-50%, 0); // IE9 only
     transform: translate(-50%, 0);
 }
 .popover {
@@ -49,8 +58,6 @@ body {
 		min-width: 250px;
 		top: 100%;
 		margin-left: 50%;
-		-webkit-transform: translate(-50%, 0);
-        -ms-transform: translate(-50%, 0); // IE9 only
         transform: translate(-50%, 0);
     }
     .popover-content.list-group {
@@ -130,8 +137,6 @@ body {
 
 
 	.comment-add {
-		-webkit-transition: all ease 0.2s;
-		-moz-transition: all ease 0.2s;
 		transition: all ease 0.2s;
 		position: absolute;
 		left: 0;
@@ -139,7 +144,7 @@ body {
 		display: block;
 		opacity: 0;
 		z-index: 8;
-		color: yellow;
+		color: $comment-button;
 		content: '';
 		position: absolute;
 		width: 40px;
@@ -147,7 +152,7 @@ body {
 		margin: -10px -10px;
 		padding: 10px;
 		font-size: 120%;
-		text-shadow: 0 1px 1px rgba(0,0,0,1);
+		text-shadow: 0 1px 1px $shadow;
 		&:hover {
 			opacity: 1 !important;
 		}
@@ -160,20 +165,20 @@ body {
 	}
 	.commented .comment-add {
 		opacity: .5;
-		color: orange;
+		color: $commented-button;
 	}
 
 	.comment-box {
 		position: absolute;
 		right: 0;
 		top: 0;
-		background: yellow;
+		background: $comment-box;
 		z-index: 3;
 		min-width: 100px;
 		max-width: 300px;
 		min-height: 40px;
 		padding: 0px 4px;
-		box-shadow: 0 0 7px rgba(0,0,0,.4);
+		box-shadow: 0 0 7px opacity($shadow ,.4);
 		border-radius: 3px;
 	}
 
@@ -183,14 +188,14 @@ body {
 	.line-text {
 		font-size: 14px;
 		font-family: Courier;
-		background: white;
+		background: $background;
 		position: relative;
 		&:hover {
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 0 5px opacity($shadow, 0.2);
 			z-index: 1;
 		}
 		&:focus {
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			box-shadow: 0 0 5px opacity($shadow, 0.5);
 			z-index: 5;
 			outline: none;
 		}
@@ -199,15 +204,15 @@ body {
 	.scene {
 		.line-text {
 			text-transform: uppercase;
-			background: rgba(0, 0, 0, 0.1);
+			background: $scene;
 			&:empty:focus:before {
 				content: 'SCENE';
-				color: #bbb;
+				color: $scene-placeholder;
 			}
 			&:focus:after {
 				position: absolute;
 				content: attr(data-suggest);
-				color: #bbb;
+				color: $scene-placeholder;
 			}
 		}
 	}
@@ -217,15 +222,15 @@ body {
 		.line-text {
 			text-align: center;
 			text-transform: uppercase;
-			background: #EDF6FF;
+			background: $character;
 			&:empty:focus:before {
 				content: 'CHARACTER';
-				color: #cfcfcf;
+				color: $character-placeholder;
 			}
 			&:focus:after {
 				position: absolute;
 				content: attr(data-suggest);
-				color: #cfcfcf;
+				color: $character-placeholder;
 			}
 		}
 	}
@@ -240,7 +245,7 @@ body {
 			}
 			&:empty:focus:before {
 				content: 'TRANSITION';
-				color: #ddd;
+				color: $placeholder;
 			}
 		}
 	}
@@ -261,30 +266,27 @@ body {
 	.dialogue {
 		margin: 0 15% 20px;
 		.line-text {
-
 			&:empty:focus:before {
 				content: 'Dialogue';
-				color: #ddd;
+				color: $placeholder;
 			}
 		}
 	}
 
 	.action {
 		.line-text {
-
 			&:empty:focus:before {
 				content: 'Action';
-				color: #ddd;
+				color: $placeholder;
 			}
 		}
 	}
 
 	.shot {
 		.line-text {
-
 			&:empty:focus:before {
 				content: 'Shot';
-				color: #ddd;
+				color: $placeholder;
 			}
 		}
 	}
@@ -304,6 +306,10 @@ body {
 		margin-left: 20px;
 		margin-right: -25px;
 	}
+}
+
+@media screen {
+
 }
 
 @media(max-width:767px) {

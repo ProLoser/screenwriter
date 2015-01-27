@@ -217,7 +217,7 @@ var Script = React.createClass({
 	render: function() {
 		var indexes = {};
 		var lines = [];
-		var previous, prevPrevious;
+		var previous = null, prevPrevious = null;
 		var next = (function(line, index){
 			lines.push(
 				<Line line={line} key={index} index={index} ref={'line'+index}
