@@ -78,9 +78,14 @@ var Script = React.createClass({displayName: "Script",
 		};
 	},
 	componentWillMount: function() {
-		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId), "script");
+		this.loadScript();
 	},
-	componentDidMount: function() {
+	componentWillReceiveProps: function() {
+		this.loadScript();
+	},
+	loadScript: function() {
+		if (this.firebaseRefs.script) this.unbind('script');
+		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.getParams().scriptId), "script");	
 		// CLEANUP OLD DATA
 		var fb = new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId);
 		fb.once('value', (function(snapshot){
