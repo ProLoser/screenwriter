@@ -525,25 +525,27 @@ var Nav = React.createClass({displayName: "Nav",
 									)
 								)
 							), 
-							React.createElement("li", {className: 'col-sm-6 col-xs-12 dropdown ' + (this.state.g=='line'&&'open')}, 
-								React.createElement("a", {onClick: this.toggle.bind(this, 'line')}, 
-									React.createElement("i", {className: "glyphicon glyphicon-align-center"}), 
-									React.createElement("span", {className: "uppercase"}, " ", editing.type || 'Line Type', " "), 
-									React.createElement("b", {className: "caret"})
-								), 
-								this.state.open == 'line' && React.createElement("div", {className: "popover bottom", style:  { display: 'block'} }, 
-									React.createElement("div", {className: "arrow"}), 
-									React.createElement("div", {className: "list-group uppercase popover-content text-center"}, 
-										types.map(function(type){
-											return React.createElement("a", {onClick: this.setType.bind(this, type), 
-												key: type, 
-												className: 'list-group-item '+(editing.type==type&&'active')}, 
-												type
-											)
-										}, this)
+							this.props.readonly ||
+								React.createElement("li", {className: 'col-sm-6 col-xs-12 dropdown ' + (this.state.g=='line'&&'open')}, 
+									React.createElement("a", {onClick: this.toggle.bind(this, 'line')}, 
+										React.createElement("i", {className: "glyphicon glyphicon-align-center"}), 
+										React.createElement("span", {className: "uppercase"}, " ", editing.type || 'Line Type', " "), 
+										React.createElement("b", {className: "caret"})
+									), 
+									this.state.open == 'line' && React.createElement("div", {className: "popover bottom", style:  { display: 'block'} }, 
+										React.createElement("div", {className: "arrow"}), 
+										React.createElement("div", {className: "list-group uppercase popover-content text-center"}, 
+											types.map(function(type){
+												return React.createElement("a", {onClick: this.setType.bind(this, type), 
+													key: type, 
+													className: 'list-group-item '+(editing.type==type&&'active')}, 
+													type
+												)
+											}, this)
+										)
 									)
 								)
-							)
+							
 						)
 					)
 				), 

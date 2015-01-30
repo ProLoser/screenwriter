@@ -525,25 +525,27 @@ var Nav = React.createClass({
 									</div>
 								</div>}
 							</li>
-							<li  className={'col-sm-6 col-xs-12 dropdown ' + (this.state.g=='line'&&'open')}>
-								<a onClick={this.toggle.bind(this, 'line')}>
-									<i className="glyphicon glyphicon-align-center"></i>
-									<span className="uppercase"> {editing.type || 'Line Type'} </span> 
-									<b className="caret"></b>
-								</a>
-								{this.state.open == 'line' && <div className="popover bottom" style={ { display: 'block' } }>
-									<div className="arrow"></div>
-									<div className="list-group uppercase popover-content text-center">
-										{types.map(function(type){
-											return <a onClick={this.setType.bind(this, type)}
-												key={type}
-												className={'list-group-item '+(editing.type==type&&'active')}>
-												{type}
-											</a>
-										}, this)}
-									</div>
-								</div>}
-							</li>
+							{this.props.readonly ||
+								<li  className={'col-sm-6 col-xs-12 dropdown ' + (this.state.g=='line'&&'open')}>
+									<a onClick={this.toggle.bind(this, 'line')}>
+										<i className="glyphicon glyphicon-align-center"></i>
+										<span className="uppercase"> {editing.type || 'Line Type'} </span> 
+										<b className="caret"></b>
+									</a>
+									{this.state.open == 'line' && <div className="popover bottom" style={ { display: 'block' } }>
+										<div className="arrow"></div>
+										<div className="list-group uppercase popover-content text-center">
+											{types.map(function(type){
+												return <a onClick={this.setType.bind(this, type)}
+													key={type}
+													className={'list-group-item '+(editing.type==type&&'active')}>
+													{type}
+												</a>
+											}, this)}
+										</div>
+									</div>}
+								</li>
+							}
 						</ul>
 					</div>
 				</div>
