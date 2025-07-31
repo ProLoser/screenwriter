@@ -408,6 +408,9 @@ var ContentEditable = React.createClass({
 		}
 		this.lastHtml = html;
 	},
+	shouldComponentUpdate: function(nextProps) {
+		return nextProps.html !== this.getDOMNode().innerHTML;
+	},
 	render: function(){
 		return <div 
 			ref="input"
