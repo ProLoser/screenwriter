@@ -1,3 +1,10 @@
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@5.0.15: Glob versions prior to v9 are no longer supported
+npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+npm warn deprecated
+npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+npm warn deprecated react-tools@0.12.2: react-tools is deprecated. For more information, visit https://fb.me/react-tools-deprecated
+[36mbuilt Module("script.jsx")[0m
 var types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
 var nextTypes = {
 	scene: 'action',
@@ -409,7 +416,60 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
 		this.lastHtml = html;
 	},
 	shouldComponentUpdate: function(nextProps) {
-		return nextProps.html !== this.getDOMNode().innerHTML;
+		// Don't re-render if the element is currently focused (user is typing)
+		// This prevents the cursor from jumping to the beginning
+		var element = this.getDOMNode();
+		if (document.activeElement === element) {
+			return false;
+		}
+		return nextProps.html !== element.innerHTML;
+	},
+	componentWillUpdate: function() {
+		// Save cursor position before update
+		var element = this.getDOMNode();
+		this.savedCursorPosition = cursorPos(element);
+	},
+	componentDidUpdate: function() {
+		// Restore cursor position after update if we saved one
+		if (this.savedCursorPosition !== undefined) {
+			var element = this.getDOMNode();
+			var textContent = element.textContent || element.innerText || '';
+			var position = Math.min(this.savedCursorPosition, textContent.length);
+			
+			if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
+				var range = document.createRange();
+				range.selectNodeContents(element);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				
+				// Move cursor to saved position
+				var currentPos = 0;
+				var nodeStack = [element];
+				var node, foundStart = false;
+				
+				while (!foundStart && (node = nodeStack.pop())) {
+					if (node.nodeType === 3) { // Text node
+						var nextPos = currentPos + node.length;
+						if (position >= currentPos && position <= nextPos) {
+							range.setStart(node, position - currentPos);
+							range.setEnd(node, position - currentPos);
+							foundStart = true;
+						}
+						currentPos = nextPos;
+					} else {
+						for (var i = node.childNodes.length - 1; i >= 0; i--) {
+							nodeStack.push(node.childNodes[i]);
+						}
+					}
+				}
+				
+				sel.removeAllRanges();
+				sel.addRange(range);
+			}
+			
+			this.savedCursorPosition = undefined;
+		}
 	},
 	render: function(){
 		return React.createElement("div", {

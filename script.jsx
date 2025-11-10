@@ -409,7 +409,60 @@ var ContentEditable = React.createClass({
 		this.lastHtml = html;
 	},
 	shouldComponentUpdate: function(nextProps) {
-		return nextProps.html !== this.getDOMNode().innerHTML;
+		// Don't re-render if the element is currently focused (user is typing)
+		// This prevents the cursor from jumping to the beginning
+		var element = this.getDOMNode();
+		if (document.activeElement === element) {
+			return false;
+		}
+		return nextProps.html !== element.innerHTML;
+	},
+	componentWillUpdate: function() {
+		// Save cursor position before update
+		var element = this.getDOMNode();
+		this.savedCursorPosition = cursorPos(element);
+	},
+	componentDidUpdate: function() {
+		// Restore cursor position after update if we saved one
+		if (this.savedCursorPosition !== undefined) {
+			var element = this.getDOMNode();
+			var textContent = element.textContent || element.innerText || '';
+			var position = Math.min(this.savedCursorPosition, textContent.length);
+			
+			if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
+				var range = document.createRange();
+				range.selectNodeContents(element);
+				var sel = window.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				
+				// Move cursor to saved position
+				var currentPos = 0;
+				var nodeStack = [element];
+				var node, foundStart = false;
+				
+				while (!foundStart && (node = nodeStack.pop())) {
+					if (node.nodeType === 3) { // Text node
+						var nextPos = currentPos + node.length;
+						if (position >= currentPos && position <= nextPos) {
+							range.setStart(node, position - currentPos);
+							range.setEnd(node, position - currentPos);
+							foundStart = true;
+						}
+						currentPos = nextPos;
+					} else {
+						for (var i = node.childNodes.length - 1; i >= 0; i--) {
+							nodeStack.push(node.childNodes[i]);
+						}
+					}
+				}
+				
+				sel.removeAllRanges();
+				sel.addRange(range);
+			}
+			
+			this.savedCursorPosition = undefined;
+		}
 	},
 	render: function(){
 		return <div 
