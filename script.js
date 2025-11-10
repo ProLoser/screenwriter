@@ -1,10 +1,3 @@
-npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
-npm warn deprecated glob@5.0.15: Glob versions prior to v9 are no longer supported
-npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-npm warn deprecated
-npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
-npm warn deprecated react-tools@0.12.2: react-tools is deprecated. For more information, visit https://fb.me/react-tools-deprecated
-[36mbuilt Module("script.jsx")[0m
 var types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
 var nextTypes = {
 	scene: 'action',
