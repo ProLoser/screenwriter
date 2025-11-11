@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/bower_components/**",
+      "**/*.scss",
+      "**/*.jsx",
+      "gulpfile.js",
+      "package.json",
+      "package-lock.json",
+      "bower.json",
+      "config.rb",
+      ".imdone"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
