@@ -57,40 +57,6 @@ function placeCaretAtEnd(el) {
 	}
 }
 
-function placeCaretAtPosition(el, position) {
-	if (typeof window.getSelection === "undefined" || typeof document.createRange === "undefined") {
-		return;
-	}
-	
-	var textContent = el.textContent || el.innerText || '';
-	position = Math.min(position, textContent.length);
-	
-	var range = document.createRange();
-	var sel = window.getSelection();
-	var currentPos = 0;
-	var nodeStack = [el];
-	var node, foundStart = false;
-	
-	while (!foundStart && (node = nodeStack.pop())) {
-		if (node.nodeType === 3) { // Text node
-			var nextPos = currentPos + node.length;
-			if (position >= currentPos && position <= nextPos) {
-				range.setStart(node, position - currentPos);
-				range.setEnd(node, position - currentPos);
-				foundStart = true;
-			}
-			currentPos = nextPos;
-		} else {
-			for (var i = node.childNodes.length - 1; i >= 0; i--) {
-				nodeStack.push(node.childNodes[i]);
-			}
-		}
-	}
-	
-	sel.removeAllRanges();
-	sel.addRange(range);
-}
-
 function S4() {
    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 }
@@ -443,24 +409,7 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
 		this.lastHtml = html;
 	},
 	shouldComponentUpdate: function(nextProps) {
-		// Don't re-render if the element is currently focused (user is typing)
-		// This prevents the cursor from jumping to the beginning
-		var element = this.getDOMNode();
-		if (document.activeElement === element) {
-			return false;
-		}
-		return nextProps.html !== element.innerHTML;
-	},
-	componentWillUpdate: function() {
-		// Save cursor position before update
-		this.savedCursorPosition = cursorPos(this.getDOMNode());
-	},
-	componentDidUpdate: function() {
-		// Restore cursor position after update if we saved one
-		if (this.savedCursorPosition !== undefined) {
-			placeCaretAtPosition(this.getDOMNode(), this.savedCursorPosition);
-			this.savedCursorPosition = undefined;
-		}
+		return nextProps.html !== this.getDOMNode().innerHTML;
 	},
 	render: function(){
 		return React.createElement("div", {
