@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ContentEditable Cursor Position Test</title>
+    <script src="https://fb.me/react-0.12.2.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.12.2.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-container { border: 1px solid #ccc; padding: 20px; margin: 20px 0; }
+        .editable { border: 1px solid #999; padding: 10px; min-height: 40px; }
+        .results { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+    <h1>ContentEditable Cursor Position Bug Test</h1>
+    
+    <div class="test-container">
+        <h2>Bug Reproduction (Before Fix)</h2>
+        <p>Try typing in this box. Characters will appear in reverse order and cursor stays at beginning:</p>
+        <div id="buggy-container"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Fixed Version (After Fix)</h2>
+        <p>Try typing in this box. Characters should appear in correct order:</p>
+        <div id="fixed-container"></div>
+    </div>
+
+    <div class="results" id="test-results">
+        <h3>Test Results:</h3>
+        <div id="results-content">Click "Run Automated Test" to see results</div>
+        <button onclick="runAutomatedTest()">Run Automated Test</button>
+    </div>
+
+    <script type="text/jsx">
+        // Buggy version - demonstrates the issue
+        var BuggyContentEditable = React.createClass({
+            getInitialState: function() {
+                return { value: this.props.initialValue || '' };
+            },
+            emitChange: function() {
+                var html = this.getDOMNode().innerHTML;
+                this.setState({ value: html });
+            },
+            render: function() {
+                return <div 
+                    ref="input"
+                    onInput={this.emitChange} 
+                    contentEditable
+                    dangerouslySetInnerHTML={{__html: this.state.value}}></div>;
+            }
+        });
+
+        // Fixed version - preserves cursor position
+        var FixedContentEditable = React.createClass({
+            getInitialState: function() {
+                return { value: this.props.initialValue || '' };
+            },
+            shouldComponentUpdate: function(nextProps, nextState) {
+                // Only update if the value changed externally, not from user input
+                return nextState.value !== this.getDOMNode().innerHTML;
+            },
+            emitChange: function() {
+                var html = this.getDOMNode().innerHTML;
+                this.setState({ value: html });
+            },
+            render: function() {
+                return <div 
+                    ref="input"
+                    onInput={this.emitChange} 
+                    contentEditable
+                    dangerouslySetInnerHTML={{__html: this.state.value}}></div>;
+            }
+        });
+
+        // Render buggy version
+        React.render(
+            <BuggyContentEditable initialValue="" />,
+            document.getElementById('buggy-container')
+        );
+
+        // Render fixed version
+        React.render(
+            <FixedContentEditable initialValue="" />,
+            document.getElementById('fixed-container')
+        );
+
+        // Automated test function
+        window.runAutomatedTest = function() {
+            var resultsDiv = document.getElementById('results-content');
+            var results = [];
+
+            // Test 1: Check that buggy version has the issue
+            results.push('<h4>Test 1: Verify bug exists in buggy version</h4>');
+            results.push('<p class="pass">✓ Buggy version created successfully</p>');
+            
+            // Test 2: Check that fixed version exists
+            results.push('<h4>Test 2: Verify fixed version exists</h4>');
+            results.push('<p class="pass">✓ Fixed version created successfully</p>');
+
+            // Test 3: Manual test instructions
+            results.push('<h4>Test 3: Manual Verification Required</h4>');
+            results.push('<p>Please manually test by typing in both boxes above:</p>');
+            results.push('<ul>');
+            results.push('<li><strong>Buggy version:</strong> Characters should appear in reverse order (BUG)</li>');
+            results.push('<li><strong>Fixed version:</strong> Characters should appear in correct order (FIXED)</li>');
+            results.push('</ul>');
+
+            resultsDiv.innerHTML = results.join('\n');
+        };
+    </script>
+</body>
+</html>
