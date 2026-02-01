@@ -396,6 +396,11 @@ var ContentEditable = React.createClass({
 		});
 		e.preventDefault();
 	},
+	shouldComponentUpdate: function(nextProps){
+		// Only update if the new HTML is different from what's currently in the DOM
+		// This prevents re-rendering on every keystroke which would reset the cursor position
+		return nextProps.html !== this.getDOMNode().innerHTML;
+	},
 	emitChange: function(){
 		var html = this.getDOMNode().innerHTML;
 		if (this.props.onChange && html !== this.lastHtml) {
