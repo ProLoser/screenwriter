@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - master
+      - gh-pages
   workflow_dispatch:
 
 permissions:
