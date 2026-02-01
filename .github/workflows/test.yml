@@ -4,7 +4,10 @@ on:
   pull_request:
     branches: [ main, master ]
   push:
-    branches: [ main, master ]
+    branches: 
+      - main
+      - master
+      - 'copilot/**'  # Run on copilot branches for testing
 
 jobs:
   test:
