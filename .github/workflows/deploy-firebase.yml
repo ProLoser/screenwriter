@@ -19,14 +19,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '16'
 
       - name: Install dependencies
         run: |
           npm install
-          npm install -g bower
-          bower install --allow-root
+          npx bower install --allow-root
 
       - name: Build
         run: |
@@ -34,7 +32,7 @@ jobs:
           npx gulp react
 
       - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0.9.0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
