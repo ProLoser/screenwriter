@@ -397,6 +397,14 @@ var ContentEditable = React.createClass({displayName: "ContentEditable",
 		e.preventDefault();
 	},
 	shouldComponentUpdate: function(nextProps){
+		// Check if any props that affect rendering have changed
+		if (nextProps.className !== this.props.className) return true;
+		if (nextProps.suggest !== this.props.suggest) return true;
+		if (nextProps.onKeyDown !== this.props.onKeyDown) return true;
+		if (nextProps.onClick !== this.props.onClick) return true;
+		if (nextProps.onFocus !== this.props.onFocus) return true;
+		if (nextProps.onBlur !== this.props.onBlur) return true;
+		
 		// Only update if the new HTML is different from what's currently in the DOM
 		// This prevents re-rendering on every keystroke which would reset the cursor position
 		return nextProps.html !== this.getDOMNode().innerHTML;
