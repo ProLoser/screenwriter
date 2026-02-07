@@ -1,39 +1,35 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-sass')(require('sass')),
     plumber = require('gulp-plumber'),
-    react = require('gulp-react'),
     webserver = require('gulp-webserver');
-var browserify = require('gulp-browserify');
-// var concat = require('gulp-concat');
 
-gulp.task('default', function() {
-	gulp.src(['**/*.js', '**/*.css', '**/*.html'])
-		.pipe(webserver({
-			livereload: true,
-			open: true,
-			fallback: 'index.html'
-		}));
-	gulp.watch('*.scss', ['sass']);
-	gulp.watch('*.jsx', ['react']);
-});
-gulp.task('sass', function() {
-	gulp.src('*.scss')
+// Sass compilation task
+function compileSass() {
+	return gulp.src('*.scss')
 		.pipe(plumber())
 		.pipe(sass({
 			sourceComments: 'map'
 		}))
 		.pipe(gulp.dest('.'));
-});
-gulp.task('react', function() {
-	gulp.src('*.jsx')
-		.pipe(plumber())
-		.pipe(react())
-		.pipe(gulp.dest('.'));
-});
+}
 
-gulp.task('browserify', function() {
-    gulp.src('*.jsx')
-      .pipe(browserify({transform: 'reactify'}))
-      .pipe(concat('script.js'))
-      .pipe(gulp.dest('.'));
-});
+// Watch files for changes
+function watchFiles() {
+	gulp.watch('*.scss', compileSass);
+}
+
+// Web server task
+function serve() {
+	return gulp.src(['**/*.js', '**/*.css', '**/*.html'])
+		.pipe(webserver({
+			livereload: true,
+			open: true,
+			fallback: 'index.html'
+		}));
+}
+
+// Export tasks
+exports.sass = compileSass;
+exports.watch = watchFiles;
+exports.serve = serve;
+exports.default = gulp.parallel(serve, watchFiles);

@@ -2,6 +2,34 @@
 
 A simple copy of Final Draft that can be used online
 
+## Development
+
+### Prerequisites
+- Node.js (v14 or higher recommended)
+- Yarn (v1.22.22 or higher)
+
+### Installation
+```bash
+yarn install
+```
+
+### Running Tests
+```bash
+# Run all tests
+yarn test
+
+# Run tests in watch mode
+yarn test:watch
+
+# Run tests with coverage
+yarn test:coverage
+```
+
+### Building
+```bash
+gulp
+```
+
 ## Instructions
 
 Use <kbd>Enter</kbd> to create new lines

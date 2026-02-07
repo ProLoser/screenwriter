@@ -5,7 +5,7 @@ $shadow: #000;
 $placeholder: #ddd;
 $character: #EDF6FF;
 $character-placeholder: #cfcfcf;
-$scene: opacity($background, 0.1);
+$scene: rgba($background, 0.1);
 $scene-placeholder: #bbb;
 $comment-button: yellow;
 $commented-button: orange;
@@ -178,7 +178,7 @@ body {
 		max-width: 300px;
 		min-height: 40px;
 		padding: 0px 4px;
-		box-shadow: 0 0 7px opacity($shadow ,.4);
+		box-shadow: 0 0 7px rgba($shadow, .4);
 		border-radius: 3px;
 	}
 
@@ -191,11 +191,11 @@ body {
 		background: $background;
 		position: relative;
 		&:hover {
-			box-shadow: 0 0 5px opacity($shadow, 0.2);
+			box-shadow: 0 0 5px rgba($shadow, 0.2);
 			z-index: 1;
 		}
 		&:focus {
-			box-shadow: 0 0 5px opacity($shadow, 0.5);
+			box-shadow: 0 0 5px rgba($shadow, 0.5);
 			z-index: 5;
 			outline: none;
 		}
