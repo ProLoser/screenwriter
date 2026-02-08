@@ -4,6 +4,7 @@ bower_components
 
 # Build outputs
 /*.map
+/*.css
 coverage
 dist
 build
