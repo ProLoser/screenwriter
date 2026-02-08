@@ -27,8 +27,14 @@ yarn test:coverage
 
 ### Building
 ```bash
+# Build SCSS to CSS
+npx gulp sass
+
+# Run development server with live reload
 gulp
 ```
+
+Note: CSS files (`styles.css`, `print.css`) are generated from SCSS sources and are not tracked in git. Run `npx gulp sass` to generate them.
 
 ## Instructions
 
