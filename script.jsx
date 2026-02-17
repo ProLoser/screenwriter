@@ -124,7 +124,10 @@ var Script = React.createClass({
 		var passed = false;
 		var iterate = (function(index){
 			var line = this.state.script.lines[index];
-			if (!line) return;
+			if (!line) {
+				console.warn('Line not found at index:', index);
+				return;
+			}
 			if (line.type == type
 				&& line.text
 				&& line.text.length > text.length
@@ -225,7 +228,10 @@ var Script = React.createClass({
 		var lines = [];
 		var previous = null, prevPrevious = null;
 		var next = (function(line, index){
-			if (!line) return;
+			if (!line) {
+				console.warn('Line not found at index:', index);
+				return;
+			}
 			lines.push(
 				<Line line={line} key={index} index={index} ref={'line'+index}
 					previous={previous} prevPrevious={prevPrevious}
