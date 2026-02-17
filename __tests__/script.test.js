@@ -2,9 +2,14 @@
  * Tests for Screenwriter React components and utilities
  */
 
-// Import utility functions and constants from script.jsx
-// Note: Since script.jsx uses old React patterns and global variables,
-// we'll test the data structures and utility logic
+// Shared utility functions for testing
+function S4() {
+  return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+}
+
+function guid() {
+  return `${S4()}${S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`;
+}
 
 describe('Screenwriter Line Types', () => {
   const types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
@@ -90,10 +95,6 @@ describe('Screenwriter Line Types', () => {
 
 describe('Utility Functions', () => {
   describe('S4 helper function', () => {
-    function S4() {
-      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    }
-
     test('should return a 4-character hex string', () => {
       const result = S4();
       expect(result).toMatch(/^[0-9a-f]{4}$/);
@@ -110,14 +111,6 @@ describe('Utility Functions', () => {
   });
 
   describe('guid function', () => {
-    function S4() {
-      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    }
-    
-    function guid() {
-      return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-    }
-
     test('should generate a GUID with correct format', () => {
       const result = guid();
       // Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
