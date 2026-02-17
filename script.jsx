@@ -386,6 +386,13 @@ var Line = React.createClass({
 });
 
 var ContentEditable = React.createClass({
+	shouldComponentUpdate: function(nextProps) {
+		// Only update if the html prop has changed AND it's different from what we have in the DOM
+		// This prevents cursor jumping when the user is typing (internal changes)
+		// but allows updates from external sources (autocomplete, Firebase updates, etc.)
+		var currentHTML = this.getDOMNode().innerHTML;
+		return nextProps.html !== currentHTML;
+	},
 	stripPaste: function(e){
 		// Strip formatting on paste
 		var tempDiv = document.createElement("DIV");
