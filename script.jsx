@@ -210,7 +210,7 @@ var Script = React.createClass({
 					// create new line pointing to current line's `next`
 					var newItem = { type: nextTypes[line.type] };
 					if (line.next) newItem.next = line.next;
-					newRef = this.firebaseRefs.script.child('lines').push(newItem);
+					var newRef = this.firebaseRefs.script.child('lines').push(newItem);
 					// point current line to the new line
 					this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key);
 					setTimeout((function(){
