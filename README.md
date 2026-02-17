@@ -28,19 +28,23 @@ yarn test:coverage
 ### Building
 ```bash
 # Build SCSS to CSS
+yarn build
+# or
 npx gulp sass
 
 # Run development server with live reload
 gulp
 ```
 
-Note: CSS files (`styles.css`, `print.css`) are generated from SCSS sources and are not tracked in git. Run `npx gulp sass` to generate them.
+Note: CSS files (`styles.css`, `print.css`) are generated from SCSS sources and are not tracked in git. Run `yarn build` or `npx gulp sass` to generate them.
 
-## Continuous Integration
+## Continuous Integration & Deployment
 
-This project uses GitHub Actions for continuous integration. All pull requests automatically run:
+This project uses GitHub Actions for CI/CD:
 
-- Unit tests on Node.js 18.x and 20.x
+### Testing (CI)
+All pull requests automatically run:
+- Unit tests on Node.js 24.x (latest LTS)
 - Test coverage analysis
 - Coverage reports uploaded to Codecov (if configured)
 
@@ -48,7 +52,13 @@ Tests must pass before pull requests can be merged. The workflow runs on:
 - Pull requests to `main` or `master` branches
 - Direct pushes to `main` or `master` branches
 
-You can view the workflow status in the "Actions" tab of the repository.
+### Deployment (CD)
+The website automatically deploys to GitHub Pages when changes are pushed to `main` or `master`:
+- Builds CSS from SCSS sources
+- Deploys all static files to GitHub Pages
+- Available at the repository's GitHub Pages URL
+
+You can view workflow status in the "Actions" tab of the repository.
 
 ## Instructions
 
