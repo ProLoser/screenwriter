@@ -386,6 +386,18 @@ var Line = React.createClass({displayName: "Line",
 });
 
 var ContentEditable = React.createClass({displayName: "ContentEditable",
+	shouldComponentUpdate: function(nextProps) {
+		// Only re-render if props that affect rendering have changed
+		// Don't re-render when the HTML content is the same as what the user is typing
+		return nextProps.html !== this.props.html ||
+			nextProps.className !== this.props.className ||
+			nextProps.suggest !== this.props.suggest ||
+			nextProps.onKeyDown !== this.props.onKeyDown ||
+			nextProps.onClick !== this.props.onClick ||
+			nextProps.onFocus !== this.props.onFocus ||
+			nextProps.onBlur !== this.props.onBlur ||
+			nextProps.onChange !== this.props.onChange;
+	},
 	stripPaste: function(e){
 		// Strip formatting on paste
 		var tempDiv = document.createElement("DIV");
