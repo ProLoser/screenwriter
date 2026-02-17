@@ -1,5 +1,8 @@
 # Screenwriter
 
+[![Test](https://github.com/ProLoser/screenwriter/actions/workflows/test.yml/badge.svg)](https://github.com/ProLoser/screenwriter/actions/workflows/test.yml)
+[![Deploy to GitHub Pages](https://github.com/ProLoser/screenwriter/actions/workflows/deploy.yml/badge.svg)](https://github.com/ProLoser/screenwriter/actions/workflows/deploy.yml)
+
 A simple copy of Final Draft that can be used online
 
 ## Development
