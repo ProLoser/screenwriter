@@ -508,6 +508,9 @@ var Nav = React.createClass({
 										<a className="btn btn-default slidetip" onClick={this.newScript} title="New Script">
 											<i className="glyphicon glyphicon-plus"></i>
 										</a>
+										<a className="btn btn-default slidetip" href="https://github.com/ProLoser/screenwriter/issues" target="_blank" rel="noopener noreferrer" title="Report Issues">
+											<img src="github-icons/GitHub-Mark-32px.png" alt="Report Issues on GitHub" style={{width: '16px', height: '16px', verticalAlign: 'middle'}} />
+										</a>
 									</span>
 								</div>
 								{this.state.open == 'print' && <div className="popover bottom" style={ { display: 'block' } } onClick={this.stopProp}>
