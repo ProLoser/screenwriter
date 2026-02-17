@@ -11,7 +11,6 @@ module.exports = {
   // Ignore patterns
   testPathIgnorePatterns: [
     '/node_modules/',
-    '/bower_components/',
     '/Courier_Prime/'
   ],
 
@@ -27,7 +26,6 @@ module.exports = {
   collectCoverageFrom: [
     '**/*.{js,jsx}',
     '!**/node_modules/**',
-    '!**/bower_components/**',
     '!**/coverage/**',
     '!**/*.config.js',
     '!gulpfile.js'
