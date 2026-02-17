@@ -2,6 +2,64 @@
 
 A simple copy of Final Draft that can be used online
 
+## Development
+
+### Prerequisites
+- Node.js (v14 or higher recommended)
+- Yarn (v1.22.22 or higher)
+
+### Installation
+```bash
+yarn install
+```
+
+### Running Tests
+```bash
+# Run all tests
+yarn test
+
+# Run tests in watch mode
+yarn test:watch
+
+# Run tests with coverage
+yarn test:coverage
+```
+
+### Building
+```bash
+# Build SCSS to CSS
+yarn build
+# or
+npx gulp sass
+
+# Run development server with live reload
+gulp
+```
+
+Note: CSS files (`styles.css`, `print.css`) are generated from SCSS sources and are not tracked in git. Run `yarn build` or `npx gulp sass` to generate them.
+
+## Continuous Integration & Deployment
+
+This project uses GitHub Actions for CI/CD:
+
+### Testing (CI)
+All pull requests automatically run:
+- Unit tests on Node.js 24.x (latest LTS)
+- Test coverage analysis
+- Coverage reports uploaded to Codecov (if configured)
+
+Tests must pass before pull requests can be merged. The workflow runs on:
+- Pull requests to `main` or `master` branches
+- Direct pushes to `main` or `master` branches
+
+### Deployment (CD)
+The website automatically deploys to GitHub Pages when changes are pushed to `main` or `master`:
+- Builds CSS from SCSS sources
+- Deploys all static files to GitHub Pages
+- Available at the repository's GitHub Pages URL
+
+You can view workflow status in the "Actions" tab of the repository.
+
 ## Instructions
 
 Use <kbd>Enter</kbd> to create new lines
