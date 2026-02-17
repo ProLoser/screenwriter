@@ -36,6 +36,20 @@ gulp
 
 Note: CSS files (`styles.css`, `print.css`) are generated from SCSS sources and are not tracked in git. Run `npx gulp sass` to generate them.
 
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration. All pull requests automatically run:
+
+- Unit tests on Node.js 18.x and 20.x
+- Test coverage analysis
+- Coverage reports uploaded to Codecov (if configured)
+
+Tests must pass before pull requests can be merged. The workflow runs on:
+- Pull requests to `main` or `master` branches
+- Direct pushes to `main` or `master` branches
+
+You can view the workflow status in the "Actions" tab of the repository.
+
 ## Instructions
 
 Use <kbd>Enter</kbd> to create new lines
