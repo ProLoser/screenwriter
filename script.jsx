@@ -90,9 +90,11 @@ var Script = React.createClass({
 		var fb = new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId);
 		fb.once('value', (function(snapshot){
 			if (!snapshot.val()) {
-				fb.set({});
 				var newLine = fb.child('lines').push({ type: 'scene' });
-				fb.update({ firstLine: newLine.key });
+				fb.set({
+					title: '',
+					firstLine: newLine.key
+				});
 				return;
 			}
 			if (snapshot.val().firstLine) return;
@@ -488,8 +490,8 @@ var Nav = React.createClass({
 	render: function() {
 		if (!this.state.script) return <div />;
 
-		if (this.state.script.title)
-			document.title = 'Screenwriter: ' + this.state.script.title;
+		if (this.state.script.title !== undefined)
+			document.title = 'Screenwriter: ' + (this.state.script.title || 'Untitled');
 
 		var editing = this.state.script.lines && this.state.script.lines[this.props.editingIndex] || {};
 		if (this.state.open=='print') {
