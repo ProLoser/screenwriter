@@ -2,15 +2,6 @@
  * Tests for Screenwriter React components and utilities
  */
 
-// Shared utility functions for testing
-function S4() {
-  return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-}
-
-function guid() {
-  return `${S4()}${S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`;
-}
-
 describe('Screenwriter Line Types', () => {
   const types = ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text'];
   const nextTypes = {
@@ -89,49 +80,6 @@ describe('Screenwriter Line Types', () => {
       types.forEach(type => {
         expect(nextTypes).toHaveProperty(type);
       });
-    });
-  });
-});
-
-describe('Utility Functions', () => {
-  describe('S4 helper function', () => {
-    test('should return a 4-character hex string', () => {
-      const result = S4();
-      expect(result).toMatch(/^[0-9a-f]{4}$/);
-    });
-
-    test('should generate different values on multiple calls', () => {
-      const results = new Set();
-      for (let i = 0; i < 100; i++) {
-        results.add(S4());
-      }
-      // Should have many unique values (allowing for some collisions)
-      expect(results.size).toBeGreaterThan(90);
-    });
-  });
-
-  describe('guid function', () => {
-    test('should generate a GUID with correct format', () => {
-      const result = guid();
-      // Format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      expect(result).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
-    });
-
-    test('should generate unique GUIDs', () => {
-      const guid1 = guid();
-      const guid2 = guid();
-      expect(guid1).not.toBe(guid2);
-    });
-
-    test('should always contain 4 hyphens', () => {
-      const result = guid();
-      const hyphens = (result.match(/-/g) || []).length;
-      expect(hyphens).toBe(4);
-    });
-
-    test('should have correct length (36 characters)', () => {
-      const result = guid();
-      expect(result).toHaveLength(36);
     });
   });
 });
