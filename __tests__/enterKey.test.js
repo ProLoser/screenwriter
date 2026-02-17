@@ -19,7 +19,7 @@ describe('Enter Key Behavior in ContentEditable', () => {
           push: jest.fn(function(value) {
             // Simulate Firebase push() returning a Reference with a key
             return {
-              key: 'mock-key-' + Math.random().toString(36).substr(2, 9)
+              key: 'mock-key-' + Math.random().toString(36).substring(2, 11)
             };
           }),
           set: jest.fn(),
@@ -335,8 +335,8 @@ describe('Enter Key Behavior in ContentEditable', () => {
       
       if (line.text) {
         const newItem = { type: nextTypes[line.type] };
-        // Using var to properly scope the variable
-        var newRef = mockComponent.firebaseRefs.script.child('lines').push(newItem);
+        // Using const for modern best practice in tests
+        const newRef = mockComponent.firebaseRefs.script.child('lines').push(newItem);
         
         if (newRef && newRef.key) {
           newRefDeclared = true;
@@ -356,7 +356,8 @@ describe('Enter Key Behavior in ContentEditable', () => {
       // Execute the code block
       if (line.text) {
         const newItem = { type: nextTypes[line.type] };
-        var newRef = mockComponent.firebaseRefs.script.child('lines').push(newItem);
+        // Using const demonstrates proper scoping (production code uses var for compatibility)
+        const newRef = mockComponent.firebaseRefs.script.child('lines').push(newItem);
         // newRef should be locally scoped
       }
       
