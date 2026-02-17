@@ -15,18 +15,14 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '24.x'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -37,11 +33,9 @@ jobs:
 
       - name: Run tests with coverage
         run: yarn test:coverage
-        if: matrix.node-version == '20.x'
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
-        if: matrix.node-version == '20.x'
         with:
           files: ./coverage/lcov.info
           fail_ci_if_error: false
