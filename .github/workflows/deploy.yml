@@ -35,8 +35,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build CSS from SCSS
-        run: npx gulp sass
+      - name: Build project
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

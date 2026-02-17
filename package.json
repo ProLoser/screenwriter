@@ -13,6 +13,7 @@
     "underscore": "^1.13.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
@@ -29,7 +30,9 @@
     "sass": "^1.97.3"
   },
   "scripts": {
-    "build": "gulp sass",
+    "build": "npm run build:jsx && npm run build:css",
+    "build:jsx": "babel script.jsx --out-file script.js --presets=@babel/preset-react --no-babelrc",
+    "build:css": "gulp sass",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
