@@ -1,5 +1,11 @@
 /**
  * Integration tests for ContentEditable component cursor behavior
+ * 
+ * NOTE: This project uses React 0.12.2 (legacy API) which uses getDOMNode().
+ * These tests replicate the shouldComponentUpdate logic to verify correctness
+ * in isolation. While normally we'd test the actual component, this approach
+ * allows us to thoroughly test the logic without needing to set up the full
+ * React 0.12 environment with Firebase dependencies.
  */
 
 describe('ContentEditable Component Integration', () => {

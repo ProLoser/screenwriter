@@ -270,11 +270,11 @@ describe('ContentEditable Cursor Position Behavior', () => {
         ? currentSelection.getRangeAt(0).endOffset 
         : 0;
       
-      // This test documents the expected behavior (cursor at end)
-      // vs buggy behavior (cursor at beginning/position 0)
-      // Note: Setting innerHTML always resets the cursor, so this test
-      // demonstrates the problem we need to solve by avoiding innerHTML updates
-      expect(newPosition).toBe(0); // This is the bug - cursor jumps to start
+      // This test demonstrates WHY the fix is needed:
+      // Setting innerHTML always resets cursor to position 0 (the bug).
+      // Our fix (shouldComponentUpdate) prevents React from calling
+      // dangerouslySetInnerHTML when the user is typing, thus preventing this bug.
+      expect(newPosition).toBe(0); // This demonstrates the bug our fix prevents
     });
 
     test('cursor position should be preserved when component should not update', () => {
