@@ -92,7 +92,7 @@ var Script = React.createClass({
 			if (!snapshot.val()) {
 				fb.set({});
 				var newLine = fb.child('lines').push({ type: 'scene' });
-				fb.update({ firstLine: newLine.key() });
+				fb.update({ firstLine: newLine.key });
 				return;
 			}
 			if (snapshot.val().firstLine) return;
@@ -212,9 +212,9 @@ var Script = React.createClass({
 					if (line.next) newItem.next = line.next;
 					newRef = this.firebaseRefs.script.child('lines').push(newItem);
 					// point current line to the new line
-					this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key());
+					this.firebaseRefs.script.child('lines/'+index+'/next').set(newRef.key);
 					setTimeout((function(){
-						this.refs['line'+newRef.key()].focus();
+						this.refs['line'+newRef.key].focus();
 					}).bind(this));
 				}
 		}
@@ -474,7 +474,7 @@ var Nav = React.createClass({
 	newScript: function(){
 		var fb = new Firebase("https://screenwrite.firebaseio.com/");
 		var newRef = fb.push();
-		window.location.hash = '#/' + newRef.key();
+		window.location.hash = '#/' + newRef.key;
 		window.location.reload(); // force firebase to reload
 	},
 	render: function() {
@@ -573,7 +573,7 @@ var Home = React.createClass({
 	newScript: function(){
 		var fb = new Firebase("https://screenwrite.firebaseio.com/");
 		var newRef = fb.push();
-		window.location.hash = '#/' + newRef.key();
+		window.location.hash = '#/' + newRef.key;
 		window.location.reload(); // force firebase to reload
 	},
 	render: function() {
