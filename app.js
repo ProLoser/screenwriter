@@ -91,10 +91,10 @@ app.run(function($rootScope, $state, types, $timeout, $window){
 });
 app.constant('types', ['scene', 'action', 'character', 'dialogue', 'parenthetical', 'transition', 'shot', 'text']);
 app.controller('Script', function($scope, types, $localStorage, $stateParams, $firebase, cursorPos){
-    document.title = 'Screenwriter: ' + ($scope.script.title || 'Untitled');
+    document.title = 'Screenwriter: ' + $scope.script.title;
     
     $scope.$watch('script.title', function(newVal, oldVal){
-        document.title = 'Screenwriter: ' + (newVal || 'Untitled');
+        document.title = 'Screenwriter: ' + newVal;
     });
     $scope.types = types;
     var nextTypes = {
