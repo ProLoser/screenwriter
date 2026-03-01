@@ -1,0 +1,79 @@
+<div class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation">
+  <div class="container">
+    <ul class="nav navbar-nav btn-block row">
+      <!-- OUTLINE
+      <a class="pull-left dropdown-toggle hidden-xs" ng-click="toggle('outline');$event.stopPropagation()"><i class="glyphicon glyphicon-bookmark"></i></a>
+      -->
+      <!-- OUTLINE DROPDOWN
+      <ol class="dropdown-menu uppercase hidden-xs" ng-show="dropdowns=='outline'">
+        <li class="dropdown-header">Outline</li>
+        <li class="divider"></li>  
+        <li ng-repeat="scene in script.lines | filter : {type:'scene'}">
+            <a ng-click="focus(scene)">{{scene.text}}</a>
+        </li>
+      </ol>
+      -->
+
+      <!-- SCRIPT TITLE -->
+      <li class="col-sm-6 col-xs-12 navbar-btn dropdown" ng-class="{open:dropdowns=='print'}">
+        <div class="input-group">
+          <input type="text" class="form-control text-center" ng-model="script.title" placeholder="Script Title" ng-autofocus="!script.title">
+          <span class="input-group-btn">
+            <!-- PRINTER -->
+            <a class="btn btn-default" ng-class="{active:dropdowns=='print'}" ng-click="toggle('print');$event.stopPropagation();" title="Print Options"><i class="glyphicon glyphicon-print"></i></a>
+            <!-- NEW -->
+            <a class="btn btn-default" ng-click="new()" title="New Script"><i class="glyphicon glyphicon-plus"></i></a>
+          </span>
+        </div>
+
+
+        <!-- PRINTER DROPDOWN -->
+        <div class="popover bottom" ng-style="{display:dropdowns=='print'&&'block'}" ng-click="$event.stopPropagation()">
+          <div class="arrow"></div>
+          <h3 class="popover-title btn btn-block" ng-click="print()">Print Script</h3>
+          <div class="popover-content">
+            <div class="form-group">
+              <textarea placeholder="Author(s)" ng-model="script.authors" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="Address (left side)" ng-model="script.leftAddress" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="Address (right side)" ng-model="script.rightAddress" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <select class="form-control" ng-model="printer.highlight" title="Highlights a character when printing">
+                <option value="">-- Character --</option>
+                <option ng-repeat="character in characters">{{character}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </li>
+
+
+      <!-- LINE TYPE -->
+      <li class="col-sm-6 col-xs-12 dropdown" ng-class="{open:dropdowns=='line'}">
+        <a ng-click="toggle('line');$event.stopPropagation()">
+          <i class="glyphicon glyphicon-align-center"></i> 
+          <span class="uppercase">{{editing.type || 'Line Type'}}</span> 
+          <b class="caret"></b>
+        </a>
+
+
+        <!-- LINE TYPE DROPDOWN -->
+        <div class="popover bottom" ng-style="{display:dropdowns=='line'&&'block'}">
+          <div class="arrow"></div>
+            <div class="list-group uppercase popover-content text-center">
+              <a ng-repeat="type in types" 
+                ng-click="editing.type=type"
+                ng-class="{active:editing.type==type}"
+                class="list-group-item">
+                {{type}}
+              </a>
+            </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

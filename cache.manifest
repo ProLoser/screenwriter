@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# Libraries from CDN
+https://cdn.jsdelivr.net/npm/underscore@1.13.7/underscore-min.js
+https://cdn.jsdelivr.net/npm/react@0.12.2/dist/react-with-addons.min.js
+https://cdn.jsdelivr.net/npm/react-router@0.11.6/dist/react-router.min.js
+https://cdn.jsdelivr.net/npm/reactfire@0.4.0/dist/reactfire.min.js
+https://cdn.jsdelivr.net/npm/firebase@1.1.3/firebase.js
+https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css
+# Application files
+app.js
+styles.css
+print.css
+nav.html
+home-nav.html
+script.html

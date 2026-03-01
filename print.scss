@@ -1,0 +1,83 @@
+/* http://2012.scriptfrenzy.org/howtoformatascreenplay */
+
+@media print {
+	.comment-box, .comment-add {
+		display: none !important;
+	}
+	body {
+		margin: 0;
+	    font-size: 12pt;
+	}
+	header {
+		page-break-after: always;
+		margin-top: 50%;
+		text-align: center;
+    	white-space: pre;
+	}
+	address {
+		position: absolute;
+		bottom: 0;
+    	white-space: pre;
+    	&.text-left {
+			left: 0;
+    	}
+    	&.text-right {
+    		right: 0;
+    	}
+	}
+	li {
+		margin: 12pt 0;
+	}
+	.character, .scene, .shot {
+		text-transform: uppercase;
+	}
+	.dialogue, .parenthetical {
+		margin-top: -12pt;
+	}
+	.character {
+		margin-left: 2.2in;
+	}
+	.dialogue {
+		margin-left: 1in;
+		margin-right: 1.5in;
+	}
+	.transition {
+		.line-text:empty {
+			&:after {
+				display: none;
+			}
+		}
+	}
+	.parenthetical {
+		margin-left: 1.6in;
+		margin-right: 1.9in;
+		.line-text:empty {
+			&:before, &:after {
+				display: none;
+			}
+		}
+	}
+	.character-highlighted {
+		margin-top: 100px;
+	}
+	.character, .scene, .shot, .transition, .dialogue, .action {
+		.line-text:empty:before {
+			// display: none;
+		}
+	}
+}
+
+@page { 
+    size: auto;   /* auto is the initial value */ 
+    /* this affects the margin in the printer settings */ 
+    margin: 1in 1in 1in 1.5in;  
+	@top-right {
+	    content: counter(page);
+	    content: 'hi';
+	}
+	:first {
+		@top-right {
+			content: none;
+		}
+	}
+}

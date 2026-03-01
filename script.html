@@ -1,0 +1,32 @@
+<div ng-click="closeComment()">
+	<ul class="script hidden-print">
+		<li ng-repeat="line in script.lines track by $index"
+			ng-class="{commenting:line==commenting,editing:line==editing,commented:line.comment}"
+			class="{{line.type}}">
+			<div contenteditable 
+				ng-click="$event.stopPropagation()"
+				ng-show="commenting==line"
+				class="comment-box"
+				ng-model="line.comment"></div>
+			<div contenteditable
+				ng-model="line.text"
+				ng-keydown="keydown($event, line)"
+				ng-keypress="keypress($event, line)"
+				ng-focus="edit(line)"
+				class="line-text"></div>
+			<a ng-click="comment(line);$event.stopPropagation()" class="comment-add">
+				<i class="glyphicon glyphicon-comment"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<div class="script-print visible-print">
+	<header>
+		<p class="uppercase">{{script.title}}</p>
+		<p ng-show="script.authors">by</p>
+		<p>{{script.authors}}</p>
+		<address class="text-left">{{script.leftAddress}}</address>
+		<address class="text-right">{{script.rightAddress}}</address>
+	</header>
+	<p ng-repeat="line in script.lines" ng-class="{highlight:line.text.toUpperCase()==printer.highlight.toUpperCase()}" class="{{line.type}}">{{line.text}}</p>
+</div>

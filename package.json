@@ -1,0 +1,50 @@
+{
+  "name": "screenwriter",
+  "version": "0.0.0",
+  "description": "A simple copy of Final Draft that can be used online",
+  "main": "app.js",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "firebase": "^12.9.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "^7.13.0",
+    "reactfire": "^4.2.3",
+    "underscore": "^1.13.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "babel-jest": "^30.2.0",
+    "gulp": "^5.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^6.0.1",
+    "gulp-webserver": "^0.9.1",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "sass": "^1.97.3"
+  },
+  "scripts": {
+    "build": "npm run build:jsx && npm run build:css",
+    "build:jsx": "babel script.jsx --out-file script.js --presets=@babel/preset-react --no-babelrc",
+    "build:css": "gulp sass",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ProLoser/screenwriter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProLoser/screenwriter/issues"
+  },
+  "homepage": "https://github.com/ProLoser/screenwriter"
+}
