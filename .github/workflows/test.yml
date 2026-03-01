@@ -2,7 +2,8 @@ name: Test
 
 on:
   pull_request:
-    branches: [main, master, gh-pages]
+  branches:
+    - main
 
 jobs:
   test:
@@ -24,9 +25,6 @@ jobs:
 
       - name: Build project
         run: yarn build
-
-      - name: Run tests
-        run: yarn test
 
       - name: Run tests with coverage
         run: yarn test:coverage

@@ -1,0 +1,36 @@
+name: Deploy PR previews
+concurrency: preview-${{ github.ref }}
+on:
+    pull_request:
+        types:
+            - opened
+            - reopened
+            - synchronize
+            - closed
+jobs:
+    deploy-preview:
+        runs-on: ubuntu-latest
+        steps:    
+            - uses: actions/checkout@v4
+            
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '24.x'
+                cache: 'yarn'
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Build project
+              run: yarn build
+
+            - uses: rossjrw/pr-preview-action@v1
+              with:
+                  source-dir: .
+                  preview-branch: gh-pages
+                  umbrella-dir: preview
+                  action: auto
+                  wait-for-pages-deployment: true
+                  comment: true
+                  qr-code: false
