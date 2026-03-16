@@ -4,8 +4,9 @@ package-lock.json
 
 # Build outputs
 /*.map
-/*.css
 script.js
+script.css
+fonts/
 coverage
 dist
 build
