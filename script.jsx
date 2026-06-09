@@ -10,6 +10,15 @@ var nextTypes = {
 	text: 'text'
 };
 
+function getHashParams() {
+	var hash = window.location.hash.replace(/^#\/?/, '');
+	var parts = hash ? hash.split('/') : [];
+	return {
+		scriptId: parts[0] || null,
+		action: parts[1] || null
+	};
+}
+
 var StopPropagationMixin = {
 	stopProp: function(event) {
 		event.nativeEvent.stopImmediatePropagation();
@@ -66,13 +75,13 @@ function guid() {
 
 
 var Script = React.createClass({
-	mixins: [ReactFireMixin, ReactRouter.State],
+	mixins: [ReactFireMixin],
 	getInitialState: function() {
 		highlight = '';
-
+		var params = getHashParams();
 		return {
-			scriptId: this.getParams().scriptId,
-			action: this.getParams().action,
+			scriptId: params.scriptId,
+			action: params.action,
 			script: {},
 			editing: {}
 		};
@@ -85,7 +94,7 @@ var Script = React.createClass({
 	},
 	loadScript: function() {
 		if (this.firebaseRefs.script) this.unbind('script');
-		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+this.getParams().scriptId), "script");	
+		this.bindAsObject(new Firebase("https://screenwrite.firebaseio.com/"+getHashParams().scriptId), "script");	
 		// CLEANUP OLD DATA
 		var fb = new Firebase("https://screenwrite.firebaseio.com/"+this.state.scriptId);
 		fb.once('value', (function(snapshot){
@@ -262,12 +271,12 @@ var Script = React.createClass({
 var highlight = '';
 
 var Line = React.createClass({
-	mixins: [ReactFireMixin, StopPropagationMixin, ReactRouter.State],
+	mixins: [ReactFireMixin, StopPropagationMixin],
 	getInitialState: function() {
 		return {
 			comments: this.props.line.comments,
 			commenting: false,
-			scriptId: this.getParams().scriptId,
+			scriptId: getHashParams().scriptId,
 			focused: false,
 		};
 	},
@@ -441,12 +450,12 @@ var ContentEditable = React.createClass({
 });
 
 var Nav = React.createClass({
-	mixins: [ReactFireMixin, StopPropagationMixin, ReactRouter.State],
+	mixins: [ReactFireMixin, StopPropagationMixin],
 	getInitialState: function() {
 		return {
 			open: null,
 			script: {},
-			scriptId: this.getParams().scriptId,
+			scriptId: getHashParams().scriptId,
 			highlight: ''
 		};
 	},
@@ -602,7 +611,7 @@ var Home = React.createClass({
 						<p>
 							<a className="btn btn-primary" onClick={this.newScript}><i className="glyphicon glyphicon-plus"></i> New Script</a>
 							&nbsp;
-							<Link className="btn btn-primary" to="/demo">Demo Script</Link> 
+							<a className="btn btn-primary" href="#/demo">Demo Script</a> 
 						</p>
 
 						<p>
@@ -635,23 +644,17 @@ var Home = React.createClass({
 
 var App = React.createClass({
 	render: function() {
-		return <RouteHandler />;
+		var params = getHashParams();
+		if (params.scriptId) {
+			return <Script />;
+		}
+		return <Home />;
 	}
 });
 
-Route = ReactRouter.Route;
-Link = ReactRouter.Link;
-RouteHandler = ReactRouter.RouteHandler;
-DefaultRoute = ReactRouter.DefaultRoute;
-var routes = (
-	<Route handler={App}>
-		<DefaultRoute handler={Home} />
-		<Route name="script" path="/:scriptId" handler={Script} />
-		<Route name="scriptAction" path="/:scriptId/:action" handler={Script} />
-	</Route>
-);
+function renderApp() {
+	React.render(<App />, document.getElementById('container'));
+}
 
-
-ReactRouter.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('container'));
-});
+window.addEventListener('hashchange', renderApp);
+renderApp();
