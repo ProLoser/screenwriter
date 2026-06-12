@@ -107,7 +107,7 @@ var Script = React.createClass({
 			if (snapshot.val().firstLine) return;
 			var previous, previousIndex;
 			fb.update({firstLine: '0'});
-			_.each(snapshot.val().lines, function(line, index) {
+			Object.entries(snapshot.val().lines).forEach(function([index, line]) {
 				if (previous) {
 					fb.child('lines/'+previousIndex+'/next').set(index);
 				}
@@ -117,7 +117,7 @@ var Script = React.createClass({
 		}).bind(this));
 
 		window.onunload = (function(){
-			if (_.keys(this.state.script.lines).length <= 2)
+			if (Object.keys(this.state.script.lines).length <= 2)
 				fb.remove();
 		}).bind(this);
 	},
@@ -413,7 +413,7 @@ var ContentEditable = React.createClass({
 	stripPaste: function(e){
 		// Strip formatting on paste
 		var tempDiv = document.createElement("DIV");
-		var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
+		var item = Array.from(e.clipboardData.items).find(function(i) { return i.type === 'text/plain'; });
 		item.getAsString(function (value) {
 			tempDiv.innerHTML = value;
 			document.execCommand('inserttext', false, tempDiv.innerText);
@@ -503,9 +503,11 @@ var Nav = React.createClass({
 		var editing = this.state.script.lines && this.state.script.lines[this.props.editingIndex] || {};
 		if (this.state.open=='print') {
 			var characters = [];
-			_.each(_.uniq(_.map(_.pluck(_.where(this.state.script.lines, {type:'character'}), 'text'), function(character){
-				return character && character.toUpperCase();
-			})), function(character){
+			[...new Set(
+				Object.values(this.state.script.lines)
+					.filter(function(line) { return line.type === 'character'; })
+					.map(function(line) { return line.text && line.text.toUpperCase(); })
+			)].forEach(function(character){
 				if (character)
 					characters.push(<option key={character}>{character}</option>)
 			});
