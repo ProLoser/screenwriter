@@ -1,6 +1,5 @@
 CACHE MANIFEST
 # Libraries from CDN
-https://cdn.jsdelivr.net/npm/underscore@1.13.7/underscore-min.js
 https://cdn.jsdelivr.net/npm/react@0.12.2/dist/react-with-addons.min.js
 https://cdn.jsdelivr.net/npm/react-router@0.11.6/dist/react-router.min.js
 https://cdn.jsdelivr.net/npm/reactfire@0.4.0/dist/reactfire.min.js
