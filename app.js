@@ -261,7 +261,7 @@ app.directive('contenteditable', function($timeout){
             // Strip formatting on paste
             var pasteBinding = $element.on('paste', function (e) {
                 var tempDiv = document.createElement("DIV");
-                var item = _.findWhere(e.clipboardData.items, { type: 'text/plain' });
+                var item = Array.from(e.clipboardData.items).find(function(i) { return i.type === 'text/plain'; });
                 item.getAsString(function (value) {
                     tempDiv.innerHTML = value;
                     document.execCommand('inserttext', false, tempDiv.innerText);
@@ -321,8 +321,12 @@ app.directive('ngAutofocus', function(){
 });
 app.filter('unique', function(){
     return function(data){
-        return _.uniq(data, false, function(row){
-            return row && row.text && row.text.toUpperCase();
+        var seen = new Set();
+        return data.filter(function(row) {
+            var key = row && row.text && row.text.toUpperCase();
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
         });
     };
 });
